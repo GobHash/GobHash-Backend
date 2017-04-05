@@ -23,8 +23,9 @@ const login = (req, res, next) => {
     const token = jwt.sign({
       username: user.username,
       test: 'hola'
-    }, config.jwtSecret, {
-      expiresIn: '30 days'
+    }, config.jwtSecretPrivate, {
+      expiresIn: '30 days',
+      algorithm: 'RS256'
     });
     return res.json({
       token,
@@ -42,12 +43,12 @@ const login = (req, res, next) => {
  * @param res
  * @returns {*}
  */
-const getRandomNumber = (req, res) => {
+function getRandomNumber(req, res) {
   // req.user is assigned by jwt middleware if valid token is provided
   return res.json({
     user: req.user,
     num: Math.random() * 100
   });
-};
+}
 
 export default { login, getRandomNumber };

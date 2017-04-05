@@ -49,3 +49,8 @@ node_modules
 
 # .env
 .env
+
+# keys
+*.pub
+*.key
+*.pem
