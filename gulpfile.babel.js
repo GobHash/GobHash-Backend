@@ -8,7 +8,7 @@ const plugins = gulpLoadPlugins();
 
 const paths = {
   js: ['./**/*.js', '!dist/**', '!node_modules/**', '!coverage/**'],
-  nonJs: ['./package.json', './.gitignore', './.env'],
+  nonJs: ['./package.json', './.gitignore', './.env', './publicKey.pub', './privateKey.pem'],
   tests: './server/tests/*.js'
 };
 
@@ -22,6 +22,12 @@ gulp.task('copy', () =>
   gulp.src(paths.nonJs)
     .pipe(plugins.newer('dist'))
     .pipe(gulp.dest('dist'))
+);
+
+gulp.task('copyDocs', () =>
+  gulp.src(['./server/docs/api_docs.yml'])
+    .pipe(plugins.newer('dist'))
+    .pipe(gulp.dest('dist/server/docs'))
 );
 
 // Compile ES6 to ES5 and copy to dist
@@ -45,7 +51,7 @@ gulp.task('nodemon', ['copy', 'babel'], () =>
     script: path.join('dist', 'index.js'),
     ext: 'js',
     ignore: ['node_modules/**/*.js', 'dist/**/*.js'],
-    tasks: ['copy', 'babel']
+    tasks: ['copy', 'babel', 'copyDocs']
   })
 );
 
@@ -55,6 +61,6 @@ gulp.task('serve', ['clean'], () => runSequence('nodemon'));
 // default task: clean dist, compile js files and copy non-js files.
 gulp.task('default', ['clean'], () => {
   runSequence(
-    ['copy', 'babel']
+    ['copy', 'babel', 'copyDocs']
   );
 });
