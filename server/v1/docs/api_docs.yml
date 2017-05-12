@@ -1,18 +1,25 @@
 ---
 swagger: "2.0"
 info:
-  description: "Move your app forward with the Uber API"
+  description: "GobHash.Inc"
   version: "1.0.0"
-  title: "Uber API"
+  title: "Private API"
 host: "api.uber.com"
 basePath: "/v1"
 schemes:
 - "https"
+securityDefinitions:
+  Bearer:
+    type: apiKey
+    name: Authorization
+    in: header
 produces:
 - "application/json"
 paths:
   /products:
     get:
+      security:
+        - Bearer: []
       tags:
       - "Products"
       summary: "Product Types"
