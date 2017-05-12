@@ -27,10 +27,10 @@ const certPublic = fs.readFileSync('publicKey.pub', 'utf8');
 const config = {
   env: envVars.NODE_ENV,
   port: envVars.PORT,
-  mongooseDebug: envVars.MONGOOSE_DEBUG,
+  sqlDebug: envVars.SQL_DEBUG,
   jwtSecretPrivate: certPrivate,
   jwtSecretPublic: certPublic,
-  dbUri: envVars.DB_URI,
+  dbUri: envVars.DB_URI
 };
 
 export default config;
