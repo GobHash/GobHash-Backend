@@ -1,5 +1,5 @@
 import express from 'express';
-import swaggerUi from 'swagger-ui-express';
+import swaggerUi from 'gobhash-swagger';
 import logger from 'morgan';
 import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
@@ -13,24 +13,17 @@ import expressWinston from 'express-winston';
 import expressValidation from 'express-validation';
 import helmet from 'helmet';
 import winstonInstance from './winston';
-import routes from '../server/routes/index.route';
+import routes from '../server/v1/routes/index.route';
 import config from './config';
-import APIError from '../server/helpers/APIError';
+import APIError from '../server/v1/helpers/APIError';
 
 // The Swagger document (require it, build it programmatically, fetch it from a URL, ...)
-const spec = fs.readFileSync('server/docs/api_docs.yml', 'utf8');
+const spec = fs.readFileSync('server/v1/docs/api_docs.yml', 'utf8');
 const swaggerDoc = jsyaml.safeLoad(spec);
-const options = {
-  basePath: 'test',
-  apiVersion: '1.0',
-  info: {
-    title: 'swagger-express sample app',
-    description: 'Swagger + Express = {swagger-express}'
-  },
-};
+
 const app = express();
 
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDoc, true, options));
+app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDoc, false));
 
 
 if (config.env === 'development') {
@@ -63,7 +56,7 @@ if (config.env === 'development') {
   }));
 }
 // mount all routes on /api path
-app.use('/api', routes);
+app.use('/v1', routes);
 
 // if error is not an instanceOf APIError, convert it.
 app.use((err, req, res, next) => {

@@ -10,18 +10,10 @@ const envVarsSchema = Joi.object({
     .default('development'),
   PORT: Joi.number()
     .default(3000),
-  MONGOOSE_DEBUG: Joi.boolean()
-    .when('NODE_ENV', {
-      is: Joi.string().equal('development'),
-      then: Joi.boolean().default(true),
-      otherwise: Joi.boolean().default(false)
-    }),
   JWT_SECRET: Joi.string().required()
     .description('JWT Secret required to sign'),
-  MONGO_HOST: Joi.string().required()
-    .description('Mongo DB host url'),
-  MONGO_PORT: Joi.number()
-    .default(27017)
+  DB_URI: Joi.string().required()
+    .description('SQL DB full uri'),
 }).unknown()
   .required();
 
@@ -38,10 +30,7 @@ const config = {
   mongooseDebug: envVars.MONGOOSE_DEBUG,
   jwtSecretPrivate: certPrivate,
   jwtSecretPublic: certPublic,
-  mongo: {
-    host: envVars.MONGO_HOST,
-    port: envVars.MONGO_PORT
-  }
+  dbUri: envVars.DB_URI,
 };
 
 export default config;
