@@ -54,7 +54,7 @@
     "express-jwt": "5.1.0",
     "express-validation": "1.0.2",
     "express-winston": "2.1.2",
-    "gobhash-swagger": "^1.0.0",
+    "gobhash-swagger": "^1.0.7",
     "helmet": "3.1.0",
     "http-status": "^0.2.0",
     "joi": "10.0.6",
