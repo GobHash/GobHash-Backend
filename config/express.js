@@ -23,7 +23,7 @@ const swaggerDoc = jsyaml.safeLoad(spec);
 
 const app = express();
 
-app.use('/', swaggerUi.serve, swaggerUi.setup(swaggerDoc, false));
+app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDoc, false));
 
 
 if (config.env === 'development') {
