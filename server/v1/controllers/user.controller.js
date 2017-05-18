@@ -62,7 +62,14 @@ function create(req, res) {
       email: req.body.email,
       password: hash
     })
-    .then(savedUser => res.json(savedUser))
+    .then((savedUser) => {
+      const modUser = {
+        id: savedUser.id,
+        username: savedUser.username,
+        email: savedUser.email
+      };
+      res.json(modUser);
+    })
     .catch((e) => {
       const errorMessage = {
         name: e.name,
@@ -148,7 +155,16 @@ function list(req, res) {
  */
 function remove(req, res) {
   const user = req.user;
-  User.destroy({
+  if (user === null && user === undefined) {
+    const errorMessage = {
+      name: 'UserNotFoundException',
+      message: 'User id does not exist',
+      errors: []
+    };
+    return res.json(errorMessage);
+  }
+  return User.destroy({
+    attributes: ['id', 'username', 'email'],
     where: {
       id: user.id
     }
