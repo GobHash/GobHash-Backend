@@ -1,4 +1,6 @@
-# GobHash-Backend
+# GobHash-Backend 
+[![Build Status](https://travis-ci.com/fcpauldiaz/GobHash-Backend.svg?token=BA4QqVvYrBdqHBsnJ9LK&branch=master)](https://travis-ci.com/fcpauldiaz/GobHash-Backend)
+
 Megaproyecto 2017 UVG
 
 
