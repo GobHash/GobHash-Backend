@@ -88,7 +88,7 @@ describe('## User APIs', () => {
         .delete(`/v1/users/${user.id}`)
         .expect(httpStatus.OK)
         .then((res) => {
-          expect(res.body.username).to.equal(user.username);
+          expect(res.body.username).to.equal('KK');
           expect(res.body.email).to.equal(user.email);
           done();
         })

@@ -163,13 +163,19 @@ function remove(req, res) {
     };
     return res.json(errorMessage);
   }
-  return User.destroy({
-    attributes: ['id', 'username', 'email'],
+  User.destroy({
     where: {
       id: user.id
     }
   })
-  .then(res.json(user))
+  .then(()  => {
+    const modUser = {
+      id: user.id,
+      username: user.username,
+      email: user.email
+    };
+    return res.json(modUser);
+  })
   .catch((e) => {
     const errorMessage = {
       name: e.name,
