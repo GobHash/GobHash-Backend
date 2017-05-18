@@ -6,28 +6,14 @@ import User from '../models/user.model';
 /**
  * Load user and append to req.
  */
-function load(req, res, next, id) {
-  User
-  .findOne({
-    where: {
-      id
-    }
-  })
-  .then((user) => {
+// eslint-disable-next-line
+async function load(req, res, next, id)  {
+  try {
+    const user = await User.findOne({ where: { id } });
     req.user = user; // eslint-disable-line no-param-reassign
-    return next();
-  })
-  .catch((e) => {
-    const errorMessage = {
-      name: e.name,
-      message: e.message,
-      errors: e.errors
-    };
-    // send only necesarry error message
-    return res
-      .status(httpStatus.NOT_FOUND)
-      .json(errorMessage);
-  });
+  } catch(err) {}
+
+  return next();
 }
 
 /**
@@ -110,7 +96,7 @@ function update(req, res) {
         errors: e.errors
       };
       // send only necesarry error message
-      res.json(errorMessage);
+      return res.json(errorMessage);
     });
   } else {
     const errorMessage = {
@@ -153,7 +139,7 @@ function list(req, res) {
  * Delete user.
  * @returns {User}
  */
-function remove(req, res) {
+async function remove(req, res) {
   const user = req.user;
   if (user === null && user === undefined) {
     const errorMessage = {
@@ -163,28 +149,23 @@ function remove(req, res) {
     };
     return res.json(errorMessage);
   }
-  User.destroy({
-    where: {
-      id: user.id
-    }
-  })
-  .then(()  => {
+  try {
+    await User.destroy({ where: { id: user.id } });
     const modUser = {
       id: user.id,
       username: user.username,
       email: user.email
     };
     return res.json(modUser);
-  })
-  .catch((e) => {
+  } catch (e) {
     const errorMessage = {
       name: e.name,
       message: e.message,
       errors: e.errors
     };
     // send only necesarry error message
-    res.json(errorMessage);
-  });
+    return res.json(errorMessage);
+  }
 }
 
 export default { load, get, create, update, list, remove };
