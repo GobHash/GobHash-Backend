@@ -1,7 +1,7 @@
 import config from '../../../config/config';
 
 const apiKey = config.mailgun_key;
-const domain = 'newtonlabs.com.gt';
+const domain = 'mailgun.newtonlabs.com.gt';
 const mailgun = require('mailgun-js')({ apiKey, domain });
 
 const preData = {

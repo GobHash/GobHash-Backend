@@ -1,5 +1,4 @@
 import Joi from 'joi';
-import fs from 'fs';
 // require and configure dotenv, will load vars in .env in PROCESS.ENV
 require('dotenv').config();
 
@@ -27,7 +26,8 @@ const config = {
   port: envVars.PORT,
   sqlDebug: envVars.SQL_DEBUG,
   jwtSecret: envVars.JWT_SECRET,
-  dbUri: envVars.DB_URI
+  dbUri: envVars.DB_URI,
+  mailgun_key: envVars.MAILGUN_KEY
 };
 
 export default config;
