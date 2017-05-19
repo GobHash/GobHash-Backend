@@ -2,18 +2,17 @@ import Sequelize from 'sequelize';
 import config from '../../../config/config';
 
 const sequelize = new Sequelize(config.dbUri, { logging: false });
-
 /**
  * User Schema
  */
 const User = sequelize.define('user', {
   username: {
     type: Sequelize.STRING,
-    field: 'username'
+    field: 'username',
+    unique: 'username'
   },
   email: {
-    type: Sequelize.STRING,
-    unique: 'email'
+    type: Sequelize.STRING
   },
   password: {
     type: Sequelize.STRING

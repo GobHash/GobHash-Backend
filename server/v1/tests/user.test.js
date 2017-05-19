@@ -20,7 +20,6 @@ describe('## User APIs', () => {
         .expect(httpStatus.OK)
         .then((res) => {
           expect(res.body.username).to.equal(user.username);
-          expect(res.body.email).to.equal(user.email);
           user = res.body;
           done();
         })
@@ -35,7 +34,6 @@ describe('## User APIs', () => {
         .expect(httpStatus.OK)
         .then((res) => {
           expect(res.body.username).to.equal(user.username);
-          expect(res.body.email).to.equal(user.email);
           done();
         })
         .catch(done);
@@ -56,13 +54,13 @@ describe('## User APIs', () => {
   describe('# PUT /api/users/:userId', () => {
     it('should update user details', (done) => {
       user.username = 'KK';
+      user.email = 'valid@email.com';
       request(app)
         .put(`/v1/users/${user.id}`)
         .send(user)
         .expect(httpStatus.OK)
         .then((res) => {
           expect(res.body.username).to.equal('KK');
-          expect(res.body.email).to.equal(user.email);
           done();
         })
         .catch(done);
@@ -89,7 +87,6 @@ describe('## User APIs', () => {
         .expect(httpStatus.OK)
         .then((res) => {
           expect(res.body.username).to.equal('KK');
-          expect(res.body.email).to.equal(user.email);
           done();
         })
         .catch(done);

@@ -6,21 +6,22 @@ import User from '../models/user.model';
 /**
  * Load user and append to req.
  */
-// eslint-disable-next-line
-async function load(req, res, next, id)  {
+const load = async (req, res, next, id) => {
   try {
     const user = await User.findOne({ where: { id } });
     req.user = user; // eslint-disable-line no-param-reassign
-  } catch(err) {}
+  } catch (err) {
+    console.log(err) // eslint-disable-line
+  }
 
   return next();
-}
+};
 
 /**
  * Get user
  * @returns {User}
  */
-function get(req, res) {
+const get = (req, res) => {
   if (req.user !== null && req.user !== undefined) {
     return res.json(req.user);
   }
@@ -32,7 +33,7 @@ function get(req, res) {
   return res
     .status(httpStatus.NOT_FOUND)
     .json(errorMessage);
-}
+};
 
 /**
  * Create new user
@@ -41,74 +42,52 @@ function get(req, res) {
  * @property {string} req.body.password - The passwrod of user.
  * @returns {User}
  */
-function create(req, res) {
-  bcrypt.hash(req.body.password, 10, (err, hash) => {
-    User.create({
+const create = async (req, res) => {
+  try {
+    const [hashPassword, hashEmail] = await Promise.all(
+      [
+        bcrypt.hash(req.body.password, 10),
+        bcrypt.hash(req.body.email, 10)
+      ]);
+    const user = await User.create({
       username: req.body.username,
-      email: req.body.email,
-      password: hash
-    })
-    .then((savedUser) => {
-      const modUser = {
-        id: savedUser.id,
-        username: savedUser.username,
-        email: savedUser.email
-      };
-      res.json(modUser);
-    })
-    .catch((e) => {
-      const errorMessage = {
-        name: e.name,
-        message: e.message,
-        errors: e.errors
-      };
-      // send only necesarry error message
-      res.json(errorMessage);
+      email: hashEmail,
+      password: hashPassword
     });
-  });
-}
+    const modUser = {
+      id: user.id,
+      username: user.username
+    };
+    return res.json(modUser);
+  } catch (e) {
+    return res.json(e);
+  }
+};
 
 /**
  * Update existing user
  * @property {string} req.body.username - The username of user.
- * @property {string} req.body.mobileNumber - The mobileNumber of user.
+ * @property {string} req.body.email    - The email of user.
  * @returns {User}
  */
-function update(req, res) {
+const update = async (req, res) => {
   const user = req.user;
-  if (user !== null && user !== undefined) {
+  if (user !== null) {
+    const email = await bcrypt.hash(req.body.email, 10);
     user.username = req.body.username;
-    user.email = req.body.email;
-
-    User.update({
-      username: user.username,
-      email: user.email
-    }, {
-      where: {
-        id: user.id
-      }
-    })
-    .then(res.json(user))
-    .catch((e) => {
-      const errorMessage = {
-        name: e.name,
-        message: e.message,
-        errors: e.errors
-      };
-      // send only necesarry error message
-      return res.json(errorMessage);
-    });
-  } else {
-    const errorMessage = {
-      name: 'UserNotFoundException',
-      message: 'User id does not exist',
-      errors: []
-    };
-    return res
-      .status(httpStatus.NOT_FOUND)
-      .json(errorMessage);
+    user.email = email;
+    await user.save();
+    return res.json(user);
   }
-}
+  const errorMessage = {
+    name: 'UserNotFoundException',
+    message: 'User id does not exist',
+    errors: []
+  };
+  return res
+    .status(httpStatus.NOT_FOUND)
+    .json(errorMessage);
+};
 
 /**
  * Get user list.
@@ -116,30 +95,31 @@ function update(req, res) {
  * @property {number} req.query.limit - Limit number of users to be returned.
  * @returns {User[]}
  */
-function list(req, res) {
+const list = async (req, res) => {
   const { limit = 50, offset = 0 } = req.query;
-  User.findAll({
-    attributes: ['id', 'username', 'email'],
-    limit: parseInt(limit, 10),
-    offset: parseInt(offset, 10)
-  })
-  .then(users => res.json(users))
-  .catch((e) => {
+  try {
+    const users = await User.findAll({
+      attributes: ['id', 'username'],
+      limit: parseInt(limit, 10),
+      offset: parseInt(offset, 10)
+    });
+    return res.json(users);
+  } catch (e) {
     const errorMessage = {
       name: e.name,
       message: e.message,
       errors: e.errors
     };
     // send only necesarry error message
-    res.json(errorMessage);
-  });
-}
+    return res.json(errorMessage);
+  }
+};
 
 /**
  * Delete user.
  * @returns {User}
  */
-async function remove(req, res) {
+const remove = async (req, res) => {
   const user = req.user;
   if (user === null && user === undefined) {
     const errorMessage = {
@@ -153,8 +133,7 @@ async function remove(req, res) {
     await User.destroy({ where: { id: user.id } });
     const modUser = {
       id: user.id,
-      username: user.username,
-      email: user.email
+      username: user.username
     };
     return res.json(modUser);
   } catch (e) {
@@ -166,6 +145,6 @@ async function remove(req, res) {
     // send only necesarry error message
     return res.json(errorMessage);
   }
-}
+};
 
 export default { load, get, create, update, list, remove };
