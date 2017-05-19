@@ -13,6 +13,8 @@ const envVarsSchema = Joi.object({
     .description('JWT Secret required to sign'),
   DB_URI: Joi.string().required()
     .description('SQL DB full uri'),
+  MAILGUN_KEY: Joi.string().required()
+    .description('Mail Gun Secret Key')
 }).unknown()
   .required();
 

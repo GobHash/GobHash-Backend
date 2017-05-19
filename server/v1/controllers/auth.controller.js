@@ -50,13 +50,14 @@ const login = async (req, res) => {
  * @param res
  * @returns {*}
  */
-function getRandomNumber(req, res) {
+const getRandomNumber = async (req, res) => {
   // req.user is assigned by jwt middleware if valid token is provided
-  return res.json({
+  const response = {
     user: req.user,
     num: Math.random() * 100
-  });
-}
+  };
+  return res.json(response);
+};
 
 /**
  * Send Reset Password Token
@@ -64,7 +65,7 @@ function getRandomNumber(req, res) {
  * @param res
  * @returns json response
  */
-async function resetPassword(req, res) {
+const resetPassword = async (req, res) => {
   //  check if users exists in database
   //  req.body.email
   try {
@@ -87,6 +88,6 @@ async function resetPassword(req, res) {
     // user not found
     return res.status(404).json('User not found');
   }
-}
+};
 
 export default { login, getRandomNumber, resetPassword };
