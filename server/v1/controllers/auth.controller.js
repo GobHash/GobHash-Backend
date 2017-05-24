@@ -12,6 +12,12 @@ const errorMessage = {
   errors: []
 };
 
+const unathorizedMesssage = {
+  name: 'UnathorizedException',
+  message: 'Authentication error',
+  errors: [{ email: 'Not matched' }]
+};
+
 /**
  * Returns jwt token if valid username and password is provided
  * @param req
@@ -69,7 +75,11 @@ const resetPassword = async (req, res) => {
   //  check if users exists in database
   //  req.body.email
   try {
-    const user = await User.findOne({ where: { email: req.body.email } });
+    const user = await User.findOne({ where: { username: req.body.username } });
+    const valid = await bcrypt.compare(req.body.email, user.email);
+    if (valid === false) {
+      return res.status(httpStatus.UNAUTHORIZED).json(unathorizedMesssage);
+    }
     //  set reset token and expiration date
     user.resetPasswordToken = crypto.randomBytes(20).toString('hex');
     user.resetPasswordExpiration = Date.now() + 3600000;  // 1 hour from now
@@ -78,12 +88,12 @@ const resetPassword = async (req, res) => {
     const data = {
       from: 'GobHash <me@samples.mailgun.org>',
       to: req.body.email,
-      subject: 'Reset Password Token',
+      subject: 'Reestablecer Contraseña',
       text: resetURL
     };
     //  send email to reset it.
-    email.sendEmail(data);
-    return res.json('Email Send');
+    email.sendEmail(data, { username: user.username });
+    return res.json('Email Sent');
   } catch (e) {
     // user not found
     return res.status(404).json('User not found');

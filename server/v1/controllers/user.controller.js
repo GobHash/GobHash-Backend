@@ -90,6 +90,31 @@ const update = async (req, res) => {
 };
 
 /**
+ * Change User Password
+ * @property {number} req.body.username - Username of User
+ * @property {number} req.body.password - New password
+ * @returns {User[]}
+ */
+const changePassword = async (req, res) => {
+  try {
+    const user = await User.findOne({ where: { username: req.body.username } });
+    const hashPassword = await bcrypt.hash(req.body.password, 10);
+    user.password = hashPassword;
+    await user.save();
+    return res.json('Password changed');
+  } catch (e) {
+    const errorMessage = {
+      name: 'UserNotFoundException',
+      message: 'username does not exist',
+      errors: []
+    };
+    return res
+      .status(httpStatus.NOT_FOUND)
+      .json(errorMessage);
+  }
+};
+
+/**
  * Get user list.
  * @property {number} req.query.skip - Number of users to be skipped.
  * @property {number} req.query.limit - Limit number of users to be returned.
@@ -147,4 +172,4 @@ const remove = async (req, res) => {
   }
 };
 
-export default { load, get, create, update, list, remove };
+export default { load, get, create, update, list, remove, changePassword };

@@ -9,8 +9,9 @@ chai.config.includeStack = true;
 
 describe('## Auth APIs', () => {
   const validUserCredentials = {
-    username: 'pablo',
-    password: '1234'
+    username: 'test',
+    password: '1234',
+    email: 'address@newtonlabs.com.gt'
   };
 
   const invalidUserCredentials = {
@@ -82,6 +83,19 @@ describe('## Auth APIs', () => {
         .expect(httpStatus.OK)
         .then((res) => {
           expect(res.body.num).to.be.a('number');
+          done();
+        })
+        .catch(done);
+    });
+  });
+  describe('# POST /v1/auth/reset', () => {
+    it('Should send reset email', (done) => {
+      request(app)
+        .post('/v1/auth/reset')
+        .send(validUserCredentials)
+        .expect(httpStatus.OK)
+        .then((res) => {
+          expect(res.body).to.equal('Email Sent');
           done();
         })
         .catch(done);
