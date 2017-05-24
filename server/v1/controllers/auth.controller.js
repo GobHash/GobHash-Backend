@@ -92,7 +92,7 @@ const resetPassword = async (req, res) => {
       text: resetURL
     };
     //  send email to reset it.
-    email.sendEmail(data, { username: user.username });
+    email.sendEmail(data, { username: user.username, resetURL });
     return res.json('Email Sent');
   } catch (e) {
     // user not found
