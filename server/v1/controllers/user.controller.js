@@ -104,9 +104,9 @@ const changePassword = async (req, res) => {
     return res.json('Password changed');
   } catch (e) {
     const errorMessage = {
-      name: 'UserNotFoundException',
-      message: 'username does not exist',
-      errors: []
+      name: e.name,
+      message: e.message,
+      errors: e.errors
     };
     return res
       .status(httpStatus.NOT_FOUND)
