@@ -23,7 +23,19 @@ const swaggerDoc = jsyaml.safeLoad(spec);
 
 const app = express();
 
-app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDoc, false));
+const options = {
+  validatorUrl: null,
+  oauth: {
+    clientId: 'your-client-id1',
+    clientSecret: 'your-client-secret-if-required1',
+    realm: 'your-realms1',
+    appName: 'your-app-name1',
+    scopeSeparator: ',',
+    additionalQueryStringParams: {}
+  }
+};
+
+app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDoc, false, options, '.swagger-ui .topbar { background-color: rgb(112, 111, 111); }'));
 
 
 if (config.env === 'development') {

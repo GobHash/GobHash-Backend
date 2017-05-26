@@ -2436,9 +2436,9 @@ glogg@^1.0.0:
   dependencies:
     sparkles "^1.0.0"
 
-gobhash-swagger@^1.0.7:
-  version "1.0.7"
-  resolved "https://registry.yarnpkg.com/gobhash-swagger/-/gobhash-swagger-1.0.7.tgz#62022f739db59a3f9513b71b9adcc7e5e5bbd3bb"
+gobhash-swagger@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/gobhash-swagger/-/gobhash-swagger-2.0.0.tgz#114ff99f842e98ee0e8cdace8b8b123725a157bf"
 
 got@^3.2.0:
   version "3.3.1"
@@ -4302,11 +4302,11 @@ q@^1.1.2:
   version "1.5.0"
   resolved "https://registry.yarnpkg.com/q/-/q-1.5.0.tgz#dd01bac9d06d30e6f219aecb8253ee9ebdc308f1"
 
-qs@6.2.0, qs@^6.1.0, qs@~6.2.0:
+qs@6.2.0, qs@~6.2.0:
   version "6.2.0"
   resolved "https://registry.yarnpkg.com/qs/-/qs-6.2.0.tgz#3b7848c03c2dece69a9522b0fae8c4126d745f3b"
 
-qs@~6.3.0:
+qs@^6.1.0, qs@~6.3.0:
   version "6.3.0"
   resolved "https://registry.yarnpkg.com/qs/-/qs-6.3.0.tgz#f403b264f23bc01228c74131b407f18d5ea5d442"
 
