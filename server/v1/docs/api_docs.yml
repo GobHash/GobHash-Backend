@@ -4,10 +4,12 @@ info:
   description: "GobHash.Inc"
   version: "1.0.0"
   title: "Private API"
-host: "api.uber.com"
+host: "localhost:3000"
 basePath: "/v1"
 schemes:
-- "https"
+- "http"
+consumes:
+  - application/json
 securityDefinitions:
   Bearer:
     type: apiKey
@@ -16,47 +18,41 @@ securityDefinitions:
 produces:
 - "application/json"
 paths:
-  /products:
-    get:
+  /auth/login:
+    post:
       security:
         - Bearer: []
       tags:
-      - "Products"
-      summary: "Product Types"
-      description: "The Products endpoint returns information about the *Uber* products\n\
-        offered at a given location. The response includes the display name\nand other\
-        \ details about each product, and lists the products in the\nproper display\
-        \ order.\n"
-      operationId: "productsGET"
+      - "Auth"
+      summary: "Login user"
+      description: "Login endpoint"
+      operationId: "postLogin"
       parameters:
-      - name: "latitude"
-        in: "query"
-        description: "Latitude component of location."
+      - name: "username"
+        in: "formData"
+        description: "Username."
         required: true
-        type: "number"
-        format: "double"
-      - name: "longitude"
-        in: "query"
-        description: "Longitude component of location."
+        type: "string"
+      - name: "password"
+        in: "formData"
+        description: "Password."
         required: true
-        type: "number"
-        format: "double"
+        type: "string"
       responses:
         200:
-          description: "An array of products"
+          description: "Authorization Token"
           schema:
-            type: "array"
-            items:
-              $ref: "#/definitions/Product"
+            type: "string"
         default:
           description: "Unexpected error"
           schema:
             $ref: "#/definitions/Error"
-      x-swagger-router-controller: "Products"
-  /estimates/price:
+  /auth/random-number:
     get:
+      security:
+        - Bearer: []
       tags:
-      - "Estimates"
+      - "Auth"
       summary: "Price Estimates"
       description: "The Price Estimates endpoint returns an estimated price range\n\
         for each product offered at a given location. The price estimate is\nprovided\
@@ -67,31 +63,6 @@ paths:
         \ its surge_multiplier will be greater than 1, but the price estimate\nalready\
         \ factors in this multiplier.\n"
       operationId: "estimatesPriceGET"
-      parameters:
-      - name: "start_latitude"
-        in: "query"
-        description: "Latitude component of start location."
-        required: true
-        type: "number"
-        format: "double"
-      - name: "start_longitude"
-        in: "query"
-        description: "Longitude component of start location."
-        required: true
-        type: "number"
-        format: "double"
-      - name: "end_latitude"
-        in: "query"
-        description: "Latitude component of end location."
-        required: true
-        type: "number"
-        format: "double"
-      - name: "end_longitude"
-        in: "query"
-        description: "Longitude component of end location."
-        required: true
-        type: "number"
-        format: "double"
       responses:
         200:
           description: "An array of price estimates by product"

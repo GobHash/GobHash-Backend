@@ -93,11 +93,23 @@ const resetPassword = async (req, res) => {
     };
     //  send email to reset it.
     email.sendEmail(data, { username: user.username, resetURL });
-    return res.json('Email Sent');
+    return res.json({ message: 'Email Sent', token: user.resetPasswordToken });
   } catch (e) {
     // user not found
     return res.status(404).json('User not found');
   }
 };
 
-export default { login, getRandomNumber, resetPassword };
+const validateResetToken = async (req, res) => {
+  try {
+    const user = await User.findOne({
+      where: { resetPasswordToken: req.params.token,
+        resetPasswordExpiration: { $gt: Date.now() }
+      }
+    });
+    return res.json(user);
+  } catch (e) {
+    return res.status(httpStatus.NOT_FOUND).json(e);
+  }
+};
+export default { login, getRandomNumber, resetPassword, validateResetToken };

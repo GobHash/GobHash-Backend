@@ -95,7 +95,20 @@ describe('## Auth APIs', () => {
         .send(validUserCredentials)
         .expect(httpStatus.OK)
         .then((res) => {
-          expect(res.body).to.equal('Email Sent');
+          expect(res.body.message).to.equal('Email Sent');
+          validUserCredentials.token = res.body.token;
+          done();
+        })
+        .catch(done);
+    });
+  });
+  describe('# GET /v1/auth/reset/:token', () => {
+    it('Should validate token', (done) => {
+      request(app)
+        .get(`/v1/auth/reset/${validUserCredentials.token}`)
+        .expect(httpStatus.OK)
+        .then((res) => {
+          expect(res.body.username).to.equal(validUserCredentials.username);
           done();
         })
         .catch(done);

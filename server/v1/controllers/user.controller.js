@@ -100,6 +100,8 @@ const changePassword = async (req, res) => {
     const user = await User.findOne({ where: { username: req.body.username } });
     const hashPassword = await bcrypt.hash(req.body.password, 10);
     user.password = hashPassword;
+    user.resetPasswordToken = undefined;
+    user.resetPasswordExpiration = undefined;
     await user.save();
     return res.json('Password changed');
   } catch (e) {
