@@ -40,8 +40,8 @@ addressparser@1.0.1:
   resolved "https://registry.yarnpkg.com/addressparser/-/addressparser-1.0.1.tgz#47afbe1a2a9262191db6838e4fd1d39b40821746"
 
 agent-base@2:
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/agent-base/-/agent-base-2.0.1.tgz#bd8f9e86a8eb221fffa07bd14befd55df142815e"
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/agent-base/-/agent-base-2.1.0.tgz#193455e4347bca6b05847cb81e939bb325446da8"
   dependencies:
     extend "~3.0.0"
     semver "~5.0.1"
@@ -235,27 +235,6 @@ aws4@^1.2.1:
   version "1.5.0"
   resolved "https://registry.yarnpkg.com/aws4/-/aws4-1.5.0.tgz#0a29ffb79c31c9e712eeb087e8e7a64b4a56d755"
 
-babel-cli@6.18.0:
-  version "6.18.0"
-  resolved "https://registry.yarnpkg.com/babel-cli/-/babel-cli-6.18.0.tgz#92117f341add9dead90f6fa7d0a97c0cc08ec186"
-  dependencies:
-    babel-core "^6.18.0"
-    babel-polyfill "^6.16.0"
-    babel-register "^6.18.0"
-    babel-runtime "^6.9.0"
-    commander "^2.8.1"
-    convert-source-map "^1.1.0"
-    fs-readdir-recursive "^1.0.0"
-    glob "^5.0.5"
-    lodash "^4.2.0"
-    output-file-sync "^1.1.0"
-    path-is-absolute "^1.0.0"
-    slash "^1.0.0"
-    source-map "^0.5.0"
-    v8flags "^2.0.10"
-  optionalDependencies:
-    chokidar "^1.0.0"
-
 babel-code-frame@^6.16.0, babel-code-frame@^6.22.0:
   version "6.22.0"
   resolved "https://registry.yarnpkg.com/babel-code-frame/-/babel-code-frame-6.22.0.tgz#027620bee567a88c32561574e7fd0801d33118e4"
@@ -264,7 +243,7 @@ babel-code-frame@^6.16.0, babel-code-frame@^6.22.0:
     esutils "^2.0.2"
     js-tokens "^3.0.0"
 
-babel-core@6.18.0, babel-core@^6.0.2, babel-core@^6.18.0:
+babel-core@6.18.0, babel-core@^6.0.2:
   version "6.18.0"
   resolved "https://registry.yarnpkg.com/babel-core/-/babel-core-6.18.0.tgz#bb5ce9bc0a956e6e94e2f12d597abb3b0b330deb"
   dependencies:
@@ -721,7 +700,7 @@ babel-plugin-transform-strict-mode@^6.22.0:
     babel-runtime "^6.22.0"
     babel-types "^6.22.0"
 
-babel-polyfill@^6.16.0, babel-polyfill@^6.23.0:
+babel-polyfill@^6.23.0:
   version "6.23.0"
   resolved "https://registry.yarnpkg.com/babel-polyfill/-/babel-polyfill-6.23.0.tgz#8364ca62df8eafb830499f699177466c3b03499d"
   dependencies:
@@ -789,7 +768,7 @@ babel-register@^6.18.0, babel-register@^6.22.0:
     mkdirp "^0.5.1"
     source-map-support "^0.4.2"
 
-babel-runtime@^6.18.0, babel-runtime@^6.22.0, babel-runtime@^6.9.0, babel-runtime@^6.9.1:
+babel-runtime@^6.18.0, babel-runtime@^6.22.0, babel-runtime@^6.9.1:
   version "6.22.0"
   resolved "https://registry.yarnpkg.com/babel-runtime/-/babel-runtime-6.22.0.tgz#1cf8b4ac67c77a4ddb0db2ae1f74de52ac4ca611"
   dependencies:
@@ -851,7 +830,7 @@ bcrypt-pbkdf@^1.0.0:
   dependencies:
     tweetnacl "^0.14.3"
 
-bcrypt@^1.0.2:
+bcrypt@1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/bcrypt/-/bcrypt-1.0.2.tgz#d05fc5d223173e0e28ec381c0f00cc25ffaf2736"
   dependencies:
@@ -887,13 +866,13 @@ block-stream@*:
   dependencies:
     inherits "~2.0.0"
 
-bluebird@3.4.6, bluebird@^3.3.4:
-  version "3.4.6"
-  resolved "https://registry.yarnpkg.com/bluebird/-/bluebird-3.4.6.tgz#01da8d821d87813d158967e743d5fe6c62cf8c0f"
-
 bluebird@^3.0.5, bluebird@^3.3.1, bluebird@^3.4.1, bluebird@^3.4.6, bluebird@^3.5.0:
   version "3.5.0"
   resolved "https://registry.yarnpkg.com/bluebird/-/bluebird-3.5.0.tgz#791420d7f551eea2897453a8a77653f96606d67c"
+
+bluebird@^3.3.4:
+  version "3.4.6"
+  resolved "https://registry.yarnpkg.com/bluebird/-/bluebird-3.4.6.tgz#01da8d821d87813d158967e743d5fe6c62cf8c0f"
 
 body-parser@1.17.2:
   version "1.17.2"
@@ -1036,7 +1015,7 @@ chalk@~0.4.0:
     has-color "~0.1.0"
     strip-ansi "~0.1.0"
 
-chokidar@^1.0.0, chokidar@^1.4.3:
+chokidar@^1.4.3:
   version "1.6.1"
   resolved "https://registry.yarnpkg.com/chokidar/-/chokidar-1.6.1.tgz#2f4447ab5e96e50fb3d789fd90d4c72e0e4c70c2"
   dependencies:
@@ -1120,7 +1099,7 @@ code-point-at@^1.0.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/code-point-at/-/code-point-at-1.1.0.tgz#0d070b4d043a5bea33a2f1a40e2edb3d9a4ccf77"
 
-codecov@^2.2.0:
+codecov@2.2.0:
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/codecov/-/codecov-2.2.0.tgz#2d06817ceb8891eca6368836d4fb6bf6cc04ffd1"
   dependencies:
@@ -1142,7 +1121,7 @@ combined-stream@^1.0.5, combined-stream@~1.0.5:
   dependencies:
     delayed-stream "~1.0.0"
 
-commander@2.9.0, commander@^2.5.0, commander@^2.8.1, commander@^2.9.0:
+commander@2.9.0, commander@^2.5.0, commander@^2.9.0:
   version "2.9.0"
   resolved "https://registry.yarnpkg.com/commander/-/commander-2.9.0.tgz#9c99094176e12240cb22d6c5146098400fe0f7d4"
   dependencies:
@@ -1410,9 +1389,9 @@ debug-fabulous@0.0.X:
     lazy-debug-legacy "0.0.X"
     object-assign "4.1.0"
 
-debug@2, debug@2.6.7, debug@2.X, debug@^2.1.1, debug@^2.2.0, debug@~2.6.0:
-  version "2.6.7"
-  resolved "https://registry.yarnpkg.com/debug/-/debug-2.6.7.tgz#92bad1f6d05bbb6bba22cca88bcd0ec894c2861e"
+debug@2, debug@2.6.8, debug@2.X, debug@^2.1.1, debug@^2.2.0, debug@~2.6.0:
+  version "2.6.8"
+  resolved "https://registry.yarnpkg.com/debug/-/debug-2.6.8.tgz#e731531ca2ede27d188222427da17821d68ff4fc"
   dependencies:
     ms "2.0.0"
 
@@ -1422,23 +1401,11 @@ debug@2.2.0, debug@~2.2.0:
   dependencies:
     ms "0.7.1"
 
-debug@2.3.3:
-  version "2.3.3"
-  resolved "https://registry.yarnpkg.com/debug/-/debug-2.3.3.tgz#40c453e67e6e13c901ddec317af8986cda9eff8c"
-  dependencies:
-    ms "0.7.2"
-
-debug@2.6.8:
-  version "2.6.8"
-  resolved "https://registry.yarnpkg.com/debug/-/debug-2.6.8.tgz#e731531ca2ede27d188222427da17821d68ff4fc"
+debug@2.6.7:
+  version "2.6.7"
+  resolved "https://registry.yarnpkg.com/debug/-/debug-2.6.7.tgz#92bad1f6d05bbb6bba22cca88bcd0ec894c2861e"
   dependencies:
     ms "2.0.0"
-
-debug@^2.4.5:
-  version "2.6.0"
-  resolved "https://registry.yarnpkg.com/debug/-/debug-2.6.0.tgz#bc596bcabe7617f11d9fa15361eded5608b8499b"
-  dependencies:
-    ms "0.7.2"
 
 decamelize@^1.0.0, decamelize@^1.1.1:
   version "1.2.0"
@@ -2219,10 +2186,6 @@ fs-extra@^2.0.0:
     graceful-fs "^4.1.2"
     jsonfile "^2.1.0"
 
-fs-readdir-recursive@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/fs-readdir-recursive/-/fs-readdir-recursive-1.0.0.tgz#8cd1745c8b4f8a29c8caec392476921ba195f560"
-
 fs.realpath@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/fs.realpath/-/fs.realpath-1.0.0.tgz#1504ad2523158caa40db4a2787cb01411994ea4f"
@@ -2384,7 +2347,7 @@ glob@^4.3.1:
     minimatch "^2.0.1"
     once "^1.3.0"
 
-glob@^5.0.15, glob@^5.0.5:
+glob@^5.0.15:
   version "5.0.15"
   resolved "https://registry.yarnpkg.com/glob/-/glob-5.0.15.tgz#1bc936b9e02f4a603fcc222ecf7633d30b8b93b1"
   dependencies:
@@ -2466,7 +2429,7 @@ got@^3.2.0:
     read-all-stream "^3.0.0"
     timed-out "^2.0.0"
 
-graceful-fs@4.X, graceful-fs@^4.1.11, graceful-fs@^4.1.2, graceful-fs@^4.1.4, graceful-fs@^4.1.6, graceful-fs@^4.1.9:
+graceful-fs@4.X, graceful-fs@^4.1.11, graceful-fs@^4.1.2, graceful-fs@^4.1.6, graceful-fs@^4.1.9:
   version "4.1.11"
   resolved "https://registry.yarnpkg.com/graceful-fs/-/graceful-fs-4.1.11.tgz#0e8bdfe4d1ddb8854d64e04ea7c00e2a026e5658"
 
@@ -3629,7 +3592,7 @@ mailcomposer@^4.0.2:
     buildmail "4.0.1"
     libmime "3.0.0"
 
-mailgun-js@^0.10.1:
+mailgun-js@0.10.1:
   version "0.10.1"
   resolved "https://registry.yarnpkg.com/mailgun-js/-/mailgun-js-0.10.1.tgz#67f41e8c9cdf8f84c5603c30063f5bccb0704601"
   dependencies:
@@ -3676,14 +3639,14 @@ merge@^1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/merge/-/merge-1.2.0.tgz#7531e39d4949c281a66b8c5a6e0265e8b05894da"
 
-method-override@^2.3.5:
-  version "2.3.7"
-  resolved "https://registry.yarnpkg.com/method-override/-/method-override-2.3.7.tgz#8e1d47ac480fb0cd8777083f11c896901166b2e5"
+method-override@2.3.9:
+  version "2.3.9"
+  resolved "https://registry.yarnpkg.com/method-override/-/method-override-2.3.9.tgz#bd151f2ce34cf01a76ca400ab95c012b102d8f71"
   dependencies:
-    debug "2.3.3"
+    debug "2.6.8"
     methods "~1.1.2"
     parseurl "~1.3.1"
-    vary "~1.1.0"
+    vary "~1.1.1"
 
 methods@1.x, methods@^1.1.1, methods@~1.1.2:
   version "1.1.2"
@@ -3707,7 +3670,7 @@ micromatch@^2.1.5, micromatch@^2.3.7, micromatch@^2.3.8:
     parse-glob "^3.0.4"
     regex-cache "^0.4.2"
 
-"mime-db@>= 1.24.0 < 2", mime-db@~1.26.0:
+"mime-db@>= 1.24.0 < 2":
   version "1.26.0"
   resolved "https://registry.yarnpkg.com/mime-db/-/mime-db-1.26.0.tgz#eaffcd0e4fc6935cf8134da246e2e6c35305adff"
 
@@ -3715,17 +3678,11 @@ mime-db@~1.27.0:
   version "1.27.0"
   resolved "https://registry.yarnpkg.com/mime-db/-/mime-db-1.27.0.tgz#820f572296bbd20ec25ed55e5b5de869e5436eb1"
 
-mime-types@^2.1.10, mime-types@^2.1.11, mime-types@^2.1.12, mime-types@~2.1.15:
+mime-types@^2.1.10, mime-types@^2.1.11, mime-types@^2.1.12, mime-types@~2.1.11, mime-types@~2.1.15, mime-types@~2.1.7:
   version "2.1.15"
   resolved "https://registry.yarnpkg.com/mime-types/-/mime-types-2.1.15.tgz#a4ebf5064094569237b8cf70046776d09fc92aed"
   dependencies:
     mime-db "~1.27.0"
-
-mime-types@~2.1.11, mime-types@~2.1.7:
-  version "2.1.14"
-  resolved "https://registry.yarnpkg.com/mime-types/-/mime-types-2.1.14.tgz#f7ef7d97583fcaf3b7d282b6f8b5679dab1e94ee"
-  dependencies:
-    mime-db "~1.26.0"
 
 mime@1.3.4, mime@^1.3.4:
   version "1.3.4"
@@ -3803,10 +3760,6 @@ morgan@1.8.2:
 ms@0.7.1:
   version "0.7.1"
   resolved "https://registry.yarnpkg.com/ms/-/ms-0.7.1.tgz#9cd13c03adbff25b65effde7ce864ee952017098"
-
-ms@0.7.2:
-  version "0.7.2"
-  resolved "https://registry.yarnpkg.com/ms/-/ms-0.7.2.tgz#ae25cf2512b3885a1d95d7f037868d8431124765"
 
 ms@2.0.0, ms@^2.0.0:
   version "2.0.0"
@@ -4056,14 +4009,6 @@ osenv@^0.1.0:
   dependencies:
     os-homedir "^1.0.0"
     os-tmpdir "^1.0.0"
-
-output-file-sync@^1.1.0:
-  version "1.1.2"
-  resolved "https://registry.yarnpkg.com/output-file-sync/-/output-file-sync-1.1.2.tgz#d0a33eefe61a205facb90092e826598d5245ce76"
-  dependencies:
-    graceful-fs "^4.1.4"
-    mkdirp "^0.5.1"
-    object-assign "^4.1.0"
 
 pac-proxy-agent@1:
   version "1.0.0"
@@ -4878,8 +4823,8 @@ sntp@1.x.x:
     hoek "2.x.x"
 
 socks-proxy-agent@2:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/socks-proxy-agent/-/socks-proxy-agent-2.0.0.tgz#c674842d70410fb28ae1e92e6135a927854bc275"
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/socks-proxy-agent/-/socks-proxy-agent-2.1.0.tgz#ddfb01b5dbea5fc879490ca38a25fe87d3d15912"
   dependencies:
     agent-base "2"
     extend "3"
@@ -5401,7 +5346,7 @@ uuid@^3.0.0:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/uuid/-/uuid-3.0.1.tgz#6544bba2dfda8c1cf17e629a3a305e2bb1fee6c1"
 
-v8flags@^2.0.10, v8flags@^2.0.2:
+v8flags@^2.0.2:
   version "2.0.11"
   resolved "https://registry.yarnpkg.com/v8flags/-/v8flags-2.0.11.tgz#bca8f30f0d6d60612cc2c00641e6962d42ae6881"
   dependencies:
