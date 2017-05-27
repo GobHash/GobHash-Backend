@@ -5,6 +5,9 @@ engines:
       extensions:
       - .es6
       - .js
+    checks:
+      import/extensions:
+        enabled: false
 ratings:
    paths:
    - server/**
