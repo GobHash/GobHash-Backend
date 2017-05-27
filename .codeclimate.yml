@@ -1,6 +1,10 @@
 engines:
   eslint:
     enabled: true
+    config:
+      extensions:
+      - .es6
+      - .js
 ratings:
    paths:
    - server/**
