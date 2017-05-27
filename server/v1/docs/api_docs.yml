@@ -28,16 +28,13 @@ paths:
       description: "Login endpoint"
       operationId: "postLogin"
       parameters:
-      - name: "username"
-        in: "formData"
-        description: "Username."
+      - name: "loginBody"
+        in: "body"
+        description: "Login object"
         required: true
-        type: "string"
-      - name: "password"
-        in: "formData"
-        description: "Password."
-        required: true
-        type: "string"
+        schema:
+          $ref: "#/definitions/Login"
+
       responses:
         200:
           description: "Authorization Token"
@@ -53,230 +50,106 @@ paths:
         - Bearer: []
       tags:
       - "Auth"
-      summary: "Price Estimates"
-      description: "The Price Estimates endpoint returns an estimated price range\n\
-        for each product offered at a given location. The price estimate is\nprovided\
-        \ as a formatted string with the full price range and the localized\ncurrency\
-        \ symbol.<br><br>The response also includes low and high estimates,\nand the\
-        \ [ISO 4217](http://en.wikipedia.org/wiki/ISO_4217) currency code for\nsituations\
-        \ requiring currency conversion. When surge is active for a particular\nproduct,\
-        \ its surge_multiplier will be greater than 1, but the price estimate\nalready\
-        \ factors in this multiplier.\n"
-      operationId: "estimatesPriceGET"
+      summary: "Get random number"
+      description: "Test Protected route"
+      operationId: "authRandomGET"
       responses:
         200:
-          description: "An array of price estimates by product"
+          description: "User Token and Random number"
           schema:
-            type: "array"
-            items:
-              $ref: "#/definitions/PriceEstimate"
+            type: "string"
         default:
           description: "Unexpected error"
           schema:
             $ref: "#/definitions/Error"
-      x-swagger-router-controller: "Estimates"
-  /estimates/time:
+  /auth/reset:
+    post:
+      tags:
+      - "Auth"
+      summary: "Request to reset password"
+      description: "Initial flow to reset a users's password. Sends email to user."
+      operationId: "authResetPOST"
+      parameters:
+      - name: "AuthBody"
+        in: "body"
+        description: "Auth Reset body"
+        required: true
+        schema:
+          $ref: "#/definitions/Auth"
+
+      responses:
+        200:
+          description: "Reset token"
+          schema:
+            type: "object"
+            $ref: "#/definitions/ResetPassword"
+        default:
+          description: "Unexpected error"
+          schema:
+            $ref: "#/definitions/Error"
+  /auth/reset/{token}:
     get:
       tags:
-      - "Estimates"
-      summary: "Time Estimates"
-      description: "The Time Estimates endpoint returns ETAs for all products offered\
-        \ at a given location, with the responses expressed as integers in seconds.\
-        \ We recommend that this endpoint be called every minute to provide the most\
-        \ accurate, up-to-date ETAs."
-      operationId: "estimatesTimeGET"
+      - "Auth"
+      summary: "Validate token in URL"
+      description: "Search for valid valid reset token. Returns user object"
+      operationId: "validateResetPOST"
       parameters:
-      - name: "start_latitude"
-        in: "query"
-        description: "Latitude component of start location."
+      - name: "token"
+        in: "path"
+        description: "Reset password token"
         required: true
-        type: "number"
-        format: "double"
-      - name: "start_longitude"
-        in: "query"
-        description: "Longitude component of start location."
-        required: true
-        type: "number"
-        format: "double"
-      - name: "customer_uuid"
-        in: "query"
-        description: "Unique customer identifier to be used for experience customization."
-        required: false
-        type: "string"
-        format: "uuid"
-      - name: "product_id"
-        in: "query"
-        description: "Unique identifier representing a specific product for a given\
-          \ latitude & longitude."
-        required: false
         type: "string"
       responses:
         200:
-          description: "An array of products"
+          description: "Reset token"
           schema:
-            type: "array"
-            items:
-              $ref: "#/definitions/Product"
+            type: "object"
+            $ref: "#/definitions/User"
         default:
           description: "Unexpected error"
           schema:
             $ref: "#/definitions/Error"
-      x-swagger-router-controller: "Estimates"
-  /me:
-    get:
-      tags:
-      - "User"
-      summary: "User Profile"
-      description: "The User Profile endpoint returns information about the Uber user\
-        \ that has authorized with the application."
-      operationId: "meGET"
-      parameters: []
-      responses:
-        200:
-          description: "Profile information for a user"
-          schema:
-            $ref: "#/definitions/Profile"
-        default:
-          description: "Unexpected error"
-          schema:
-            $ref: "#/definitions/Error"
-      x-swagger-router-controller: "User"
-  /history:
-    get:
-      tags:
-      - "User"
-      summary: "User Activity"
-      description: "The User Activity endpoint returns data about a user's lifetime\
-        \ activity with Uber. The response will include pickup locations and times,\
-        \ dropoff locations and times, the distance of past requests, and information\
-        \ about which products were requested.<br><br>The history array in the response\
-        \ will have a maximum length based on the limit parameter. The response value\
-        \ count may exceed limit, therefore subsequent API requests may be necessary."
-      operationId: "historyGET"
-      parameters:
-      - name: "offset"
-        in: "query"
-        description: "Offset the list of returned results by this amount. Default\
-          \ is zero."
-        required: false
-        type: "integer"
-        format: "int32"
-      - name: "limit"
-        in: "query"
-        description: "Number of items to retrieve. Default is 5, maximum is 100."
-        required: false
-        type: "integer"
-        format: "int32"
-      responses:
-        200:
-          description: "History information for the given user"
-          schema:
-            $ref: "#/definitions/Activities"
-        default:
-          description: "Unexpected error"
-          schema:
-            $ref: "#/definitions/Error"
-      x-swagger-router-controller: "User"
 definitions:
-  Product:
+  Login:
     type: "object"
     properties:
-      product_id:
+      username:
         type: "string"
-        description: "Unique identifier representing a specific product for a given\
-          \ latitude & longitude. For example, uberX in San Francisco will have a\
-          \ different product_id than uberX in Los Angeles."
-      description:
+      password:
         type: "string"
-        description: "Description of product."
-      display_name:
-        type: "string"
-        description: "Display name of product."
-      capacity:
-        type: "string"
-        description: "Capacity of product. For example, 4 people."
-      image:
-        type: "string"
-        description: "Image URL representing the product."
-  PriceEstimate:
+  Auth:
     type: "object"
     properties:
-      product_id:
+      username:
         type: "string"
-        description: "Unique identifier representing a specific product for a given\
-          \ latitude & longitude. For example, uberX in San Francisco will have a\
-          \ different product_id than uberX in Los Angeles"
-      currency_code:
-        type: "string"
-        description: "[ISO 4217](http://en.wikipedia.org/wiki/ISO_4217) currency code."
-      display_name:
-        type: "string"
-        description: "Display name of product."
-      estimate:
-        type: "string"
-        description: "Formatted string of estimate in local currency of the start\
-          \ location. Estimate could be a range, a single number (flat rate) or \"\
-          Metered\" for TAXI."
-      low_estimate:
-        type: "number"
-        description: "Lower bound of the estimated price."
-      high_estimate:
-        type: "number"
-        description: "Upper bound of the estimated price."
-      surge_multiplier:
-        type: "number"
-        description: "Expected surge multiplier. Surge is active if surge_multiplier\
-          \ is greater than 1. Price estimate already factors in the surge multiplier."
-  Profile:
-    type: "object"
-    properties:
-      first_name:
-        type: "string"
-        description: "First name of the Uber user."
-      last_name:
-        type: "string"
-        description: "Last name of the Uber user."
       email:
         type: "string"
-        description: "Email address of the Uber user"
-      picture:
-        type: "string"
-        description: "Image URL of the Uber user."
-      promo_code:
-        type: "string"
-        description: "Promo code of the Uber user."
-  Activity:
+
+  User:
     type: "object"
     properties:
-      uuid:
+      id:
+        type: "integer"
+        format: "int32"
+      username:
         type: "string"
-        description: "Unique identifier for the activity"
-  Activities:
+
+  ResetPassword:
     type: "object"
     properties:
-      offset:
-        type: "integer"
-        format: "int32"
-        description: "Position in pagination."
-      limit:
-        type: "integer"
-        format: "int32"
-        description: "Number of items to retrieve (100 max)."
-      count:
-        type: "integer"
-        format: "int32"
-        description: "Total number of items available."
-      history:
-        type: "array"
-        items:
-          $ref: "#/definitions/Activity"
+      message:
+        type: "string"
+      token:
+        type: "string"
   Error:
     type: "object"
     properties:
-      code:
-        type: "integer"
-        format: "int32"
+      name:
+        type: "string"
       message:
         type: "string"
-      fields:
-        type: "string"
+      errrors:
+        type: "array"
+        items:
+          type: "string"

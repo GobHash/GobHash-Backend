@@ -1389,7 +1389,7 @@ debug-fabulous@0.0.X:
     lazy-debug-legacy "0.0.X"
     object-assign "4.1.0"
 
-debug@2, debug@2.6.8, debug@2.X, debug@^2.1.1, debug@^2.2.0, debug@~2.6.0:
+debug@2, debug@2.6.8, debug@2.X, debug@^2.1.1, debug@^2.2.0:
   version "2.6.8"
   resolved "https://registry.yarnpkg.com/debug/-/debug-2.6.8.tgz#e731531ca2ede27d188222427da17821d68ff4fc"
   dependencies:
@@ -1401,7 +1401,7 @@ debug@2.2.0, debug@~2.2.0:
   dependencies:
     ms "0.7.1"
 
-debug@2.6.7:
+debug@2.6.7, debug@~2.6.0:
   version "2.6.7"
   resolved "https://registry.yarnpkg.com/debug/-/debug-2.6.7.tgz#92bad1f6d05bbb6bba22cca88bcd0ec894c2861e"
   dependencies:

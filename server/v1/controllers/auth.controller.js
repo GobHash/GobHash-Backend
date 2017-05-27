@@ -107,9 +107,10 @@ const validateResetToken = async (req, res) => {
         resetPasswordExpiration: { $gt: Date.now() }
       }
     });
-    return res.json(user);
+    const modUser = { id: user.id, username: user.username };
+    return res.json(modUser);
   } catch (e) {
-    return res.status(httpStatus.NOT_FOUND).json(e);
+    return res.status(httpStatus.NOT_FOUND).json('Not valid token');
   }
 };
 export default { login, getRandomNumber, resetPassword, validateResetToken };
