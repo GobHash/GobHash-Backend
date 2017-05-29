@@ -31,6 +31,6 @@ router.route('/reset')
  * get valid username on valid reset token
  */
 router.route('/reset/:token')
-  .get(authCtrl.validateResetToken);
+  .get(validate(paramValidation.resetToken), authCtrl.validateResetToken);
 
 export default router;

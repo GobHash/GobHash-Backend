@@ -24,7 +24,7 @@ router.route('/:userId')
 
 router.route('/password/change')
   // POST /v1/users/password/change - Change Password
-  .post(userCtrl.changePassword);
+  .post(validate(paramValidation.passwordChange), userCtrl.changePassword);
 
 /** Load user when API with userId route parameter is hit */
 router.param('userId', userCtrl.load);

@@ -1,7 +1,7 @@
 import Joi from 'joi';
 
 export default {
-  // POST /api/users
+  // POST /v1/users
   createUser: {
     body: {
       username: Joi.string().required(),
@@ -10,7 +10,7 @@ export default {
     }
   },
 
-  // UPDATE /api/users/:userId
+  // UPDATE /v1/users/:userId
   updateUser: {
     body: {
       username: Joi.string().required(),
@@ -20,12 +20,24 @@ export default {
       userId: Joi.string().hex().required()
     }
   },
-
-  // POST /api/auth/login
+  // POST /v1/users/password/change
+  passwordChange: {
+    body: {
+      username: Joi.string().required(),
+      password: Joi.string().required()
+    }
+  },
+  // POST /v1/auth/login
   login: {
     body: {
       username: Joi.string().required(),
       password: Joi.string().required()
+    }
+  },
+  // GET /v1/auth/reset/:token
+  resetToken: {
+    params: {
+      token: Joi.string().hex().required()
     }
   }
 };
