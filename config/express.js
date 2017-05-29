@@ -23,21 +23,6 @@ const swaggerDoc = jsyaml.safeLoad(spec);
 
 const app = express();
 
-const options = {
-  validatorUrl: null,
-  oauth: {
-    clientId: 'your-client-id1',
-    clientSecret: 'your-client-secret-if-required1',
-    realm: 'your-realms1',
-    appName: 'your-app-name1',
-    scopeSeparator: ',',
-    additionalQueryStringParams: {}
-  }
-};
-
-app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDoc, false, options, '.swagger-ui .topbar { background-color: rgb(112, 111, 111); }'));
-
-
 if (config.env === 'development') {
   app.use(logger('dev'));
 }
@@ -70,6 +55,9 @@ if (config.env === 'development') {
 // mount all routes on /api path
 app.use('/v1', routes);
 
+// swagger ui config
+app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDoc, false, {}, '.swagger-ui .topbar { background-color: rgb(112, 111, 111); }'));
+
 // if error is not an instanceOf APIError, convert it.
 app.use((err, req, res, next) => {
   if (err instanceof expressValidation.ValidationError) {
@@ -89,6 +77,7 @@ app.use((req, res, next) => {
   const err = new APIError('API not found', httpStatus.NOT_FOUND);
   return next(err);
 });
+
 
 // log error in winston transports except when executing test suite
 if (config.env !== 'test') {

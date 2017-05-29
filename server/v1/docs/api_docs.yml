@@ -64,6 +64,8 @@ paths:
             $ref: "#/definitions/Error"
   /auth/reset:
     post:
+      security:
+        - Bearer: []
       tags:
       - "Auth"
       summary: "Request to reset password"
@@ -89,6 +91,8 @@ paths:
             $ref: "#/definitions/Error"
   /auth/reset/{token}:
     get:
+      security:
+        - Bearer: []
       tags:
       - "Auth"
       summary: "Validate token in URL"
@@ -110,6 +114,165 @@ paths:
           description: "Unexpected error"
           schema:
             $ref: "#/definitions/Error"
+  /users:
+    get:
+      security:
+        - Bearer: []
+      tags:
+      - "User"
+      summary: "Get all users"
+      description: "List all registered users."
+      operationId: "listUsersGET"
+      parameters:
+      - name: "skip"
+        in: "query"
+        description: "Skip users (offset)"
+        required: false
+        type: "number"
+      - name: "limit"
+        in: "query"
+        description: "Limit user list"
+        required: false
+        type: "number"
+      responses:
+        200:
+          description: "User"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/User"
+        default:
+          description: "Unexpected error"
+          schema:
+            $ref: "#/definitions/Error"
+    post:
+      security:
+        - Bearer: []
+      tags:
+      - "User"
+      summary: "Create new user"
+      description: "Create a new user."
+      operationId: "createUserPOST"
+      parameters:
+      - name: "bodyUser"
+        in: "body"
+        required: true
+        schema:
+          $ref: "#/definitions/UserPost"
+      responses:
+        200:
+          description: "User"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/User"
+        default:
+          description: "Unexpected error"
+          schema:
+            $ref: "#/definitions/Error"
+    put:
+      security:
+        - Bearer: []
+      tags:
+      - "User"
+      summary: "Update a user"
+      description: "Update a user's password and email"
+      operationId: "updateUserPUT"
+      parameters:
+      - name: "bodyUser"
+        in: "body"
+        required: true
+        schema:
+          $ref: "#/definitions/UserPut"
+      responses:
+        200:
+          description: "User"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/User"
+        default:
+          description: "Unexpected error"
+          schema:
+            $ref: "#/definitions/Error"
+
+
+  /users/{id}:
+    get:
+      security:
+        - Bearer: []
+      tags:
+      - "User"
+      summary: "Get User by id"
+      description: "Get user by id"
+      operationId: "userGET"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "User id"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "User"
+          schema:
+            type: "object"
+            $ref: "#/definitions/User"
+        default:
+          description: "Unexpected error"
+          schema:
+            $ref: "#/definitions/Error"
+    delete:
+      security:
+        - Bearer: []
+      tags:
+      - "User"
+      summary: "Delete a user"
+      description: "Delete a user by id"
+      operationId: "deleteUser"
+      parameters:
+      - name: "id"
+        in: "path"
+        required: true
+        description: "User's id"
+        type: number
+      responses:
+        200:
+          description: "User"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/User"
+        default:
+          description: "Unexpected error"
+          schema:
+            $ref: "#/definitions/Error"
+  /users/password/change:
+    post:
+      security:
+        - Bearer: []
+      tags:
+      - "User"
+      summary: Change a user's password
+      description: Change user's password and remove reset token
+      operationId: changePasswordPost
+      parameters:
+      - name: "bodyPassword"
+        in: "body"
+        description: "body Password"
+        required: true
+        schema:
+          $ref: "#/definitions/passwordChange"
+      responses:
+        200:
+          description: "Password changed message"
+          schema:
+            type: "string"
+        default:
+          description: "Unexpected error"
+          schema:
+            $ref: "#/definitions/Error"
+
 definitions:
   Login:
     type: "object"
@@ -134,13 +297,35 @@ definitions:
         format: "int32"
       username:
         type: "string"
-
+  UserPost:
+    type: "object"
+    properties:
+      username:
+        type: "string"
+      email:
+        type: "string"
+      password:
+        type: "string"
+  UserPut:
+    type: "object"
+    properties:
+      username:
+        type: "string"
+      email:
+        type: "string"
   ResetPassword:
     type: "object"
     properties:
       message:
         type: "string"
       token:
+        type: "string"
+  passwordChange:
+    type: "object"
+    properties:
+      username:
+        type: "string"
+      password:
         type: "string"
   Error:
     type: "object"

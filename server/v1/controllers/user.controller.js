@@ -23,7 +23,11 @@ const load = async (req, res, next, id) => {
  */
 const get = (req, res) => {
   if (req.user !== null && req.user !== undefined) {
-    return res.json(req.user);
+    const modUser = {
+      id: req.user.id,
+      username: req.user.username
+    };
+    return res.json(modUser);
   }
   const errorMessage = {
     name: 'UserNotFoundException',
