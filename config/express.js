@@ -56,7 +56,7 @@ if (config.env === 'development') {
 app.use('/v1', routes);
 
 // swagger ui config
-app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDoc, false, {}, '.swagger-ui .topbar { background-color: rgb(112, 111, 111); }'));
+app.use('/', swaggerUi.serve, swaggerUi.setup(swaggerDoc, false, {}, '.swagger-ui .topbar { background-color: rgb(112, 111, 111); }'));
 
 // if error is not an instanceOf APIError, convert it.
 app.use((err, req, res, next) => {

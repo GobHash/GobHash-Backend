@@ -6,7 +6,7 @@ import app from '../../../index';
 chai.config.includeStack = true;
 
 describe('## Misc', () => {
-  describe('# GET /api/health-check', () => {
+  describe('# GET /v1/health-check', () => {
     it('should return OK', (done) => {
       request(app)
         .get('/v1/health-check')
@@ -19,10 +19,10 @@ describe('## Misc', () => {
     });
   });
 
-  describe('# GET /api/404', () => {
+  describe('# GET /v1/404', () => {
     it('should return 404 status', (done) => {
       request(app)
-        .get('/api/404')
+        .get('/v1/404')
         .expect(httpStatus.NOT_FOUND)
         .then((res) => {
           expect(res.body.message).to.equal('Not Found');
