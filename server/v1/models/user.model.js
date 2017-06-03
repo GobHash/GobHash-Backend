@@ -2,6 +2,7 @@ import Sequelize from 'sequelize';
 import config from '../../../config/config';
 
 const sequelize = new Sequelize(config.dbUri, { logging: false });
+
 /**
  * User Schema
  */
@@ -15,6 +16,12 @@ const User = sequelize.define('user', {
     type: Sequelize.STRING
   },
   password: {
+    type: Sequelize.STRING
+  },
+  picture: {
+    type: Sequelize.STRING
+  },
+  biography: {
     type: Sequelize.STRING
   },
   resetPasswordToken: {
