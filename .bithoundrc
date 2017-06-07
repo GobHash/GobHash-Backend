@@ -1,7 +1,12 @@
 {
-  "devDependencies": {
+  "dependencies": {
     "mute": [
       "gulp"
+    ],
+    "unused-ignores": [
+      "mysql2",
+      "crypto",
+      "codecov"
     ]
   }
 }
