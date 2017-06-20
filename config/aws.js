@@ -20,7 +20,15 @@ const upload = multer({
     key: (req, file, cb) => {
       cb(null, Date.now().toString());
     }
-  })
+  }),
+  fileFilter(req, file, next) {
+    const isPhoto = file.mimetype.startsWith('image/');
+    if (isPhoto) {
+      next(null, true);
+    } else {
+      next({ message: 'That file type is not supported' }, false);
+    }
+  }
 });
 
 export default upload;
