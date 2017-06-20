@@ -11,7 +11,8 @@
     "yarn": ">=0.20.3"
   },
   "scripts": {
-    "start": "gulp serve",
+    "start": "node dist/index.js",
+    "dev": "gulp serve",
     "start:debug": "cross-env DEBUG=express-mongoose-es6-rest-api:* yarn start",
     "build": "gulp",
     "lint": "esw *.js server config --color",
@@ -21,7 +22,9 @@
     "test:watch": "yarn test -- --watch",
     "test:coverage": "cross-env NODE_ENV=test ./node_modules/.bin/istanbul cover _mocha -- --ui bdd --reporter spec --colors --compilers js:babel-core/register server/v1/tests --recursive && ./node_modules/.bin/codecov -t 32d5fc43-ccba-43a6-9a6b-9ad7058a28e4",
     "test:check-coverage": "yarn test:coverage && istanbul check-coverage",
-    "report-coverage": "coveralls < ./coverage/lcov.info"
+    "report-coverage": "coveralls < ./coverage/lcov.info",
+    "preinstall": "npm install -g gulp",
+    "postinstall": "gulp"
   },
   "repository": {
     "type": "git",
