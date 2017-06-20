@@ -23,7 +23,6 @@
     "test:coverage": "cross-env NODE_ENV=test ./node_modules/.bin/istanbul cover _mocha -- --ui bdd --reporter spec --colors --compilers js:babel-core/register server/v1/tests --recursive && ./node_modules/.bin/codecov -t 32d5fc43-ccba-43a6-9a6b-9ad7058a28e4",
     "test:check-coverage": "yarn test:coverage && istanbul check-coverage",
     "report-coverage": "coveralls < ./coverage/lcov.info",
-    "preinstall": "npm install -g gulp",
     "postinstall": "gulp"
   },
   "repository": {
@@ -45,7 +44,12 @@
   ],
   "dependencies": {
     "aws-sdk": "^2.61.0",
+    "babel-core": "6.24.1",
+    "babel-plugin-add-module-exports": "0.2.1",
     "babel-polyfill": "^6.23.0",
+    "babel-preset-es2015": "6.24.1",
+    "babel-preset-stage-2": "6.24.1",
+    "babel-register": "^6.24.1",
     "bcrypt": "1.0.2",
     "body-parser": "1.17.2",
     "codecov": "2.2.0",
@@ -60,6 +64,8 @@
     "express-validation": "1.0.2",
     "express-winston": "2.4.0",
     "gobhash-swagger": "^2.0.1",
+    "gulp": "3.9.1",
+    "gulp-babel": "6.1.2",
     "handlebars": "^4.0.10",
     "helmet": "3.6.1",
     "http-status": "^1.0.1",
@@ -79,10 +85,6 @@
     "winston": "2.3.1"
   },
   "devDependencies": {
-    "babel-core": "6.24.1",
-    "babel-plugin-add-module-exports": "0.2.1",
-    "babel-preset-es2015": "6.24.1",
-    "babel-preset-stage-2": "6.24.1",
     "chai": "^4.0.1",
     "commitizen": "^2.9.2",
     "coveralls": "^2.11.6",
@@ -93,8 +95,6 @@
     "eslint-config-airbnb-base": "11.2.0",
     "eslint-plugin-import": "2.3.0",
     "eslint-watch": "3.1.0",
-    "gulp": "3.9.1",
-    "gulp-babel": "6.1.2",
     "gulp-load-plugins": "^1.2.0",
     "gulp-newer": "^1.1.0",
     "gulp-nodemon": "^2.0.6",
