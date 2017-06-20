@@ -23,7 +23,8 @@
     "test:coverage": "cross-env NODE_ENV=test ./node_modules/.bin/istanbul cover _mocha -- --ui bdd --reporter spec --colors --compilers js:babel-core/register server/v1/tests --recursive && ./node_modules/.bin/codecov -t 32d5fc43-ccba-43a6-9a6b-9ad7058a28e4",
     "test:check-coverage": "yarn test:coverage && istanbul check-coverage",
     "report-coverage": "coveralls < ./coverage/lcov.info",
-    "postinstall": "gulp"
+    "postinstall": "gulp",
+    "production": "node dist/index.js"
   },
   "repository": {
     "type": "git",
@@ -66,6 +67,7 @@
     "gobhash-swagger": "^2.0.1",
     "gulp": "3.9.1",
     "gulp-babel": "6.1.2",
+    "gulp-load-plugins": "^1.2.0",
     "handlebars": "^4.0.10",
     "helmet": "3.6.1",
     "http-status": "^1.0.1",
@@ -95,7 +97,6 @@
     "eslint-config-airbnb-base": "11.2.0",
     "eslint-plugin-import": "2.3.0",
     "eslint-watch": "3.1.0",
-    "gulp-load-plugins": "^1.2.0",
     "gulp-newer": "^1.1.0",
     "gulp-nodemon": "^2.0.6",
     "gulp-sourcemaps": "^2.6.0",
