@@ -1,6 +1,6 @@
 import crypto from 'crypto';
 import jwt from 'jsonwebtoken';
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcryptjs';
 import httpStatus from 'http-status';
 import User from '../models/user.model';
 import email from '../helpers/email';
