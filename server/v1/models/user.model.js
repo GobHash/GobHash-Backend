@@ -70,7 +70,7 @@ UserSchema.statics = {
   get(id) {
     return this.findById(id)
       .exec()
-      .then((user) => { return user }); // eslint-disable-linr
+      .then((user) => { return user }); // eslint-disable-line
   },
 
   /**
