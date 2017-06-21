@@ -1,4 +1,5 @@
 import request from 'supertest';
+import mongoose from 'mongoose';
 import httpStatus from 'http-status';
 import chai, { expect } from 'chai';
 import app from '../../../index';
@@ -35,7 +36,7 @@ describe('## Misc', () => {
   describe('# Error Handling', () => {
     it('should handle mongoose CastError - Cast to ObjectId failed', (done) => {
       request(app)
-        .get('/v1/users/56z787zzz67fc')
+        .get(`/v1/users/${mongoose.Types.ObjectId()}`)
         .expect(httpStatus.NOT_FOUND)
         .then((res) => {
           expect(res.body.message).to.equal('User id does not exist');
