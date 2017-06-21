@@ -11,7 +11,7 @@
     "yarn": ">=0.20.3"
   },
   "scripts": {
-    "start": "node dist/index.js",
+    "start": "pm2 start dist/index.js -i max --attach",
     "dev": "gulp serve",
     "start:debug": "cross-env DEBUG=express-mongoose-es6-rest-api:* yarn start",
     "build": "gulp",
@@ -23,6 +23,7 @@
     "test:coverage": "cross-env NODE_ENV=test ./node_modules/.bin/istanbul cover _mocha -- --ui bdd --reporter spec --colors --compilers js:babel-core/register server/v1/tests --recursive && ./node_modules/.bin/codecov -t 32d5fc43-ccba-43a6-9a6b-9ad7058a28e4",
     "test:check-coverage": "yarn test:coverage && istanbul check-coverage",
     "report-coverage": "coveralls < ./coverage/lcov.info",
+    "preinstall": "npm install pm2 -g",
     "postinstall": "gulp",
     "production": "node dist/index.js"
   },
