@@ -23,7 +23,6 @@
     "test:coverage": "cross-env NODE_ENV=test ./node_modules/.bin/istanbul cover _mocha -- --ui bdd --reporter spec --colors --compilers js:babel-core/register server/v1/tests --recursive && ./node_modules/.bin/codecov -t 32d5fc43-ccba-43a6-9a6b-9ad7058a28e4",
     "test:check-coverage": "yarn test:coverage && istanbul check-coverage",
     "report-coverage": "coveralls < ./coverage/lcov.info",
-    "preinstall": "npm install pm2 -g",
     "postinstall": "gulp",
     "production": "node dist/index.js"
   },
@@ -87,6 +86,7 @@
     "mysql2": "^1.3.2",
     "passport": "^0.3.2",
     "passport-local": "^1.0.0",
+    "pm2": "^2.5.0",
     "pmx": "^1.2.0",
     "run-sequence": "^1.1.5",
     "sequelize": "^4.0.0",
