@@ -28,7 +28,7 @@ const unathorizedMesssage = {
 const login = async (req, res) => {
   // fetch user from db
   try {
-    const user = await User.findOne({ where: { username: req.body.username } });
+    const user = await User.findOne({ username: req.body.username });
     const valid = await bcrypt.compare(req.body.password, user.password);
     if (valid === true) {
       const token = jwt.sign({
@@ -75,7 +75,7 @@ const resetPassword = async (req, res) => {
   //  check if users exists in database
   //  req.body.email
   try {
-    const user = await User.findOne({ where: { username: req.body.username } });
+    const user = await User.findOne({ username: req.body.username });
     const valid = await bcrypt.compare(req.body.email, user.email);
     if (valid === false) {
       return res.status(httpStatus.UNAUTHORIZED).json(unathorizedMesssage);
@@ -103,12 +103,11 @@ const resetPassword = async (req, res) => {
 const validateResetToken = async (req, res) => {
   try {
     const user = await User.findOne({
-      where: { resetPasswordToken: req.params.token,
-        resetPasswordExpiration: { $gt: Date.now() }
-      }
-    });
-    const modUser = { id: user.id, username: user.username };
-    return res.json(modUser);
+      resetPasswordToken: req.params.token,
+      resetPasswordExpiration: { $gt: Date.now() }
+    })
+    .select('username');
+    return res.json(user);
   } catch (e) {
     return res.status(httpStatus.NOT_FOUND).json('Not valid token');
   }

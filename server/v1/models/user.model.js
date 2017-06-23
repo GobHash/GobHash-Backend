@@ -1,37 +1,95 @@
-import Sequelize from 'sequelize';
-import config from '../../../config/config';
-
-const sequelize = new Sequelize(config.dbUri, { logging: false });
+import mongoose from 'mongoose';
 
 /**
  * User Schema
  */
-const User = sequelize.define('user', {
+const UserSchema = new mongoose.Schema({
   username: {
-    type: Sequelize.STRING,
-    field: 'username',
-    unique: 'username'
-  },
-  email: {
-    type: Sequelize.STRING
+    type: String,
+    required: true,
+    unique: true,
+    lowercase: true,
+    trim: true
   },
   password: {
-    type: Sequelize.STRING
+    type: String,
+    required: true
+  },
+  email: {
+    type: String,
+    required: true
   },
   picture: {
-    type: Sequelize.STRING
+    type: String,
+    trim: true,
+    lowercase: true
   },
   biography: {
-    type: Sequelize.STRING
+    type: String,
+    trim: true,
+    lowercase: true
   },
   resetPasswordToken: {
-    type: Sequelize.STRING
+    type: String
   },
   resetPasswordExpiration: {
-    type: Sequelize.DATE
+    type: Date
+  },
+  updatedAt: {
+    type: Date,
+    default: Date.now
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now
   }
-}, {
-  freezeTableName: true // Model tableName will be the same as the model name
 });
 
-export default User;
+/**
+ * Add your
+ * - pre-save hooks
+ * - validations
+ * - virtuals
+ */
+
+/**
+ * Methods
+ */
+UserSchema.method({
+});
+
+/**
+ * Statics
+ */
+UserSchema.statics = {
+  /**
+   * Get user
+   * @param {ObjectId} id - The objectId of user.
+   * @returns {Promise<User, APIError>}
+   */
+  get(id) {
+    return this.findById(id)
+      .exec()
+      .then((user) => { return user }); // eslint-disable-line
+  },
+
+  /**
+   * List users in descending order of 'createdAt' timestamp.
+   * @param {number} skip - Number of users to be skipped.
+   * @param {number} limit - Limit number of users to be returned.
+   * @returns {Promise<User[]>}
+   */
+  list({ skip = 0, limit = 50 } = {}) {
+    return this.find()
+      .select('username')
+      .sort({ createdAt: -1 })
+      .skip(+skip)
+      .limit(+limit)
+      .exec();
+  }
+};
+
+/**
+ * @typedef User
+ */
+export default mongoose.model('User', UserSchema);
