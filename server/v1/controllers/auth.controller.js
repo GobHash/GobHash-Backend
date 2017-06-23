@@ -8,14 +8,12 @@ import config from '../../../config/config';
 
 const errorMessage = {
   name: 'UserNotFoundException',
-  message: 'Authentication error',
-  errors: []
+  errmsg: 'Authentication error'
 };
 
 const unathorizedMesssage = {
   name: 'UnathorizedException',
-  message: 'Authentication error',
-  errors: [{ email: 'Not matched' }]
+  errmsg: 'Authentication error: email not matched'
 };
 
 /**

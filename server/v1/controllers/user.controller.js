@@ -58,7 +58,7 @@ const create = async (req, res) => {
       id: user.id,
       username: user.username
     };
-    user.save();
+    await user.save();
     return res.json(modUser);
   } catch (e) {
     return res.json(e);

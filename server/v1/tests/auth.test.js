@@ -28,7 +28,7 @@ describe('## Auth APIs', () => {
         .send(invalidUserCredentials)
         .expect(httpStatus.UNAUTHORIZED)
         .then((res) => {
-          expect(res.body.message).to.equal('Authentication error');
+          expect(res.body.errmsg).to.equal('Authentication error');
           done();
         })
         .catch(done);

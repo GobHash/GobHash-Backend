@@ -90,7 +90,7 @@
     "pm2": "^2.5.0",
     "pmx": "^1.2.0",
     "run-sequence": "^1.1.5",
-    "sequelize": "^4.0.0",
+    "sequelize": "^4.2.0",
     "winston": "2.3.1"
   },
   "devDependencies": {

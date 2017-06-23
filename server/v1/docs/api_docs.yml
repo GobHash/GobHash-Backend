@@ -4,7 +4,6 @@ info:
   description: "GobHash.Inc"
   version: "1.0.0"
   title: "Private API"
-host: "localhost:3000"
 basePath: "/v1"
 schemes:
 - "http"
@@ -330,11 +329,13 @@ definitions:
   Error:
     type: "object"
     properties:
-      name:
+      code:
+        type: "integer"
+      index:
+        type: integer
+      errmsg:
         type: "string"
-      message:
-        type: "string"
-      errrors:
+      op:
         type: "array"
         items:
           type: "string"
