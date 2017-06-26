@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
-
+import httpStatus from 'http-status';
+import APIError from '../helpers/APIError';
 /**
  * User Schema
  */
@@ -70,7 +71,13 @@ UserSchema.statics = {
   get(id) {
     return this.findById(id)
       .exec()
-      .then((user) => { return user }); // eslint-disable-line
+      .then((user) => {
+        if (user) {
+          return user;
+        }
+        const err = new APIError('User id does not exist', httpStatus.NOT_FOUND);
+        return Promise.reject(err);
+      });
   },
 
   /**

@@ -10,11 +10,10 @@ const load = async (req, res, next, id) => {
   try {
     const user = await User.get(id);
     req.user = user; // eslint-disable-line no-param-reassign
+    return next();
   } catch (err) {
-    console.log(err) // eslint-disable-line
+    return next(err);
   }
-
-  return next();
 };
 
 /**
@@ -27,8 +26,7 @@ const get = (req, res) => {
   }
   const errorMessage = {
     name: 'UserNotFoundException',
-    message: 'User id does not exist',
-    errors: []
+    message: 'User id does not exist'
   };
   return res
     .status(httpStatus.NOT_FOUND)
@@ -72,8 +70,8 @@ const create = async (req, res) => {
  * @returns {User}
  */
 const update = async (req, res) => {
-  const user = req.user;
-  if (user !== null) {
+  const user = await User.get(req.params.userId);
+  if (user !== null && user !== undefined) {
     const email = await bcrypt.hash(req.body.email, 10);
     user.username = req.body.username;
     user.email = email;
@@ -82,8 +80,7 @@ const update = async (req, res) => {
   }
   const errorMessage = {
     name: 'UserNotFoundException',
-    message: 'User id does not exist',
-    errors: []
+    errmsg: 'User id does not exist'
   };
   return res
     .status(httpStatus.NOT_FOUND)
@@ -106,14 +103,9 @@ const changePassword = async (req, res) => {
     await user.save();
     return res.json('Password changed');
   } catch (e) {
-    const errorMessage = {
-      name: e.name,
-      message: e.message,
-      errors: e.errors
-    };
     return res
       .status(httpStatus.NOT_FOUND)
-      .json(errorMessage);
+      .json(e);
   }
 };
 
@@ -144,7 +136,7 @@ const list = async (req, res) => {
  * @returns {User}
  */
 const remove = async (req, res) => {
-  const user = req.user;
+  const user = await User.get(req.params.userId);
   if (user === null && user === undefined) {
     const errorMessage = {
       name: 'UserNotFoundException',
@@ -160,14 +152,8 @@ const remove = async (req, res) => {
       username: user.username
     };
     return res.json(modUser);
-  } catch (e) {
-    const errorMessage = {
-      name: e.name,
-      message: e.message,
-      errors: e.errors
-    };
-    // send only necesarry error message
-    return res.json(errorMessage);
+  } catch (error) {
+    return res.json(error);
   }
 };
 
