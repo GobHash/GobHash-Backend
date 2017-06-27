@@ -4,6 +4,7 @@ import expressJwt from 'express-jwt';
 import paramValidation from '../../../config/param-validation';
 import userCtrl from '../controllers/user.controller';
 import config from '../../../config/config';
+import upload from '../../../config/aws';
 
 const router = express.Router(); // eslint-disable-line new-cap
 
@@ -42,6 +43,14 @@ router.route('/biography')
     validate(paramValidation.updateBio),
     userCtrl.updateBio
   );
+
+router.route('/picture')
+  /** POST v1/users/picture */
+  .post(
+      expressJwt({ secret: config.jwtSecret }),
+      upload.single('profile'),
+      userCtrl.updatePicture
+    );
 /** Load user when API with userId route parameter is hit */
 router.param('userId', userCtrl.load);
 

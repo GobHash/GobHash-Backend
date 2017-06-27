@@ -2,7 +2,6 @@ import bcrypt from 'bcryptjs';
 import httpStatus from 'http-status';
 import User from '../models/user.model';
 
-
 /**
  * Load user and append to req.
  */
@@ -75,6 +74,7 @@ const update = async (req, res) => {
     const email = await bcrypt.hash(req.body.email, 10);
     user.username = req.body.username;
     user.email = email;
+    user.updatedAt = Date.now();
     await user.save();
     return res.json(user);
   }
@@ -100,6 +100,7 @@ const changePassword = async (req, res) => {
     user.password = hashPassword;
     user.resetPasswordToken = undefined;
     user.resetPasswordExpiration = undefined;
+    user.updatedAt = Date.now();
     await user.save();
     return res.json('Password changed');
   } catch (e) {
@@ -159,12 +160,13 @@ const remove = async (req, res) => {
 
 /**
  * Updates or creates the biography of user.
- * @returns {User}
+ * @returns string
  */
 const updateBio = async (req, res) => {
   try {
     const user = await User.findOne({ username: req.user.username });
     user.biography = req.body.biography;
+    user.updatedAt = Date.now();
     await user.save();
     return res.json('biography updated');
   } catch (e) {
@@ -174,4 +176,37 @@ const updateBio = async (req, res) => {
   }
 };
 
-export default { load, get, create, update, list, remove, changePassword, updateBio };
+/**
+ * Set user's profile picture
+ * @return string
+ */
+const updatePicture = async (req, res) => {
+  try {
+    const user = await User.findOne({ username: req.user.username });
+    user.picture.originalName = req.file.originalname;
+    user.picture.name = req.file.key;
+    user.picture.location = req.file.location;
+    user.updatedAt = Date.now();
+    const savedUser = await user.save();
+    return res.json({
+      username: savedUser.username,
+      biography: savedUser.biography,
+      createdAt: savedUser.createdAt,
+      updatedAt: savedUser.updatedAt,
+      picture: savedUser.picture
+    });
+  } catch (e) {
+    return res.json(e);
+  }
+};
+export default {
+  load,
+  get,
+  create,
+  update,
+  list,
+  remove,
+  changePassword,
+  updateBio,
+  updatePicture
+};

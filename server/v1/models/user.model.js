@@ -21,9 +21,18 @@ const UserSchema = new mongoose.Schema({
     required: true
   },
   picture: {
-    type: String,
-    trim: true,
-    lowercase: true
+    location: {
+      type: String,
+      required: false
+    },
+    name: {
+      type: String,
+      required: false
+    },
+    originalName: {
+      type: String,
+      required: false
+    }
   },
   biography: {
     type: String,
@@ -88,7 +97,7 @@ UserSchema.statics = {
    */
   list({ skip = 0, limit = 50 } = {}) {
     return this.find()
-      .select('username')
+      .select('username biography createdAt updatedAt picture')
       .sort({ createdAt: -1 })
       .skip(+skip)
       .limit(+limit)
