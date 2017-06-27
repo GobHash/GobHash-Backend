@@ -104,6 +104,18 @@ describe('## User APIs', () => {
         .catch(done);
     });
   });
+  describe('# POST /v1/users/picture', () => {
+    it('should set users picture', (done) => {
+      request(app)
+        .post('/v1/users/picture')
+        .set('Authorization', jwtToken)
+        .send(user)
+        .then(() => {
+          done();
+        })
+        .catch(done);
+    });
+  });
 
   describe('# PUT /v1/users/:userId', () => {
     it('should update user details', (done) => {
