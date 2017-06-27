@@ -27,6 +27,13 @@ export default {
       password: Joi.string().required()
     }
   },
+  // POST v1/users/biography
+  updateBio: {
+    body: {
+      username: Joi.string().required(),
+      biography: Joi.string().required()
+    }
+  },
   // POST /v1/auth/login
   login: {
     body: {

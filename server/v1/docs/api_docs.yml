@@ -19,8 +19,6 @@ produces:
 paths:
   /auth/login:
     post:
-      security:
-        - Bearer: []
       tags:
       - "Auth"
       summary: "Login user"
@@ -63,8 +61,6 @@ paths:
             $ref: "#/definitions/Error"
   /auth/reset:
     post:
-      security:
-        - Bearer: []
       tags:
       - "Auth"
       summary: "Request to reset password"
@@ -145,8 +141,6 @@ paths:
           schema:
             $ref: "#/definitions/Error"
     post:
-      security:
-        - Bearer: []
       tags:
       - "User"
       summary: "Create new user"
@@ -271,7 +265,30 @@ paths:
           description: "Unexpected error"
           schema:
             $ref: "#/definitions/Error"
+  /users/biography:
+    post:
+      tags:
+      - "User"
+      summary: "Update or set the user's biography"
+      description: "This will create or update the user's biography."
+      operationId: "userBioPOST"
+      parameters:
+      - name: "UserBody"
+        in: "body"
+        description: "User biography body"
+        required: true
+        schema:
+          $ref: "#/definitions/UserBio"
 
+      responses:
+        200:
+          description: "biography updated"
+          schema:
+            type: "string"
+        default:
+          description: "Unexpected error"
+          schema:
+            $ref: "#/definitions/Error"
 definitions:
   Login:
     type: "object"
@@ -319,6 +336,13 @@ definitions:
         type: "string"
       token:
         type: "string"
+  UserBio:
+    type: "object"
+    properties:
+      username:
+        type: string
+      biography:
+        type: string
   passwordChange:
     type: "object"
     properties:

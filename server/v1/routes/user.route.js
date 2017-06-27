@@ -35,6 +35,13 @@ router.route('/password/change')
     validate(paramValidation.passwordChange),
     userCtrl.changePassword);
 
+router.route('/biography')
+  /** POST v1/users/biography */
+  .post(
+    expressJwt({ secret: config.jwtSecret }),
+    validate(paramValidation.updateBio),
+    userCtrl.updateBio
+  );
 /** Load user when API with userId route parameter is hit */
 router.param('userId', userCtrl.load);
 

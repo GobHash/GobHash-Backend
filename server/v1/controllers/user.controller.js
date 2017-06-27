@@ -157,4 +157,21 @@ const remove = async (req, res) => {
   }
 };
 
-export default { load, get, create, update, list, remove, changePassword };
+/**
+ * Updates or creates the biography of user.
+ * @returns {User}
+ */
+const updateBio = async (req, res) => {
+  try {
+    const user = await User.findOne({ username: req.user.username });
+    user.biography = req.body.biography;
+    await user.save();
+    return res.json('biography updated');
+  } catch (e) {
+    return res
+      .status(httpStatus.NOT_FOUND)
+      .json(e);
+  }
+};
+
+export default { load, get, create, update, list, remove, changePassword, updateBio };

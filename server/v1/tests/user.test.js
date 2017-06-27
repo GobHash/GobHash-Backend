@@ -90,6 +90,20 @@ describe('## User APIs', () => {
         .catch(done);
     });
   });
+  describe('# POST /v1/users/biography', () => {
+    it('should set users biography', (done) => {
+      user.biography = 'test';
+      request(app)
+        .post('/v1/users/biography')
+        .set('Authorization', jwtToken)
+        .send(user)
+        .then((res) => {
+          expect(res.body).to.equal('biography updated');
+          done();
+        })
+        .catch(done);
+    });
+  });
 
   describe('# PUT /v1/users/:userId', () => {
     it('should update user details', (done) => {
