@@ -39,6 +39,14 @@ const UserSchema = new mongoose.Schema({
     trim: true,
     lowercase: true
   },
+  following: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User'
+  }],
+  followers: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User'
+  }],
   resetPasswordToken: {
     type: String
   },
@@ -79,6 +87,8 @@ UserSchema.statics = {
    */
   get(id) {
     return this.findById(id)
+      .select('username biography createdAt updatedAt picture followers following')
+      .populate('followers following', 'username biography picture')
       .exec()
       .then((user) => {
         if (user) {
@@ -97,7 +107,8 @@ UserSchema.statics = {
    */
   list({ skip = 0, limit = 50 } = {}) {
     return this.find()
-      .select('username biography createdAt updatedAt picture')
+      .select('username biography createdAt updatedAt picture followers following')
+      .populate('followers following', 'username biography picture')
       .sort({ createdAt: -1 })
       .skip(+skip)
       .limit(+limit)

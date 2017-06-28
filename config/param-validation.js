@@ -34,6 +34,12 @@ export default {
       biography: Joi.string().required()
     }
   },
+  // POST v1/users/follow
+  followUser: {
+    body: {
+      username: Joi.string().required()
+    }
+  },
   // POST /v1/auth/login
   login: {
     body: {

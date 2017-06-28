@@ -51,6 +51,20 @@ router.route('/picture')
       upload.single('profile'),
       userCtrl.updatePicture
     );
+router.route('/follow')
+  /** POST v1/users/follow */
+  .post(
+    expressJwt({ secret: config.jwtSecret }),
+    validate(paramValidation.followUser),
+    userCtrl.followUser
+  );
+router.route('/unfollow')
+  /** POST v1/users/unfollow */
+  .post(
+    expressJwt({ secret: config.jwtSecret }),
+    validate(paramValidation.followUser),
+    userCtrl.unfollowUser
+  );
 /** Load user when API with userId route parameter is hit */
 router.param('userId', userCtrl.load);
 

@@ -46,8 +46,9 @@ const create = async (req, res) => {
         bcrypt.hash(req.body.password, 10),
         bcrypt.hash(req.body.email, 10)
       ]);
+    const username = req.body.username;
     const user = await new User({
-      username: req.body.username,
+      username,
       email: hashEmail,
       password: hashPassword
     });
@@ -199,6 +200,55 @@ const updatePicture = async (req, res) => {
     return res.json(e);
   }
 };
+
+/**
+ * Follow another user
+ * @return {String}operation status
+ */
+const followUser = async (req, res) => {
+  try {
+    const actualUserPromise = User.findOne({ username: req.user.username });
+    const followUserPromise = User.findOne({ username: req.body.username });
+    const [actual, follow] = await Promise.all([actualUserPromise, followUserPromise]);
+    // validate user
+    if (actual.username !== follow.username) {
+      follow.followers.push(actual);
+      actual.following.push(follow);
+      await Promise.all([follow.save(), actual.save()]);
+      return res.json({
+        message: `${actual.username} followed ${follow.username}`
+      });
+    }
+    return res
+      .status(httpStatus.INTERNAL_SERVER_ERROR)
+      .json('bad operation');
+  } catch (e) {
+    return res.json(e);
+  }
+};
+
+const unfollowUser = async (req, res) => {
+  try {
+    const actualUserPromise = User.findOne({ username: req.user.username });
+    const followUserPromise = User.findOne({ username: req.body.username });
+    const [actual, follow] = await Promise.all([actualUserPromise, followUserPromise]);
+    // validate user
+    if (actual.username !== follow.username) {
+      follow.followers.pull(actual);
+      actual.following.pull(follow);
+      await Promise.all([follow.save(), actual.save()]);
+      return res.json({
+        message: `${actual.username} unfollowed ${follow.username}`
+      });
+    }
+    return res
+      .status(httpStatus.INTERNAL_SERVER_ERROR)
+      .json('bad operation');
+  } catch (e) {
+    return res.json(e);
+  }
+};
+
 export default {
   load,
   get,
@@ -208,5 +258,7 @@ export default {
   remove,
   changePassword,
   updateBio,
-  updatePicture
+  updatePicture,
+  followUser,
+  unfollowUser
 };

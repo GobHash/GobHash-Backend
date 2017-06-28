@@ -10,13 +10,18 @@ chai.config.includeStack = true;
 describe('## User APIs', () => {
   let user = {
     username: 'kk123',
-    email: 'test@test.com',
-    password: '1234'
+    password: '1234',
+    email: 'address@newtonlabs.com.gt'
+  };
+  const validJwtCredentials = {
+    username: 'kk123',
+    password: '1234',
+    email: 'address@newtonlabs.com.gt'
   };
   const validUserCredentials = {
-    username: 'kk123',
-    email: 'test@test.com',
+    username: 'test',
     password: '1234',
+    email: 'address@newtonlabs.com.gt'
   };
   let jwtToken;
 
@@ -37,13 +42,13 @@ describe('## User APIs', () => {
     it('should get valid JWT token', (done) => {
       request(app)
         .post('/v1/auth/login')
-        .send(validUserCredentials)
+        .send(validJwtCredentials)
         .expect(httpStatus.OK)
         .then((res) => {
           expect(res.body).to.have.property('token');
           jwt.verify(res.body.token, config.jwtSecret, (err, decoded) => {
             expect(err).to.not.be.ok; // eslint-disable-line no-unused-expressions
-            expect(decoded.username).to.equal(validUserCredentials.username);
+            expect(decoded.username).to.equal(validJwtCredentials.username);
             jwtToken = `Bearer ${res.body.token}`;
             done();
           });
@@ -117,6 +122,36 @@ describe('## User APIs', () => {
     });
   });
 
+  describe('# POST /v1/users/follow', () => {
+    it('should follow a user', (done) => {
+      request(app)
+        .post('/v1/users/follow')
+        .set('Authorization', jwtToken)
+        .send(validUserCredentials)
+        .then((res) => {
+          expect(res.body.message)
+            .to
+            .equal(`${user.username} followed ${validUserCredentials.username}`);
+          done();
+        })
+        .catch(done);
+    });
+  });
+  describe('# POST /v1/users/unfollow', () => {
+    it('should unfollow a user', (done) => {
+      request(app)
+        .post('/v1/users/unfollow')
+        .set('Authorization', jwtToken)
+        .send(validUserCredentials)
+        .then((res) => {
+          expect(res.body.message)
+            .to
+            .equal(`${user.username} unfollowed ${validUserCredentials.username}`);
+          done();
+        })
+        .catch(done);
+    });
+  });
   describe('# PUT /v1/users/:userId', () => {
     it('should update user details', (done) => {
       user.username = 'kk';
