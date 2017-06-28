@@ -310,6 +310,48 @@ paths:
           description: "Unexpected error"
           schema:
             $ref: "#/definitions/Error"
+  /users/follow:
+    post:
+      tags:
+      - "User"
+      summary: Follow a user.
+      parameters:
+      - name: "FollowBody"
+        in: "body"
+        description: "Follow another user"
+        required: true
+        schema:
+          $ref: "#/definitions/UserFollow"
+      responses:
+        200:
+          description: "user followed user"
+          schema:
+            type: "string"
+        default:
+          description: "Unexpected error"
+          schema:
+            $ref: "#/definitions/Error"
+  /users/unfollow:
+    post:
+      tags:
+      - "User"
+      summary: Unfollows a user.
+      parameters:
+      - name: "FollowBody"
+        in: "body"
+        description: "Unfollows another user"
+        required: true
+        schema:
+          $ref: "#/definitions/UserFollow"
+      responses:
+        200:
+          description: "user unfollowed user"
+          schema:
+            type: "string"
+        default:
+          description: "Unexpected error"
+          schema:
+            $ref: "#/definitions/Error"
 definitions:
   Login:
     type: "object"
@@ -364,6 +406,11 @@ definitions:
         type: string
       biography:
         type: string
+  UserFollow:
+    type: "object"
+    properties:
+      username:
+        type: "string"
   passwordChange:
     type: "object"
     properties:
