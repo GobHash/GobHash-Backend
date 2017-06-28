@@ -289,6 +289,27 @@ paths:
           description: "Unexpected error"
           schema:
             $ref: "#/definitions/Error"
+  /users/picture:
+    post:
+      tags:
+      - "User"
+      summary: Uploads a file.
+      consumes:
+       - multipart/form-data
+      parameters:
+       - in: formData
+         name: profile
+         type: file
+         description: The photo to upload.
+      responses:
+        200:
+          description: "biography updated"
+          schema:
+            type: "string"
+        default:
+          description: "Unexpected error"
+          schema:
+            $ref: "#/definitions/Error"
 definitions:
   Login:
     type: "object"

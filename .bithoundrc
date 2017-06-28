@@ -6,7 +6,11 @@
     "unused-ignores": [
       "mysql2",
       "crypto",
-      "codecov"
+      "codecov",
+      "pm2",
+      "babel-core",
+      "babel-register",
+      "passport"
     ]
   }
 }
