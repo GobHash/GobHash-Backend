@@ -28,11 +28,10 @@ const config = {
   port: envVars.PORT,
   sqlDebug: envVars.SQL_DEBUG,
   jwtSecret: envVars.JWT_SECRET,
-  dbUri: envVars.DB_URI,
   mailgun_key: envVars.MAILGUN_KEY,
   s3_key: envVars.AWS_S3_KEY,
   s3_secret: envVars.AWS_S3_SECRET,
-  mongoUri: envVars.MONGO_URI
+  mongoUri: envVars.DB_URI
 };
 
 export default config;
