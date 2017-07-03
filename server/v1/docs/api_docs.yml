@@ -352,6 +352,32 @@ paths:
           description: "Unexpected error"
           schema:
             $ref: "#/definitions/Error"
+  /post/:
+    post:
+      security:
+        - Bearer: []
+      tags:
+      - "Post"
+      summary: Create a new post
+      description: Create a new post
+      operationId: createNewPost
+      parameters:
+      - name: "PostBody"
+        in: "body"
+        description: "body of post"
+        required: true
+        schema:
+          $ref: "#/definitions/PostBody"
+      responses:
+        200:
+          description: "Post created"
+          schema:
+            type: "object"
+            $ref: "#/definitions/PostBody"
+        default:
+          description: "Unexpected error"
+          schema:
+            $ref: "#/definitions/Error"
 definitions:
   Login:
     type: "object"
@@ -418,6 +444,16 @@ definitions:
         type: "string"
       password:
         type: "string"
+  PostBody:
+    type: object
+    properties:
+      layout:
+        type: string
+      title:
+        type: string
+      description:
+        type: string
+
   Error:
     type: "object"
     properties:
