@@ -30,11 +30,12 @@ const login = async (req, res) => {
     const valid = await bcrypt.compare(req.body.password, user.password);
     if (valid === true) {
       const token = jwt.sign({
-        username: user.username
+        username: user.username,
+        id: user.id
       }, config.jwtSecret, {
         expiresIn: '30 days'
       });
-      return res.json({ token, username: user.username });
+      return res.json({ token, username: user.username, id: user.id });
     }
     // password not valid
     return res

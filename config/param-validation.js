@@ -52,5 +52,14 @@ export default {
     params: {
       token: Joi.string().hex().required()
     }
+  },
+  // POST v1/post
+  createPost: {
+    body: {
+      layout: Joi.string().required(),
+      title: Joi.string().required(),
+      description: Joi.string().required(),
+      tags: Joi.array()
+    }
   }
 };
