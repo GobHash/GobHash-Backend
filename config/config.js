@@ -13,6 +13,8 @@ const envVarsSchema = Joi.object({
     .description('JWT Secret required to sign'),
   DB_URI: Joi.string().required()
     .description('SQL DB full uri'),
+  MONGODB_URI: Joi.string().required()
+    .description('Mongo DB URI'),
   MAILGUN_KEY: Joi.string().required()
     .description('Mail Gun Secret Key')
 }).unknown()
@@ -28,10 +30,11 @@ const config = {
   port: envVars.PORT,
   sqlDebug: envVars.SQL_DEBUG,
   jwtSecret: envVars.JWT_SECRET,
+  dbUri: envVars.DB_URI,
   mailgun_key: envVars.MAILGUN_KEY,
   s3_key: envVars.AWS_S3_KEY,
   s3_secret: envVars.AWS_S3_SECRET,
-  mongoUri: envVars.DB_URI
+  mongoUri: envVars.MONGODB_URI
 };
 
 export default config;
