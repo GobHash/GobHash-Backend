@@ -11,7 +11,7 @@
     "yarn": ">=0.20.3"
   },
   "scripts": {
-    "start": "pm2 start dist/index.js -i 4 --attach",
+    "start": "pm2 start dist/index.js -i 4 --attach && pm2 link cnylh3vhw2pxtvf 1r8u14nfdcfribv",
     "dev": "gulp serve",
     "start:debug": "cross-env DEBUG=express-mongoose-es6-rest-api:* yarn start",
     "build": "gulp",
