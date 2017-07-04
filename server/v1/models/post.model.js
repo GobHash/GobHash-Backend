@@ -1,4 +1,6 @@
 import mongoose from 'mongoose';
+import httpStatus from 'http-status';
+import APIError from '../helpers/APIError';
 
 
 /**
@@ -64,11 +66,47 @@ const PostSchema = new mongoose.Schema({
     required: false
   }],
   updatedAt: {
-
+    type: Date
   },
   createdAt: {
     type: Date
   }
 });
 
+
+/**
+ * Statics
+ */
+PostSchema.statics = {
+  /**
+   * Get Post
+   * @param {ObjectId} id - The objectId of user.
+   * @returns {Promise<User, APIError>}
+   */
+  get(id) {
+    return this.findById(id)
+      .exec()
+      .then((user) => {
+        if (user) {
+          return user;
+        }
+        const err = new APIError('Post id does not exist', httpStatus.NOT_FOUND);
+        return Promise.reject(err);
+      });
+  },
+
+  /**
+   * List post in descending order of 'createdAt' timestamp.
+   * @param {number} skip - Number of users to be skipped.
+   * @param {number} limit - Limit number of users to be returned.
+   * @returns {Promise<User[]>}
+   */
+  list({ skip = 0, limit = 50 } = {}) {
+    return this.find()
+      .sort({ createdAt: -1 })
+      .skip(+skip)
+      .limit(+limit)
+      .exec();
+  }
+};
 export default mongoose.model('Post', PostSchema);

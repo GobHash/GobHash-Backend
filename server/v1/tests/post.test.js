@@ -14,7 +14,7 @@ describe('## POSTS APIs', () => {
     email: 'address@newtonlabs.com.gt'
   };
   let jwtToken;
-  const validPost = {
+  let validPost = {
     title: 'test',
     description: 'test',
     layout: 'test',
@@ -54,6 +54,32 @@ describe('## POSTS APIs', () => {
             .to.have.property('description');
           expect(res.body)
             .to.have.property('tags');
+          validPost = res.body;
+          done();
+        })
+        .catch(done);
+    });
+  });
+  describe('# GET /v1/post/', () => {
+    it('should get one post', (done) => {
+      request(app)
+        .get(`/v1/post/${validPost.id}`)
+        .set('Authorization', jwtToken)
+        .expect(httpStatus.OK)
+        .then(() => {
+          done();
+        })
+        .catch(done);
+    });
+  });
+  describe('# GET /v1/post/', () => {
+    it('should get all posts', (done) => {
+      request(app)
+        .get('/v1/post')
+        .set('Authorization', jwtToken)
+        .expect(httpStatus.OK)
+        .then((res) => {
+          expect(res.body).to.be.an('array');
           done();
         })
         .catch(done);

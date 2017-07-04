@@ -378,6 +378,60 @@ paths:
           description: "Unexpected error"
           schema:
             $ref: "#/definitions/Error"
+    get:
+      security:
+        - Bearer: []
+      tags:
+      - "Post"
+      summary: Get list of posts
+      description: Get list of posts
+      operationId: GetPOST
+      parameters:
+      - name: "skip"
+        in: "query"
+        description: "Skip posts (offset)"
+        required: false
+        type: "number"
+      - name: "limit"
+        in: "query"
+        description: "Limit post list"
+        required: false
+        type: "number"
+      responses:
+        200:
+          description: "Post created"
+          schema:
+            type: "object"
+            $ref: "#/definitions/PostEntity"
+        default:
+          description: "Unexpected error"
+          schema:
+            $ref: "#/definitions/Error"
+  /post/{postId}:
+     get:
+      security:
+        - Bearer: []
+      tags:
+      - "Post"
+      summary: Get one post
+      description: Get post by id
+      operationId: GetPOST
+      parameters:
+      - name: "postId"
+        in: "path"
+        description: "Post id"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "Post created"
+          schema:
+            type: "object"
+            $ref: "#/definitions/PostEntity"
+        default:
+          description: "Unexpected error"
+          schema:
+            $ref: "#/definitions/Error"
 definitions:
   Login:
     type: "object"
@@ -453,6 +507,26 @@ definitions:
         type: string
       description:
         type: string
+  PostEntity:
+    type: object
+    properties:
+      id:
+        type: string
+      layout:
+        type: string
+      title:
+        type: string
+      description:
+        type: string
+      comments:
+        type: array
+      likes:
+        type: array
+      pictures:
+        type: array
+      tags:
+        type: array
+
 
   Error:
     type: "object"
