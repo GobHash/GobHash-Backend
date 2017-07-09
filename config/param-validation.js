@@ -61,5 +61,25 @@ export default {
       description: Joi.string().required(),
       tags: Joi.array()
     }
+  },
+  // DELETE v1/post/delete
+  deletePost: {
+    body: {
+      postId: Joi.string().required()
+    }
+  },
+  // POST v1/post/comment
+  addComment: {
+    body: {
+      postId: Joi.string().required(),
+      content: Joi.string().required()
+    }
+  },
+  // DELETE v1/post/comment
+  deleteComment: {
+    body: {
+      postId: Joi.string().required(),
+      commentId: Joi.string().required()
+    }
   }
 };

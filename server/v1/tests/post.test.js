@@ -20,6 +20,7 @@ describe('## POSTS APIs', () => {
     layout: 'test',
     tags: ['1234']
   };
+  let comment = {};
   describe('# POST /api/auth/login', () => {
     it('should get valid JWT token', (done) => {
       request(app)
@@ -80,6 +81,51 @@ describe('## POSTS APIs', () => {
         .expect(httpStatus.OK)
         .then((res) => {
           expect(res.body).to.be.an('array');
+          done();
+        })
+        .catch(done);
+    });
+  });
+  describe('# POST /v1/post/comment', () => {
+    it('add comment to post', (done) => {
+      request(app)
+        .post('/v1/post/comment')
+        .set('Authorization', jwtToken)
+        .send({ content: 'test content', postId: validPost._id })
+        .expect(httpStatus.OK)
+        .then((res) => {
+          comment = res.body;
+          expect(res.body)
+            .to.have.property('content');
+          done();
+        })
+        .catch(done);
+    });
+  });
+  describe('# DELETE /v1/post/comment', () => {
+    it('delete comment from post', (done) => {
+      request(app)
+        .delete('/v1/post/comment')
+        .set('Authorization', jwtToken)
+        .send({ commentId: comment._id, postId: validPost._id })
+        .expect(httpStatus.OK)
+        .then((res) => {
+          expect(res.body)
+            .to.have.property('content');
+          done();
+        })
+        .catch(done);
+    });
+  });
+  describe('# DELETE /v1/post', () => {
+    it('delete post', (done) => {
+      request(app)
+        .delete('/v1/post/')
+        .set('Authorization', jwtToken)
+        .send({ postId: validPost._id })
+        .expect(httpStatus.OK)
+        .then((res) => {
+          expect(res.body._id).to.equal(validPost._id);
           done();
         })
         .catch(done);

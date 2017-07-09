@@ -36,12 +36,69 @@ const get = async (req, res) => {
 const list = async (req, res) => {
   const { limit = 50, skip = 0 } = req.query;
   try {
-    const users = await Post.list({ limit, skip });
-    return res.json(users);
+    const posts = await Post.list({ limit, skip });
+    return res.json(posts);
   } catch (e) {
     return res.json(e);
   }
 };
-// Update
-// Delete
-export default { create, get, list };
+/**
+ * Add comment to post
+ * @property {ObjectId} req.body.postId - Object Id of post
+ * @property {ObjectId} req.body.content - String of comment content
+ * @returns {User[]}
+ */
+const addComment = async (req, res) => {
+  try {
+    // find post
+    const post = await Post.get(req.body.postId);
+    const user = req.user.id;
+    // add comment to post
+    post.comments.push({
+      user,
+      content: req.body.content
+    });
+    await post.save();
+    return res.json(post.comments[post.comments.length - 1]);
+  } catch (e) {
+    return res.json(e);
+  }
+};
+/**
+ * Delete comment from post
+ * @property {ObjectId} req.body.postId - Object Id of post
+ * @property {ObjectId} req.body.commentId - String of comment content
+ * @returns {User[]}
+ */
+const deleteComment = async (req, res) => {
+  try {
+    // find post
+    const post = await Post.get(req.body.postId);
+    // find comment
+    const comment = await post.comments.id(req.body.commentId);
+    // remove from list
+    post.comments.pull(comment);
+    // save changes
+    await post.save();
+    return res.json(comment);
+  } catch (e) {
+    return res.json(e);
+  }
+};
+
+/**
+ * Delete post
+ * @param  {ObjectId} req.body.postId - Object Id of post
+ */
+const remove = async (req, res) => {
+  try {
+    // find post
+    const post = await Post.get(req.body.postId);
+    // delete post
+    await post.remove();
+    return res.json(post);
+  } catch (e) {
+    return res.json(e);
+  }
+};
+export default { create, get, list, addComment, deleteComment, remove };

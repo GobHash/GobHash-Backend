@@ -18,6 +18,11 @@ router.route('/')
     expressJwt({ secret: config.jwtSecret }),
     validate(paramValidation.createPost),
     postCtrl.create
+  )
+  .delete(
+    expressJwt({ secret: config.jwtSecret }),
+    validate(paramValidation.deletePost),
+    postCtrl.remove
   );
 
 router.route('/:postId')
@@ -25,6 +30,19 @@ router.route('/:postId')
   .get(
     expressJwt({ secret: config.jwtSecret }),
     postCtrl.get
+  );
+
+router.route('/comment')
+  /** POST v1/post/ */
+  .post(
+    expressJwt({ secret: config.jwtSecret }),
+    validate(paramValidation.addComment),
+    postCtrl.addComment
+  )
+  .delete(
+    expressJwt({ secret: config.jwtSecret }),
+    validate(paramValidation.deleteComment),
+    postCtrl.deleteComment
   );
 
 export default router;
