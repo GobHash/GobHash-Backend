@@ -407,6 +407,31 @@ paths:
           description: "Unexpected error"
           schema:
             $ref: "#/definitions/Error"
+    delete:
+      security:
+        - Bearer: []
+      tags:
+      - "Post"
+      summary: Deletes a post
+      description: Deletes a post by id
+      operationId: deletePostPOST
+      parameters:
+      - name: "PostDeleteBody"
+        in: "body"
+        description: "body of post"
+        required: true
+        schema:
+          $ref: "#/definitions/PostDeleteBody"
+      responses:
+        200:
+          description: "Post deleted"
+          schema:
+            type: "object"
+            $ref: "#/definitions/PostBody"
+        default:
+          description: "Unexpected error"
+          schema:
+            $ref: "#/definitions/Error"
   /post/{postId}:
      get:
       security:
@@ -422,6 +447,57 @@ paths:
         description: "Post id"
         required: true
         type: "string"
+      responses:
+        200:
+          description: "Post created"
+          schema:
+            type: "object"
+            $ref: "#/definitions/PostEntity"
+        default:
+          description: "Unexpected error"
+          schema:
+            $ref: "#/definitions/Error"
+  /post/comment:
+    post:
+      security:
+        - Bearer: []
+      tags:
+      - "Post"
+      summary: Add comment to post
+      description: Add a new comment to post
+      operationId: commentPOST
+      parameters:
+      - name: "commentPOST"
+        in: "body"
+        description: "body of comment post"
+        required: true
+        schema:
+          $ref: "#/definitions/PostCommentBody"
+      responses:
+        200:
+          description: "Comment created"
+          schema:
+            type: "object"
+            $ref: "#/definitions/PostEntity"
+        default:
+          description: "Unexpected error"
+          schema:
+            $ref: "#/definitions/Error"
+    delete:
+      security:
+        - Bearer: []
+      tags:
+      - "Post"
+      summary: Delete comment from post
+      description: Add a new comment to post
+      operationId: commentDELETE
+      parameters:
+      - name: "commentDELETE"
+        in: "body"
+        description: "body of comment post"
+        required: true
+        schema:
+          $ref: "#/definitions/PostCommentDeleteBody"
       responses:
         200:
           description: "Post created"
@@ -498,6 +574,11 @@ definitions:
         type: "string"
       password:
         type: "string"
+  PostDeleteBody:
+    type: object
+    properties:
+      postId:
+        type: string
   PostBody:
     type: object
     properties:
@@ -506,6 +587,20 @@ definitions:
       title:
         type: string
       description:
+        type: string
+  PostCommentBody:
+    type: object
+    properties:
+      postId:
+        type: string
+      content:
+        type: string
+  PostCommentDeleteBody:
+    type: object
+    properties:
+      postId:
+        type: string
+      commentId:
         type: string
   PostEntity:
     type: object
