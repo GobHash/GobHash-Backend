@@ -44,5 +44,17 @@ router.route('/comment')
     validate(paramValidation.deleteComment),
     postCtrl.deleteComment
   );
+router.route('/like')
+  /** POST v1/like */
+  .post(
+    expressJwt({ secret: config.jwtSecret }),
+    validate(paramValidation.addLike),
+    postCtrl.addLike
+  )
+  .delete(
+    expressJwt({ secret: config.jwtSecret }),
+    validate(paramValidation.addLike),
+    postCtrl.deleteLike
+  );
 
 export default router;

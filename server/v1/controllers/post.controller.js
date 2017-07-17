@@ -101,4 +101,66 @@ const remove = async (req, res) => {
     return res.json(e);
   }
 };
-export default { create, get, list, addComment, deleteComment, remove };
+
+/**
+ * @property {ObjectId} req.body.postId - Object Id of post
+ */
+const addLike = async (req, res) => {
+  try {
+    // find post
+    const post = await Post.get(req.body.postId);
+    const user = req.user.id;
+    const like = post.likes.find((_like) => { // eslint-disable-line
+      return _like.user == user;              // eslint-disable-line
+    });
+
+    if (like) {
+      return res.json({ msgerror: 'Post already liked by user' });
+    }
+    // add comment to post
+    post.likes.push({
+      user
+    });
+    await post.save();
+    return res.json({ likes: post.likes.length });
+  } catch (e) {
+    return res.json(e);
+  }
+};
+
+/**
+ * Delete like
+ * @param  {ObjectId} req.body.postId - Object Id of post
+ */
+const deleteLike = async (req, res) => {
+  try {
+    // find post
+    const post = await Post.get(req.body.postId);
+    // find like
+    const like = post.likes.find((_like) => { // eslint-disable-line
+      return _like.user == req.user.id;       // eslint-disable-line
+    });
+
+    if (!like) {
+      return res.json({ msgerror: 'Post not liked' });
+    }
+    // remove from list
+    post.likes.pull(like);
+    // save changes
+    await post.save();
+    return res.json({ likes: post.likes.length });
+  } catch (e) {
+    return res.json(e);
+  }
+};
+
+export default {
+  create,
+  get,
+  list,
+  addComment,
+  deleteComment,
+  remove,
+  addLike,
+  deleteLike
+};

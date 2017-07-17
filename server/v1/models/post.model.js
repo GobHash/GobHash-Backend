@@ -39,9 +39,11 @@ const PostSchema = new mongoose.Schema({
     }
   }],
   likes: [{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
-    required: false
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+      required: false
+    }
   }],
   pictures: [{
     location: {
@@ -86,9 +88,9 @@ PostSchema.statics = {
   get(id) {
     return this.findById(id)
       .exec()
-      .then((user) => {
-        if (user) {
-          return user;
+      .then((post) => {
+        if (post) {
+          return post;
         }
         const err = new APIError('Post id does not exist', httpStatus.NOT_FOUND);
         return Promise.reject(err);

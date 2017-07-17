@@ -81,5 +81,11 @@ export default {
       postId: Joi.string().required(),
       commentId: Joi.string().required()
     }
+  },
+  // POST v1/post/like
+  addLike: {
+    body: {
+      postId: Joi.string().required()
+    }
   }
 };
