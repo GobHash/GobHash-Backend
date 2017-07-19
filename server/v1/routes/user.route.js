@@ -47,10 +47,10 @@ router.route('/biography')
 router.route('/picture')
   /** POST v1/users/picture */
   .post(
-      expressJwt({ secret: config.jwtSecret }),
-      upload.single('profile'),
-      userCtrl.updatePicture
-    );
+    expressJwt({ secret: config.jwtSecret }),
+    upload.single('profile'),
+    userCtrl.updatePicture
+  );
 router.route('/follow')
   /** POST v1/users/follow */
   .post(

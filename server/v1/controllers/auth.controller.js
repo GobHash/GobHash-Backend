@@ -81,7 +81,7 @@ const resetPassword = async (req, res) => {
     }
     //  set reset token and expiration date
     user.resetPasswordToken = crypto.randomBytes(20).toString('hex');
-    user.resetPasswordExpiration = Date.now() + 3600000;  // 1 hour from now
+    user.resetPasswordExpiration = Date.now() + 3600000; // 1 hour from now
     await user.save();
     const resetURL = `http://${req.headers.host}/account/reset/${user.resetPasswordToken}`;
     const data = {
@@ -104,8 +104,7 @@ const validateResetToken = async (req, res) => {
     const user = await User.findOne({
       resetPasswordToken: req.params.token,
       resetPasswordExpiration: { $gt: Date.now() }
-    })
-    .select('username');
+    }).select('username');
     return res.json(user);
   } catch (e) {
     return res.status(httpStatus.NOT_FOUND).json('Not valid token');

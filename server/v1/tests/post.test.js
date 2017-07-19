@@ -117,6 +117,37 @@ describe('## POSTS APIs', () => {
         .catch(done);
     });
   });
+  describe('# POST /v1/post/like', () => {
+    it('add like to post', (done) => {
+      request(app)
+        .post('/v1/post/like')
+        .set('Authorization', jwtToken)
+        .send({ postId: validPost._id })
+        .expect(httpStatus.OK)
+        .then((res) => {
+          expect(res.body)
+            .to.have.property('likes');
+          done();
+        })
+        .catch(done);
+    });
+  });
+  describe('# DELETE /v1/post/like', () => {
+    it('remove like from post', (done) => {
+      request(app)
+        .delete('/v1/post/like')
+        .set('Authorization', jwtToken)
+        .send({ postId: validPost._id })
+        .expect(httpStatus.OK)
+        .then((res) => {
+          expect(res.body)
+            .to.have.property('likes');
+          done();
+        })
+        .catch(done);
+    });
+  });
+
   describe('# DELETE /v1/post', () => {
     it('delete post', (done) => {
       request(app)

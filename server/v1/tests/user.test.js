@@ -53,7 +53,7 @@ describe('## User APIs', () => {
             done();
           });
         })
-      .catch(done);
+        .catch(done);
     });
   });
 

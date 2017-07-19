@@ -28,7 +28,7 @@ describe('## Misc', () => {
           done();
         });
       })
-    .catch(done);
+      .catch(done);
   });
   describe('# GET /v1/health-check', () => {
     it('should return OK', (done) => {

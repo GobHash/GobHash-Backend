@@ -6,7 +6,7 @@ info:
   title: "Private API"
 basePath: "/v1"
 schemes:
-- "http"
+- "https"
 consumes:
   - application/json
 securityDefinitions:
