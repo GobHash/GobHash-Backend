@@ -41,24 +41,6 @@ paths:
           description: "Unexpected error"
           schema:
             $ref: "#/definitions/Error"
-  /auth/random-number:
-    get:
-      security:
-        - Bearer: []
-      tags:
-      - "Auth"
-      summary: "Get random number"
-      description: "Test Protected route"
-      operationId: "authRandomGET"
-      responses:
-        200:
-          description: "User Token and Random number"
-          schema:
-            type: "string"
-        default:
-          description: "Unexpected error"
-          schema:
-            $ref: "#/definitions/Error"
   /auth/reset:
     post:
       tags:
@@ -140,6 +122,31 @@ paths:
           description: "Unexpected error"
           schema:
             $ref: "#/definitions/Error"
+  /users/{id}:
+    get:
+      security:
+        - Bearer: []
+      tags:
+      - "User"
+      summary: "Get User by id"
+      description: "Get user by id"
+      operationId: "userGET"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "User id"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "User"
+          schema:
+            type: "object"
+            $ref: "#/definitions/User"
+        default:
+          description: "Unexpected error"
+          schema:
+            $ref: "#/definitions/Error"
     post:
       tags:
       - "User"
@@ -190,31 +197,6 @@ paths:
             $ref: "#/definitions/Error"
 
 
-  /users/{id}:
-    get:
-      security:
-        - Bearer: []
-      tags:
-      - "User"
-      summary: "Get User by id"
-      description: "Get user by id"
-      operationId: "userGET"
-      parameters:
-      - name: "id"
-        in: "path"
-        description: "User id"
-        required: true
-        type: "string"
-      responses:
-        200:
-          description: "User"
-          schema:
-            type: "object"
-            $ref: "#/definitions/User"
-        default:
-          description: "Unexpected error"
-          schema:
-            $ref: "#/definitions/Error"
     delete:
       security:
         - Bearer: []
@@ -440,7 +422,7 @@ paths:
       - "Post"
       summary: Get one post
       description: Get post by id
-      operationId: GetPOST
+      operationId: GetPOSTPOST
       parameters:
       - name: "postId"
         in: "path"
@@ -504,6 +486,55 @@ paths:
           schema:
             type: "object"
             $ref: "#/definitions/PostEntity"
+        default:
+          description: "Unexpected error"
+          schema:
+            $ref: "#/definitions/Error"
+  /post/like:
+    post:
+      security:
+        - Bearer: []
+      tags:
+      - "Post"
+      summary: Add like to post
+      description: Add a new like to post
+      operationId: likePOST
+      parameters:
+      - name: "likePOST"
+        in: "body"
+        description: "body of like post"
+        required: true
+        schema:
+          $ref: "#/definitions/LikePostBody"
+      responses:
+        200:
+          description: "Like count"
+          schema:
+            type: "integer"
+        default:
+          description: "Unexpected error"
+          schema:
+            $ref: "#/definitions/Error"
+    delete:
+      security:
+        - Bearer: []
+      tags:
+      - "Post"
+      summary: Remove like from post
+      description: delete like from post
+      operationId: likeDELETE
+      parameters:
+      - name: "likeDELETE"
+        in: "body"
+        description: "body of like post"
+        required: true
+        schema:
+          $ref: "#/definitions/LikePostBody"
+      responses:
+        200:
+          description: "Like count"
+          schema:
+            type: "integer"
         default:
           description: "Unexpected error"
           schema:
@@ -621,6 +652,11 @@ definitions:
         type: array
       tags:
         type: array
+  LikePostBody:
+    type: object
+    properties:
+      postId:
+        type: string
 
 
   Error:
