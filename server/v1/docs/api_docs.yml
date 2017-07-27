@@ -14,8 +14,6 @@ securityDefinitions:
     type: apiKey
     name: Authorization
     in: header
-produces:
-- "application/json"
 paths:
   /auth/login:
     post:
