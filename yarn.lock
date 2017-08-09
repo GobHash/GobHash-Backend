@@ -149,16 +149,16 @@ ansicolors@^0.3.2:
   version "0.3.2"
   resolved "https://registry.yarnpkg.com/ansicolors/-/ansicolors-0.3.2.tgz#665597de86a9ffe3aa9bfbe6cae5c6ea426b4979"
 
-ansicolors@~0.2.1:
-  version "0.2.1"
-  resolved "https://registry.yarnpkg.com/ansicolors/-/ansicolors-0.2.1.tgz#be089599097b74a5c9c4a84a0cdbcdb62bd87aef"
-
 anymatch@^1.3.0:
   version "1.3.0"
   resolved "https://registry.yarnpkg.com/anymatch/-/anymatch-1.3.0.tgz#a3e52fa39168c825ff57b0248126ce5a8ff95507"
   dependencies:
     arrify "^1.0.0"
     micromatch "^2.1.5"
+
+ap@~0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/ap/-/ap-0.2.0.tgz#ae0942600b29912f0d2b14ec60c45e8f330b6110"
 
 append-field@^0.1.0:
   version "0.1.0"
@@ -997,6 +997,10 @@ buffer-shims@~1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/buffer-shims/-/buffer-shims-1.0.0.tgz#9978ce317388c649ad8793028c3477ef044a8b51"
 
+buffer-writer@1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/buffer-writer/-/buffer-writer-1.0.1.tgz#22a936901e3029afcd7547eb4487ceb697a3bf08"
+
 buffer@5.0.6:
   version "5.0.6"
   resolved "https://registry.yarnpkg.com/buffer/-/buffer-5.0.6.tgz#2ea669f7eec0b6eda05b08f8b5ff661b28573588"
@@ -1066,13 +1070,6 @@ camelize@1.0.0:
 capture-stack-trace@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/capture-stack-trace/-/capture-stack-trace-1.0.0.tgz#4a6fa07399c26bba47f0b2496b4d0fb408c5550d"
-
-cardinal@1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/cardinal/-/cardinal-1.0.0.tgz#50e21c1b0aa37729f9377def196b5a9cec932ee9"
-  dependencies:
-    ansicolors "~0.2.1"
-    redeyed "~1.0.0"
 
 caseless@~0.11.0:
   version "0.11.0"
@@ -1691,10 +1688,6 @@ delegates@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/delegates/-/delegates-1.0.0.tgz#84c6e159b81904fdca59a0ef44cd870d31250f9a"
 
-denque@^1.1.1:
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/denque/-/denque-1.1.1.tgz#10229c2b88eec1bd15ff82c5fde356e7beb6db9e"
-
 depd@1.1.0, depd@^1.1.0, depd@~1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/depd/-/depd-1.1.0.tgz#e1bd82c6aab6ced965b97b88b17ed3e528ca18c3"
@@ -2032,10 +2025,6 @@ esprima@3.x.x, esprima@^3.1.1:
 esprima@^2.6.0, esprima@^2.7.1:
   version "2.7.3"
   resolved "https://registry.yarnpkg.com/esprima/-/esprima-2.7.3.tgz#96e3b70d5779f6ad49cd032673d1c312767ba581"
-
-esprima@~3.0.0:
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/esprima/-/esprima-3.0.0.tgz#53cf247acda77313e551c3aa2e73342d3fb4f7d9"
 
 esquery@^1.0.0:
   version "1.0.0"
@@ -2536,6 +2525,10 @@ generate-object-property@^1.1.0:
   resolved "https://registry.yarnpkg.com/generate-object-property/-/generate-object-property-1.2.0.tgz#9c0e1c40308ce804f4783618b937fa88f99d50d0"
   dependencies:
     is-property "^1.0.0"
+
+generic-pool@2.4.3:
+  version "2.4.3"
+  resolved "https://registry.yarnpkg.com/generic-pool/-/generic-pool-2.4.3.tgz#780c36f69dfad05a5a045dd37be7adca11a4f6ff"
 
 generic-pool@^3.1.6:
   version "3.1.7"
@@ -3072,7 +3065,7 @@ iconv-lite@0.4.15:
   version "0.4.15"
   resolved "https://registry.yarnpkg.com/iconv-lite/-/iconv-lite-0.4.15.tgz#fe265a218ac6a57cfe854927e9d04c19825eddeb"
 
-iconv-lite@^0.4.17, iconv-lite@^0.4.18, iconv-lite@^0.4.4:
+iconv-lite@^0.4.17, iconv-lite@^0.4.4:
   version "0.4.18"
   resolved "https://registry.yarnpkg.com/iconv-lite/-/iconv-lite-0.4.18.tgz#23d8656b16aae6742ac29732ea8f0336a4789cf2"
 
@@ -4004,10 +3997,6 @@ log-driver@1.2.5:
   version "1.2.5"
   resolved "https://registry.yarnpkg.com/log-driver/-/log-driver-1.2.5.tgz#7ae4ec257302fd790d557cb10c97100d857b0056"
 
-long@^3.2.0:
-  version "3.2.0"
-  resolved "https://registry.yarnpkg.com/long/-/long-3.2.0.tgz#d821b7138ca1cb581c172990ef14db200b5c474b"
-
 longest@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/longest/-/longest-1.0.1.tgz#30a0b2da38f73770e8294a0d22e6625ed77d0097"
@@ -4022,7 +4011,7 @@ lowercase-keys@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/lowercase-keys/-/lowercase-keys-1.0.0.tgz#4e3366b39e7f5457e35f1324bdf6f88d0bfc7306"
 
-lru-cache@2, lru-cache@2.5.0:
+lru-cache@2:
   version "2.5.0"
   resolved "https://registry.yarnpkg.com/lru-cache/-/lru-cache-2.5.0.tgz#d82388ae9c960becbea0c73bb9eb79b6c6ce9aeb"
 
@@ -4032,7 +4021,7 @@ lru-cache@^3.2.0:
   dependencies:
     pseudomap "^1.0.1"
 
-lru-cache@^4.0.0, lru-cache@^4.0.1, lru-cache@^4.1.1:
+lru-cache@^4.0.0, lru-cache@^4.0.1:
   version "4.1.1"
   resolved "https://registry.yarnpkg.com/lru-cache/-/lru-cache-4.1.1.tgz#622e32e82488b49279114a4f9ecf45e7cd6bba55"
   dependencies:
@@ -4333,29 +4322,6 @@ mute-stream@0.0.7, mute-stream@~0.0.4:
   version "0.0.7"
   resolved "https://registry.yarnpkg.com/mute-stream/-/mute-stream-0.0.7.tgz#3075ce93bc21b8fab43e1bc4da7e8115ed1e7bab"
 
-mysql2@^1.3.2:
-  version "1.3.5"
-  resolved "https://registry.yarnpkg.com/mysql2/-/mysql2-1.3.5.tgz#ae6a099228a3dcb9f9454676076fe9393d70aefe"
-  dependencies:
-    cardinal "1.0.0"
-    denque "^1.1.1"
-    generate-function "^2.0.0"
-    iconv-lite "^0.4.18"
-    long "^3.2.0"
-    lru-cache "^4.1.1"
-    named-placeholders "1.1.1"
-    object-assign "^4.1.1"
-    readable-stream "2.2.11"
-    safe-buffer "^5.0.1"
-    seq-queue "0.0.5"
-    sqlstring "^2.2.0"
-
-named-placeholders@1.1.1:
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/named-placeholders/-/named-placeholders-1.1.1.tgz#3b7a0d26203dd74b3a9df4c9cfb827b2fb907e64"
-  dependencies:
-    lru-cache "2.5.0"
-
 nan@^2.3.0:
   version "2.6.2"
   resolved "https://registry.yarnpkg.com/nan/-/nan-2.6.2.tgz#e4ff34e6c95fdfb5aecc08de6596f43605a7db45"
@@ -4518,7 +4484,7 @@ object-assign@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/object-assign/-/object-assign-3.0.0.tgz#9bedd5ca0897949bca47e7ff408062d549f587f2"
 
-object-assign@^4, object-assign@^4.0.1, object-assign@^4.1.0, object-assign@^4.1.1:
+object-assign@^4, object-assign@^4.0.1, object-assign@^4.1.0:
   version "4.1.1"
   resolved "https://registry.yarnpkg.com/object-assign/-/object-assign-4.1.1.tgz#2109adc7965887cfc05cbbd442cac8bfbb360863"
 
@@ -4701,6 +4667,10 @@ package-json@^2.0.0:
     registry-url "^3.0.3"
     semver "^5.1.0"
 
+packet-reader@0.3.1:
+  version "0.3.1"
+  resolved "https://registry.yarnpkg.com/packet-reader/-/packet-reader-0.3.1.tgz#cd62e60af8d7fea8a705ec4ff990871c46871f27"
+
 pad-right@^0.2.2:
   version "0.2.2"
   resolved "https://registry.yarnpkg.com/pad-right/-/pad-right-0.2.2.tgz#6fbc924045d244f2a2a244503060d3bfc6009774"
@@ -4829,6 +4799,51 @@ performance-now@^0.2.0:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/performance-now/-/performance-now-0.2.0.tgz#33ef30c5c77d4ea21c5a53869d91b56d8f2555e5"
 
+pg-connection-string@0.1.3:
+  version "0.1.3"
+  resolved "https://registry.yarnpkg.com/pg-connection-string/-/pg-connection-string-0.1.3.tgz#da1847b20940e42ee1492beaf65d49d91b245df7"
+
+pg-hstore@^2.3.2:
+  version "2.3.2"
+  resolved "https://registry.yarnpkg.com/pg-hstore/-/pg-hstore-2.3.2.tgz#f7ef053e7b9b892ae986af2f7cbe86432dfcf24f"
+  dependencies:
+    underscore "^1.7.0"
+
+pg-pool@1.*:
+  version "1.8.0"
+  resolved "https://registry.yarnpkg.com/pg-pool/-/pg-pool-1.8.0.tgz#f7ec73824c37a03f076f51bfdf70e340147c4f37"
+  dependencies:
+    generic-pool "2.4.3"
+    object-assign "4.1.0"
+
+pg-types@1.*:
+  version "1.12.0"
+  resolved "https://registry.yarnpkg.com/pg-types/-/pg-types-1.12.0.tgz#8ad3b7b897e3fd463e62de241ad5fc640b4a66f0"
+  dependencies:
+    ap "~0.2.0"
+    postgres-array "~1.0.0"
+    postgres-bytea "~1.0.0"
+    postgres-date "~1.0.0"
+    postgres-interval "^1.1.0"
+
+pg@^6.4.1:
+  version "6.4.1"
+  resolved "https://registry.yarnpkg.com/pg/-/pg-6.4.1.tgz#3eabd8ca056814437c769f17ff7a0c36ac7023c5"
+  dependencies:
+    buffer-writer "1.0.1"
+    packet-reader "0.3.1"
+    pg-connection-string "0.1.3"
+    pg-pool "1.*"
+    pg-types "1.*"
+    pgpass "1.*"
+    semver "4.3.2"
+
+pgpass@1.*:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/pgpass/-/pgpass-1.0.2.tgz#2a7bb41b6065b67907e91da1b07c1847c877b306"
+  dependencies:
+    split "^1.0.0"
+
 pidusage@^1.1.0:
   version "1.1.5"
   resolved "https://registry.yarnpkg.com/pidusage/-/pidusage-1.1.5.tgz#b8c8d32bdfaf36212ca9e741028876ea33217e66"
@@ -4935,6 +4950,24 @@ pmx@^1.2.0:
     debug "^2.6"
     json-stringify-safe "^5.0"
     vxx "^1.2.0"
+
+postgres-array@~1.0.0:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/postgres-array/-/postgres-array-1.0.2.tgz#8e0b32eb03bf77a5c0a7851e0441c169a256a238"
+
+postgres-bytea@~1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/postgres-bytea/-/postgres-bytea-1.0.0.tgz#027b533c0aa890e26d172d47cf9ccecc521acd35"
+
+postgres-date@~1.0.0:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/postgres-date/-/postgres-date-1.0.3.tgz#e2d89702efdb258ff9d9cee0fe91bd06975257a8"
+
+postgres-interval@^1.1.0:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/postgres-interval/-/postgres-interval-1.1.1.tgz#acdb0f897b4b1c6e496d9d4e0a853e1c428f06f0"
+  dependencies:
+    xtend "^4.0.0"
 
 prelude-ls@~1.1.2:
   version "1.1.2"
@@ -5116,7 +5149,7 @@ readable-stream@1.1.x, readable-stream@~1.1.9:
     isarray "0.0.1"
     string_decoder "~0.10.x"
 
-readable-stream@2, readable-stream@2.2.11, readable-stream@^2.0.0, readable-stream@^2.0.2, readable-stream@^2.0.5, readable-stream@^2.0.6, readable-stream@^2.1.4, readable-stream@^2.1.5, readable-stream@^2.2.2:
+readable-stream@2, readable-stream@^2.0.0, readable-stream@^2.0.2, readable-stream@^2.0.5, readable-stream@^2.0.6, readable-stream@^2.1.4, readable-stream@^2.1.5, readable-stream@^2.2.2:
   version "2.2.11"
   resolved "https://registry.yarnpkg.com/readable-stream/-/readable-stream-2.2.11.tgz#0796b31f8d7688007ff0b93a8088d34aa17c0f72"
   dependencies:
@@ -5167,12 +5200,6 @@ rechoir@^0.6.2:
 redefine@^0.2.0:
   version "0.2.1"
   resolved "https://registry.yarnpkg.com/redefine/-/redefine-0.2.1.tgz#e89ee7a6f24d19fff62590569332dc60380a89a3"
-
-redeyed@~1.0.0:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/redeyed/-/redeyed-1.0.1.tgz#e96c193b40c0816b00aec842698e61185e55498a"
-  dependencies:
-    esprima "~3.0.0"
 
 referrer-policy@1.1.0:
   version "1.1.0"
@@ -5458,6 +5485,10 @@ semver-regex@1.0.0:
   version "5.3.0"
   resolved "https://registry.yarnpkg.com/semver/-/semver-5.3.0.tgz#9b2ce5d3de02d17c6012ad326aa6b4d0cf54f94f"
 
+semver@4.3.2:
+  version "4.3.2"
+  resolved "https://registry.yarnpkg.com/semver/-/semver-4.3.2.tgz#c7a07158a80bedd052355b770d82d6640f803be7"
+
 semver@^4.1.0:
   version "4.3.6"
   resolved "https://registry.yarnpkg.com/semver/-/semver-4.3.6.tgz#300bc6e0e86374f7ba61068b5b1ecd57fc6532da"
@@ -5483,10 +5514,6 @@ send@0.15.3:
     on-finished "~2.3.0"
     range-parser "~1.2.0"
     statuses "~1.3.1"
-
-seq-queue@0.0.5:
-  version "0.0.5"
-  resolved "https://registry.yarnpkg.com/seq-queue/-/seq-queue-0.0.5.tgz#d56812e1c017a6e4e7c3e3a37a1da6d78dd3c93e"
 
 sequelize-cli@^2.7.0:
   version "2.7.0"
@@ -5858,6 +5885,12 @@ split@0.3:
   dependencies:
     through "2"
 
+split@^1.0.0:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/split/-/split-1.0.1.tgz#605bd9be303aa59fb35f9229fbea0ddec9ea07d9"
+  dependencies:
+    through "2"
+
 sprintf-js@1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/sprintf-js/-/sprintf-js-1.1.1.tgz#36be78320afe5801f6cea3ee78b6e5aab940ea0c"
@@ -5865,10 +5898,6 @@ sprintf-js@1.1.1:
 sprintf-js@~1.0.2:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/sprintf-js/-/sprintf-js-1.0.3.tgz#04e6926f662895354f3dd015203633b857297e2c"
-
-sqlstring@^2.2.0:
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/sqlstring/-/sqlstring-2.2.0.tgz#c3135c4ea8abcd7e7ee741a4966a891d86a4f191"
 
 sshpk@^1.7.0:
   version "1.13.1"
@@ -6265,6 +6294,10 @@ unc-path-regex@^0.1.0:
 undefsafe@0.0.3:
   version "0.0.3"
   resolved "https://registry.yarnpkg.com/undefsafe/-/undefsafe-0.0.3.tgz#ecca3a03e56b9af17385baac812ac83b994a962f"
+
+underscore@^1.7.0:
+  version "1.8.3"
+  resolved "https://registry.yarnpkg.com/underscore/-/underscore-1.8.3.tgz#4f3fb53b106e6097fcf9cb4109f2a5e9bdfa5022"
 
 unicons@0.0.3:
   version "0.0.3"

@@ -2,6 +2,7 @@
 import polyfill from 'babel-polyfill'; // eslint-disable-line
 import mongoose from 'mongoose';
 import pmx from 'pmx';                 // eslint-disable-line
+import Sequelize from 'sequelize';
 pmx.init({ http: true }); // eslint-disable-line enable http keymetris
 import config from './config/config';  // eslint-disable-line
 import app from './config/express';    // eslint-disable-line
@@ -15,7 +16,16 @@ mongoose.Promise = global.Promise; // Tell mongoose to use es6 promises
 mongoose.connection.on('error', () => {
   throw new Error(`unable to connect to database: ${config.mongoUri}`);
 });
-
+// Or you can simply use a connection uri
+const sequelize = new Sequelize(config.dbUri);
+sequelize
+.authenticate()
+.then(() => {
+  console.log('Connection has been established successfully.');
+})
+.catch(err => {
+  console.error('Unable to connect to the database:', err);
+});
 // module.parent check is required to support mocha watch
 // src: https://github.com/mochajs/mocha/issues/1912
 if (!module.parent) {

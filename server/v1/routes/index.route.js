@@ -2,6 +2,7 @@ import express from 'express';
 import userRoutes from './user.route';
 import authRoutes from './auth.route';
 import postRoutes from './post.route';
+import entityRoutes from './entity.route';
 
 const router = express.Router(); // eslint-disable-line new-cap
 
@@ -18,5 +19,8 @@ router.use('/auth', authRoutes);
 
 // mount post routes at /post
 router.use('/post', postRoutes);
+
+// mount post routes at /entity
+router.use('/entity', entityRoutes);
 
 export default router;
