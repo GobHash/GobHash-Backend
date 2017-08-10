@@ -36,10 +36,10 @@ describe('## Search APIs', () => {
     });
   });
 
-  describe('# GET /v1/search', () => {
+  describe('# GET /v1/search/users', () => {
     it('should find user by username', (done) => {
       request(app)
-        .get('/v1/search')
+        .get('/v1/search/users')
         .set('Authorization', jwtToken)
         .query({ username: validUserCredentials.username, name: validUserCredentials.name })
         .expect(httpStatus.OK)
@@ -50,10 +50,10 @@ describe('## Search APIs', () => {
     });
   });
 
-  describe('# GET /v1/search', () => {
+  describe('# GET /v1/search/users', () => {
     it('should find user by name', (done) => {
       request(app)
-        .get('/v1/search')
+        .get('/v1/search/users')
         .set('Authorization', jwtToken)
         .query({ username: 'notFound', name: validUserCredentials.name })
         .expect(httpStatus.OK)
@@ -64,10 +64,10 @@ describe('## Search APIs', () => {
     });
   });
 
-  describe('# GET /v1/search', () => {
+  describe('# GET /v1/search/users', () => {
     it('should not find user', (done) => {
       request(app)
-        .get('/v1/search')
+        .get('/v1/search/users')
         .set('Authorization', jwtToken)
         .query({ username: 'notFound', name: 'notFound' })
         .expect(httpStatus.NOT_FOUND)

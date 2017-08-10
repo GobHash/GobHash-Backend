@@ -7,8 +7,8 @@ const router = express.Router(); // eslint-disable-line new-cap
 
 export default router;
 
-router.route('/')
-  /** GET /v1/search - Get list of posts */
+router.route('/users')
+  /** GET /v1/search/users - Search for users */
   .get(
     expressJwt({ secret: config.jwtSecret }),
     searchCtrl.searchUser

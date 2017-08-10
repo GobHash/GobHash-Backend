@@ -537,6 +537,37 @@ paths:
           description: "Unexpected error"
           schema:
             $ref: "#/definitions/Error"
+  /search/users:
+    get:
+      security:
+        - Bearer: []
+      tags:
+      - "Search"
+      summary: "Find users"
+      description: "Find users by username or name."
+      operationId: "findUsersGET"
+      parameters:
+      - name: "username"
+        in: "query"
+        description: "username of user"
+        required: false
+        type: "string"
+      - name: "name"
+        in: "query"
+        description: "name of user"
+        required: false
+        type: "string"
+      responses:
+        200:
+          description: "User"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/User"
+        default:
+          description: "Unexpected error"
+          schema:
+            $ref: "#/definitions/Error"
 definitions:
   Login:
     type: "object"
