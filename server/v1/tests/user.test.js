@@ -9,16 +9,19 @@ chai.config.includeStack = true;
 
 describe('## User APIs', () => {
   let user = {
+    name: 'nameT',
     username: 'kk123',
     password: '1234',
     email: 'address@newtonlabs.com.gt'
   };
   const validJwtCredentials = {
+    name: 'nameT',
     username: 'kk123',
     password: '1234',
     email: 'address@newtonlabs.com.gt'
   };
   const validUserCredentials = {
+    name: 'nameT',
     username: 'test',
     password: '1234',
     email: 'address@newtonlabs.com.gt'

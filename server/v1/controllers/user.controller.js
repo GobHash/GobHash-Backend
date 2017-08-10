@@ -52,6 +52,9 @@ const create = async (req, res) => {
       email: hashEmail,
       password: hashPassword
     });
+    if (req.body.name !== null && req.body.name !== undefined) {
+      user.name = req.body.name;
+    }
     const modUser = {
       id: user.id,
       username: user.username
@@ -123,13 +126,7 @@ const list = async (req, res) => {
     const users = await User.list({ limit, skip });
     return res.json(users);
   } catch (e) {
-    const errorMessage = {
-      name: e.name,
-      message: e.message,
-      errors: e.errors
-    };
-    // send only necesarry error message
-    return res.json(errorMessage);
+    return res.json(e);
   }
 };
 

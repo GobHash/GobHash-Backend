@@ -5,6 +5,13 @@ import APIError from '../helpers/APIError';
  * User Schema
  */
 const UserSchema = new mongoose.Schema({
+  name: {
+    type: String,
+    required: false,
+    unique: false,
+    lowercase: false,
+    trim: true,
+  },
   username: {
     type: String,
     required: true,
@@ -87,7 +94,7 @@ UserSchema.statics = {
    */
   get(id) {
     return this.findById(id)
-      .select('username biography createdAt updatedAt picture followers following')
+      .select('name username biography createdAt updatedAt picture followers following')
       .populate('followers following', 'username biography picture')
       .exec()
       .then((user) => {
@@ -102,12 +109,12 @@ UserSchema.statics = {
   /**
    * List users in descending order of 'createdAt' timestamp.
    * @param {number} skip - Number of users to be skipped.
-   * @param {number} limit - Limit number of users to be returned.
+   * @param {number} limipt - Limit number of users to be returned.
    * @returns {Promise<User[]>}
    */
   list({ skip = 0, limit = 50 } = {}) {
     return this.find()
-      .select('username biography createdAt updatedAt picture followers following')
+      .select('name username biography createdAt updatedAt picture followers following')
       .populate('followers following', 'username biography picture')
       .sort({ createdAt: -1 })
       .skip(+skip)
