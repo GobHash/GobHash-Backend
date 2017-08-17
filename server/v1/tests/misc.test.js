@@ -49,7 +49,7 @@ describe('## Misc', () => {
         .get('/v1/404')
         .expect(httpStatus.NOT_FOUND)
         .then((res) => {
-          expect(res.body.message).to.equal('Not Found');
+          expect(res.body.message).to.equal('API not found');
           done();
         })
         .catch(done);

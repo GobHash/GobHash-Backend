@@ -58,7 +58,7 @@ describe('## Auth APIs', () => {
         .get('/v1/auth/random-number')
         .expect(httpStatus.UNAUTHORIZED)
         .then((res) => {
-          expect(res.body.message).to.equal('Unauthorized');
+          expect(res.body.message).to.equal('No authorization token was found');
           done();
         })
         .catch(done);
@@ -70,7 +70,7 @@ describe('## Auth APIs', () => {
         .set('Authorization', 'Bearer inValidToken')
         .expect(httpStatus.UNAUTHORIZED)
         .then((res) => {
-          expect(res.body.message).to.equal('Unauthorized');
+          expect(res.body.message).to.equal('jwt malformed');
           done();
         })
         .catch(done);
