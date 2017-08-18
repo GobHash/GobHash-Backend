@@ -111,8 +111,7 @@
     "istanbul": "1.1.0-alpha.1",
     "mocha": "3.4.2",
     "sequelize-cli": "^2.7.0",
-    "supertest": "3.0.0",
-    "validate-commit-msg": "2.14.0"
+    "supertest": "3.0.0"
   },
   "license": "MIT",
   "config": {
