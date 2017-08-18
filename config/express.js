@@ -12,6 +12,7 @@ import httpStatus from 'http-status';
 import expressWinston from 'express-winston';
 import expressValidation from 'express-validation';
 import helmet from 'helmet';
+
 import winstonInstance from './winston';
 import routes from '../server/v1/routes/index.route';
 import config from './config';
@@ -19,6 +20,7 @@ import APIError from '../server/v1/helpers/APIError';
 
 // The Swagger document (require it, build it programmatically, fetch it from a URL, ...)
 const spec = fs.readFileSync('server/v1/docs/api_docs.yml', 'utf8');
+const reactDocs = fs.readFileSync('react_docs/index.html', 'utf8');
 const swaggerDoc = jsyaml.safeLoad(spec);
 
 const app = express();
@@ -57,6 +59,11 @@ app.use('/v1', routes);
 
 // swagger ui config
 app.use('/', swaggerUi.serve, swaggerUi.setup(swaggerDoc, false, {}, '.swagger-ui .topbar { background-color: rgb(112, 111, 111); }'));
+
+app.use(express.static('react_docs/'));
+app.get('/docs/', (req, res) => {
+  res.send(reactDocs);
+});
 
 // if error is not an instanceOf APIError, convert it.
 app.use((err, req, res, next) => {

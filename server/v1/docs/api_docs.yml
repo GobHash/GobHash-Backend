@@ -1,9 +1,9 @@
 ---
 swagger: "2.0"
 info:
-  description: "GobHash.Inc"
+  description: "This is a detailed GobHash API Documentation.  You can find out more about on initial docs at [http://api.gobhash.com/docs](http://api.gobhash.com/docs)"
   version: "1.0.0"
-  title: "Private API"
+  title: "GobHash API"
 basePath: "/v1"
 schemes:
 - "https"
