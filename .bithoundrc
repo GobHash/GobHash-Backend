@@ -10,7 +10,8 @@
       "pm2",
       "babel-core",
       "babel-register",
-      "passport"
+      "passport",
+      "eslint-plugin-react"
     ]
   }
 }
