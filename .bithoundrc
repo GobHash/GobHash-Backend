@@ -13,5 +13,8 @@
       "passport",
       "eslint-plugin-react"
     ]
-  }
+  },
+  "ignore": [
+    "react_docs/**"
+  ]
 }
