@@ -6,7 +6,7 @@ pmx.init({ http: true }); // eslint-disable-line enable http keymetris
 import config from './config/config';  // eslint-disable-line
 import app from './config/express';    // eslint-disable-line
 
-
+require('./server/v1/sockets/connection');
 const debug = require('debug')('express-mongoose-es6-rest-api:index');
 
 

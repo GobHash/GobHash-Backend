@@ -25,6 +25,13 @@ router.route('/')
     postCtrl.remove
   );
 
+router.route('/feed/:userId')
+  /** GET a users posts according to their following */
+  .get(
+    expressJwt({ secret: config.jwtSecret }),
+    postCtrl.feed
+  );
+
 router.route('/:postId')
   /** GET v1/post/:postId */
   .get(

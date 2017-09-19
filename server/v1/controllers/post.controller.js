@@ -1,4 +1,5 @@
 import Post from '../models/post.model';
+import User from '../models/user.model';
 
 // Create
 const create = async (req, res) => {
@@ -154,6 +155,24 @@ const deleteLike = async (req, res) => {
   }
 };
 
+/**
+ * Get the feed for a user
+ * @param  req.param.userId The users id
+ * @param  req.query.limit
+ * @param  req.query.lastPost Last Id Post
+ */
+const feed = async (req, res) => {
+  try {
+    const { limit = 15, skip = 0 } = req.query;
+    const user = await User.get(req.params.userId);
+    const following = user.following;
+    const posts = await Post.filterFeed({ limit, skip, following });
+    return res.json(posts);
+  } catch (e) {
+    return res.json(e);
+  }
+};
+
 export default {
   create,
   get,
@@ -162,5 +181,6 @@ export default {
   deleteComment,
   remove,
   addLike,
-  deleteLike
+  deleteLike,
+  feed
 };

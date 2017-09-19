@@ -68,10 +68,12 @@ const PostSchema = new mongoose.Schema({
     required: false
   }],
   updatedAt: {
-    type: Date
+    type: Date,
+    default: Date.now
   },
   createdAt: {
-    type: Date
+    type: Date,
+    default: Date.now
   }
 });
 
@@ -105,6 +107,21 @@ PostSchema.statics = {
    */
   list({ skip = 0, limit = 50 } = {}) {
     return this.find()
+      .sort({ createdAt: -1 })
+      .populate('comments.user', 'username picture')
+      .skip(+skip)
+      .limit(+limit)
+      .exec();
+  },
+
+  /**
+   * Get a users feed
+   * @param {number} skip - Number of users to be skipped.
+   * @param {number} limit - Limit number of users to be returned.
+   * @returns {Promise<User[]>}
+   */
+  filterFeed({ skip = 0, limit = 15, following = [] } = {}) {
+    return this.find({ user: { $in: following } })
       .sort({ createdAt: -1 })
       .populate('comments.user', 'username picture')
       .skip(+skip)
