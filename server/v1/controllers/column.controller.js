@@ -4,12 +4,12 @@ import Entity from '../models/entity.model';
 const getColumnsByEntity = async(req, res) => {
     try {
         const vl = req.params.id;
-        console.log("TEstsTTT    ", vl)
         const clumns = await Columns.findAll({
             where: {
                 entity_id: vl
             }
         });
+        console.log("YESSSSS")
         console.log(clumns)
         return res.json(clumns)
     }
