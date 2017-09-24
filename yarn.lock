@@ -2739,9 +2739,9 @@ glogg@^1.0.0:
   dependencies:
     sparkles "^1.0.0"
 
-gobhash-swagger@^2.0.2:
-  version "2.0.2"
-  resolved "https://registry.yarnpkg.com/gobhash-swagger/-/gobhash-swagger-2.0.2.tgz#d75bdab323a17455a681a180d9224d6b161043dc"
+gobhash-swagger@^2.0.3:
+  version "2.0.3"
+  resolved "https://registry.yarnpkg.com/gobhash-swagger/-/gobhash-swagger-2.0.3.tgz#cfe3c33ec0af6f9e117ea1b0ff7b188bffeb33be"
 
 got@^3.2.0:
   version "3.3.1"
