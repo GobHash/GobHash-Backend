@@ -3,8 +3,6 @@ import express from 'express';
 import jwt from 'jsonwebtoken';
 import http from 'http';
 import config from '../../../config/config';
-import Post from '../models/post.model';
-
 
 const port = 4004;
 const app = express();
@@ -28,7 +26,7 @@ io.on('connection', (client) => {
       console.log(client.authenticated); // eslint-disable-line
     }
   });
-  client.on('update_dashboard', (data) => {
+  client.on('update_dashboard', () => {
     // get last valid post
 
   });

@@ -26,7 +26,7 @@ const unathorizedMesssage = {
 const login = async (req, res) => {
   // fetch user from db
   try {
-    const user = await User.findOne({ username: req.body.username });
+    const user = await User.findOne({ username: req.body.username.toLowerCase() });
     const valid = await bcrypt.compare(req.body.password, user.password);
     if (valid === true) {
       const token = jwt.sign({
