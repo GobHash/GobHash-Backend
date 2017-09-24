@@ -120,6 +120,29 @@ paths:
           description: "Unexpected error"
           schema:
             $ref: "#/definitions/Error"
+    post:
+      tags:
+      - "User"
+      summary: "Create new user"
+      description: "Create a new user."
+      operationId: "createUserPOST"
+      parameters:
+      - name: "bodyUser"
+        in: "body"
+        required: true
+        schema:
+          $ref: "#/definitions/UserPost"
+      responses:
+        200:
+          description: "User"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/User"
+        default:
+          description: "Unexpected error"
+          schema:
+            $ref: "#/definitions/Error"
   /users/{id}:
     get:
       security:
@@ -141,29 +164,6 @@ paths:
           schema:
             type: "object"
             $ref: "#/definitions/User"
-        default:
-          description: "Unexpected error"
-          schema:
-            $ref: "#/definitions/Error"
-    post:
-      tags:
-      - "User"
-      summary: "Create new user"
-      description: "Create a new user."
-      operationId: "createUserPOST"
-      parameters:
-      - name: "bodyUser"
-        in: "body"
-        required: true
-        schema:
-          $ref: "#/definitions/UserPost"
-      responses:
-        200:
-          description: "User"
-          schema:
-            type: "array"
-            items:
-              $ref: "#/definitions/User"
         default:
           description: "Unexpected error"
           schema:
