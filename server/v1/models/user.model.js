@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 import httpStatus from 'http-status';
 import APIError from '../helpers/APIError';
+
 /**
  * User Schema
  */
@@ -59,6 +60,10 @@ const UserSchema = new mongoose.Schema({
   },
   resetPasswordExpiration: {
     type: Date
+  },
+  admin: {
+    type: Boolean,
+    default: false
   },
   updatedAt: {
     type: Date,

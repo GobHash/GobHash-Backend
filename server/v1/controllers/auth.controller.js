@@ -110,4 +110,9 @@ const validateResetToken = async (req, res) => {
     return res.status(httpStatus.NOT_FOUND).json('Not valid token');
   }
 };
-export default { login, getRandomNumber, resetPassword, validateResetToken };
+export default {
+  login,
+  getRandomNumber,
+  resetPassword,
+  validateResetToken
+};

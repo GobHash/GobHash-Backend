@@ -1,7 +1,7 @@
 ---
 swagger: "2.0"
 info:
-  description: "This is a detailed GobHash API Documentation.  You can find out more about on initial docs at [http://api.gobhash.com/docs](http://api.gobhash.com/docs)"
+  description: "This is a detailed GobHash API Documentation.  You can find out more about on initial docs at [http://api.gobhash.com/docs](http://api.gobhash.com/docs) \n You can logout [here](/logout)"
   version: "1.0.0"
   title: "GobHash API"
 basePath: "/v1"

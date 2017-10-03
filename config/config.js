@@ -34,7 +34,9 @@ const config = {
   mailgun_key: envVars.MAILGUN_KEY,
   s3_key: envVars.AWS_S3_KEY,
   s3_secret: envVars.AWS_S3_SECRET,
-  mongoUri: envVars.MONGODB_URI
+  mongoUri: envVars.MONGODB_URI,
+  cookieKey: envVars.COOKIE_KEY,
+  adminToken: envVars.ADMIN_TOKEN
 };
 
 export default config;
