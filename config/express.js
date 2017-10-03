@@ -10,7 +10,7 @@ import httpStatus from 'http-status';
 import helmet from 'helmet';
 import methodOverride from 'method-override';
 import session from 'express-session';
-import sessionStore from 'memorystore';
+import redisStore from 'connect-redis';
 
 
 import APIError from '../server/v1/helpers/APIError';
@@ -20,7 +20,7 @@ import routes from '../server/v1/routes/index.route';
 import { passport } from './passport';
 import winstonInstance from './winston';
 
-const MemoryStore = sessionStore(session);
+const RedisSession = redisStore(session);
 const app = express();
 
 if (config.env === 'development') {
@@ -39,10 +39,9 @@ app.use(session({
   secret: config.cookieKey,
   resave: false,
   saveUninitialized: true,
-  cookie: { secure: true },
   proxy: true,
-  store: new MemoryStore({
-    checkPeriod: 86400000 // prune expired entries every 24h
+  store: new RedisSession({
+    url: config.redisURL
   })
 }));
 app.use(passport.initialize());

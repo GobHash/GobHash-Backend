@@ -36,7 +36,8 @@ const config = {
   s3_secret: envVars.AWS_S3_SECRET,
   mongoUri: envVars.MONGODB_URI,
   cookieKey: envVars.COOKIE_KEY,
-  adminToken: envVars.ADMIN_TOKEN
+  adminToken: envVars.ADMIN_TOKEN,
+  redisURL: envVars.REDISTOGO_URL
 };
 
 export default config;
