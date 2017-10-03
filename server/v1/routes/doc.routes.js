@@ -19,8 +19,6 @@ const swaggerDoc = jsyaml.safeLoad(spec);
 
 const router = express.Router(); // eslint-disable-line new-cap
 
-router.use(express.static('react_docs/'));
-router.use(express.static('server/v1/docs/'));
 
 // swagger ui config
 router.use('/', swaggerUi.serve, swaggerUi.setup(swaggerDoc, false, {}, '.swagger-ui .topbar { background-color: rgb(112, 111, 111); }'));
@@ -67,6 +65,9 @@ router.get('/logout', (req, res) => {
   req.logout();
   res.redirect('/');
 });
+
+router.use(express.static('react_docs/'));
+router.use(express.static('server/v1/docs/'));
 
 router.get('/docs', ensureLogin.ensureLoggedIn('/login'), (req, res) => {
   res.send(reactDocs);
