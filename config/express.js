@@ -10,7 +10,7 @@ import httpStatus from 'http-status';
 import helmet from 'helmet';
 import methodOverride from 'method-override';
 import session from 'express-session';
-import sessionStore from 'session-memory-store';
+import sessionStore from 'memorystore';
 
 
 import APIError from '../server/v1/helpers/APIError';
@@ -39,7 +39,10 @@ app.use(session({
   secret: config.cookieKey,
   resave: false,
   saveUninitialized: true,
-  store: new MemoryStore()
+  proxy: true,
+  store: new MemoryStore({
+    checkPeriod: 86400000 // prune expired entries every 24h
+  })
 }));
 app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
