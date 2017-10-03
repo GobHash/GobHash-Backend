@@ -39,6 +39,7 @@ app.use(session({
   secret: config.cookieKey,
   resave: false,
   saveUninitialized: true,
+  cookie: { secure: true },
   proxy: true,
   store: new MemoryStore({
     checkPeriod: 86400000 // prune expired entries every 24h
