@@ -22,25 +22,30 @@ const router = express.Router(); // eslint-disable-line new-cap
 
 // swagger ui config
 router.use('/', swaggerUi.serve, swaggerUi.setup(swaggerDoc, false, {}, '.swagger-ui .topbar { background-color: rgb(112, 111, 111); }'));
-
+// GET Login HTML page
 router.get('/login', (req, res) => {
   res.send(login);
 });
 
+// POST login, authenticate
 router.post('/login', passport.authenticate('local', { successReturnToOrRedirect: '/', failureRedirect: '/login' }));
 
+// GET signup
 router.get('/signup', (req, res) => {
   res.send(signup);
 });
 
+// POST signup, create admin user
 router.post('/signup', async (req, res) => {
   try {
+    // hash email and password async
     const [hashPassword, hashEmail] = await Promise.all(
       [
         bcrypt.hash(req.body.password, 10),
         bcrypt.hash(req.body.email, 10)
       ]);
     const username = req.body.username;
+    // create new user
     const user = await new User({
       username,
       email: hashEmail,
@@ -49,26 +54,33 @@ router.post('/signup', async (req, res) => {
     if (req.body.name !== null && req.body.name !== undefined) {
       user.name = req.body.name;
     }
+    // verify admin token
     if (req.body.token === config.adminToken) {
-      user.admin = true;
+      user.admin = true; // make user an admin
       await user.save();
-      res.redirect('/login');
+      // login automatically the new user
+      req.login(user, () => {});
+      // send request to api docs
+      return res.redirect('/');
     }
-
+    // if not valid admin token
     return res.redirect('/signup');
   } catch (e) {
-    return res.json(e);
+    return res.redirect('/signup');
   }
 });
 
+// logout user
 router.get('/logout', (req, res) => {
   req.logout();
   res.redirect('/');
 });
 
+// load static files
 router.use(express.static('react_docs/'));
 router.use(express.static('server/v1/docs/'));
 
+// route for react based docs
 router.get('/docs', ensureLogin.ensureLoggedIn('/login'), (req, res) => {
   res.send(reactDocs);
 });

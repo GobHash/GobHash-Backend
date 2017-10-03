@@ -1,6 +1,6 @@
 verbose: false
 instrumentation:
-  excludes: ['dist/**', 'coverage/**', 'gulpfile.babel.js', 'index.js', 'config/aws.js', 'bootstrap.js', 'react_docs/**']
+  excludes: ['dist/**', 'coverage/**', 'gulpfile.babel.js', 'index.js', 'config/aws.js', 'bootstrap.js', 'react_docs/**', 'server/v1/routes/docs.routes.js']
   include-all-sources: true
 reporting:
     print: summary
