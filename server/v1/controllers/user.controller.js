@@ -99,7 +99,7 @@ const update = async (req, res) => {
  */
 const changePassword = async (req, res) => {
   try {
-    const user = await User.findOne({ username: req.body.username });
+    const user = await User.findOne({ resetPasswordToken: req.body.token });
     const hashPassword = await bcrypt.hash(req.body.password, 10);
     user.password = hashPassword;
     user.resetPasswordToken = undefined;
