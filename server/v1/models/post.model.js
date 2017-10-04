@@ -98,6 +98,18 @@ PostSchema.statics = {
         return Promise.reject(err);
       });
   },
+  /**
+   * Count the number of posts of a user
+   * @param  { integer } id user id
+   * @return { }    [description]
+   */
+  countUserPosts(user) {
+    return this.find()
+      .where({ user })
+      .count()
+      .exec()
+      .then(count => count);
+  },
 
   /**
    * List post in descending order of 'createdAt' timestamp.

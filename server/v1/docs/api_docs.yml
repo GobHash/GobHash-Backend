@@ -7,6 +7,7 @@ info:
 basePath: "/v1"
 schemes:
 - "https"
+- "http"
 consumes:
   - application/json
 securityDefinitions:
@@ -222,8 +223,6 @@ paths:
             $ref: "#/definitions/Error"
   /users/password/change:
     post:
-      security:
-        - Bearer: []
       tags:
       - "User"
       summary: Change a user's password
@@ -568,6 +567,32 @@ paths:
           description: "Unexpected error"
           schema:
             $ref: "#/definitions/Error"
+  /stats/user/{userId}:
+    get:
+      security:
+        - Bearer: []
+      tags:
+      - "Stats"
+      summary: "Stats for user"
+      description: "Number of followers, following and number of posts of user"
+      operationId: "statsUserGET"
+      parameters:
+      - name: "userId"
+        in: "path"
+        description: "user id"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "UserStats"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/UserStats"
+        default:
+          description: "Unexpected error"
+          schema:
+            $ref: "#/definitions/Error"
 definitions:
   Login:
     type: "object"
@@ -686,8 +711,15 @@ definitions:
     properties:
       postId:
         type: string
-
-
+  UserStats:
+    type: object
+    properties:
+      followers:
+        type: integer
+      following:
+        type: integer
+      posts:
+        type: integer
   Error:
     type: "object"
     properties:

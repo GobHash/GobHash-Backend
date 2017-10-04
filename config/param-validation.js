@@ -87,5 +87,11 @@ export default {
     body: {
       postId: Joi.string().required()
     }
+  },
+  // GET v1/stats/user/:userId
+  statsUser: {
+    params: {
+      userId: Joi.string().required()
+    }
   }
 };

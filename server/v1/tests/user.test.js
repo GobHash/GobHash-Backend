@@ -85,19 +85,6 @@ describe('## User APIs', () => {
     });
   });
 
-  describe('# POST /v1/users/:userId/password/change', () => {
-    it('should change password', (done) => {
-      user.password = '1234';
-      request(app)
-        .post('/v1/users/password/change')
-        .send(user)
-        .then((res) => {
-          expect(res.body).to.equal('Password changed');
-          done();
-        })
-        .catch(done);
-    });
-  });
   describe('# POST /v1/users/biography', () => {
     it('should set users biography', (done) => {
       user.biography = 'test';

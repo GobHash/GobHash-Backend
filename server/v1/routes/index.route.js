@@ -2,7 +2,8 @@ import express from 'express';
 import userRoutes from './user.route';
 import authRoutes from './auth.route';
 import postRoutes from './post.route';
-import serachRoutes from './search.route';
+import searchRoutes from './search.route';
+import statsRoutes from './stats.route';
 
 const router = express.Router(); // eslint-disable-line new-cap
 
@@ -21,6 +22,9 @@ router.use('/auth', authRoutes);
 router.use('/post', postRoutes);
 
 // mount search routes at /search
-router.use('/search', serachRoutes);
+router.use('/search', searchRoutes);
+
+// mount statistics routes at /stats
+router.use('/stats', statsRoutes);
 
 export default router;
