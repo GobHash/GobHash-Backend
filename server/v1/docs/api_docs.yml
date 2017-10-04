@@ -380,7 +380,6 @@ paths:
         200:
           description: "Post created"
           schema:
-            type: "object"
             $ref: "#/definitions/PostEntity"
         default:
           description: "Unexpected error"
@@ -700,12 +699,20 @@ definitions:
         type: string
       comments:
         type: array
+        items:
+          type: string
       likes:
         type: array
+        items:
+          type: string
       pictures:
         type: array
+        items:
+          type: string
       tags:
         type: array
+        items:
+          type: string
   LikePostBody:
     type: object
     properties:
