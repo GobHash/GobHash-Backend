@@ -56,7 +56,8 @@ const UserSchema = new mongoose.Schema({
     ref: 'User'
   }],
   resetPasswordToken: {
-    type: String
+    type: String,
+    unique: true
   },
   resetPasswordExpiration: {
     type: Date
@@ -125,10 +126,11 @@ UserSchema.statics = {
       .skip(+skip)
       .limit(+limit)
       .exec();
-  }
+  },
 };
 
 /**
  * @typedef User
  */
 export default mongoose.model('User', UserSchema);
+
