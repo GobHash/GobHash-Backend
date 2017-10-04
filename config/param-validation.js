@@ -23,7 +23,7 @@ export default {
   // POST /v1/users/password/change
   passwordChange: {
     body: {
-      username: Joi.string().required(),
+      token: Joi.string().required(),
       password: Joi.string().required()
     }
   },

@@ -60,9 +60,14 @@ const create = async (req, res) => {
       username: user.username
     };
     await user.save();
-    return res.json(modUser);
+
+    return res
+      .status(httpStatus.OK)
+      .json(modUser);
   } catch (e) {
-    return res.json(e);
+    return res
+      .status(httpStatus.INTERNAL_SERVER_ERROR)
+      .json(e);
   }
 };
 
@@ -80,7 +85,9 @@ const update = async (req, res) => {
     user.email = email;
     user.updatedAt = Date.now();
     await user.save();
-    return res.json(user);
+    return res
+      .status(httpStatus.OK)
+      .json(user);
   }
   const errorMessage = {
     name: 'UserNotFoundException',
@@ -124,7 +131,9 @@ const list = async (req, res) => {
   const { limit = 50, skip = 0 } = req.query;
   try {
     const users = await User.list({ limit, skip });
-    return res.json(users);
+    return res
+      .status(httpStatus.OK)
+      .json(users);
   } catch (e) {
     return res.json(e);
   }
@@ -150,7 +159,9 @@ const remove = async (req, res) => {
       id: user._id,
       username: user.username
     };
-    return res.json(modUser);
+    return res
+      .status(httpStatus.OK)
+      .json(modUser);
   } catch (error) {
     return res.json(error);
   }
