@@ -655,7 +655,7 @@ definitions:
   passwordChange:
     type: "object"
     properties:
-      username:
+      token:
         type: "string"
       password:
         type: "string"
