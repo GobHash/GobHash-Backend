@@ -9,7 +9,9 @@ const app = express();
 const server = http.createServer(app);
 const io = socket.listen(server);
 const debug = true;
-server.listen(port);
+const p = server.listen(port);
+console.log(p.domain);
+console.log(p._connectionKey);
 
 io.on('connection', (client) => {
   client.on('authenticate', (data) => {
