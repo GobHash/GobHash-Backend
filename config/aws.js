@@ -22,7 +22,7 @@ const upload = multer({
     },
     key: (req, file, cb) => {
       const extension = file.originalname.substring(file.originalname.lastIndexOf('.'));
-      cb(null, `profile/${crypto.randomBytes(20).toString('hex')}${extension}`);
+      cb(null, `${file.fieldname}/${crypto.randomBytes(20).toString('hex')}${extension}`);
     }
   }),
   fileFilter(req, file, next) {

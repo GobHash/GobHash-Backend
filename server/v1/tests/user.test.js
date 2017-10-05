@@ -99,18 +99,6 @@ describe('## User APIs', () => {
         .catch(done);
     });
   });
-  describe('# POST /v1/users/picture', () => {
-    it('should set users picture', (done) => {
-      request(app)
-        .post('/v1/users/picture')
-        .set('Authorization', jwtToken)
-        .send(user)
-        .then(() => {
-          done();
-        })
-        .catch(done);
-    });
-  });
 
   describe('# POST /v1/users/follow', () => {
     it('should follow a user', (done) => {
