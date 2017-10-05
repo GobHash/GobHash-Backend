@@ -64,4 +64,17 @@ router.route('/like')
     postCtrl.deleteLike
   );
 
+router.route('/tag')
+  /** POST v1/post/tag */
+  .post(
+    expressJwt({ secret: config.jwtSecret }),
+    validate(paramValidation.addTag),
+    postCtrl.addTag
+  )
+  .delete(
+    expressJwt({ secret: config.jwtSecret }),
+    validate(paramValidation.addTag),
+    postCtrl.removeTag
+  );
+
 export default router;

@@ -9,6 +9,7 @@ chai.config.includeStack = true;
 
 describe('## POSTS APIs', () => {
   const validUserCredentials = {
+    name: 'nameT',
     username: 'test',
     password: '1234',
     email: 'address@newtonlabs.com.gt'
@@ -142,6 +143,40 @@ describe('## POSTS APIs', () => {
         .then((res) => {
           expect(res.body)
             .to.have.property('likes');
+          done();
+        })
+        .catch(done);
+    });
+  });
+
+  describe('# POST /v1/post/tag', () => {
+    it('add tag to post', (done) => {
+      request(app)
+        .post('/v1/post/tag')
+        .set('Authorization', jwtToken)
+        .send({ postId: validPost._id, tag: 'tag_test' })
+        .expect(httpStatus.OK)
+        .then((res) => {
+          expect(res.body.tags)
+            .to.be.an('array').to.include('tag_test');
+          done();
+        })
+        .catch(done);
+    });
+  });
+
+  describe('# DELETE /v1/post/tag', () => {
+    it('remove tag from post', (done) => {
+      request(app)
+        .delete('/v1/post/tag')
+        .set('Authorization', jwtToken)
+        .send({ postId: validPost._id, tag: 'tag_test' })
+        .expect(httpStatus.OK)
+        .then((res) => {
+          expect(res.body.post.tags)
+            .to.be.an('array').to.not.include('tag_test');
+          expect(res.body.removed)
+            .to.be.a('number');
           done();
         })
         .catch(done);

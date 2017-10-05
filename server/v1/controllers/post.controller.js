@@ -173,6 +173,35 @@ const feed = async (req, res) => {
   }
 };
 
+const addTag = async (req, res) => {
+  try {
+    const post = await Post.get(req.body.postId);
+    post.tags.push(req.body.tag);
+    await post.save();
+    return res.json(post);
+  } catch (e) {
+    return res.json(e);
+  }
+};
+
+const removeTag = async (req, res) => {
+  try {
+    let removed = 0;
+    const post = await Post.get(req.body.postId);
+    for (let i = 0; i < post.tags.length; i++) { //eslint-disable-line
+      const tag = post.tags[i];
+      if (tag.includes(req.body.tag)) {
+        post.tags.pull(tag);
+        removed += 1;
+      }
+    }
+    await post.save();
+    return res.json({ post, removed });
+  } catch (e) {
+    return res.json(e);
+  }
+};
+
 export default {
   create,
   get,
@@ -182,5 +211,7 @@ export default {
   remove,
   addLike,
   deleteLike,
+  addTag,
+  removeTag,
   feed
 };

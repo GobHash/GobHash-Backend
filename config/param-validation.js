@@ -4,34 +4,40 @@ export default {
   // POST /v1/users
   createUser: {
     body: {
-      username: Joi.string().required(),
+      username: Joi.string().max(30).required(),
       email: Joi.string().regex(/^([\w-.]+)@((?:[\w]+\.)+)([a-zA-Z]{2,4})$/).required(),
-      password: Joi.string().required()
+      password: Joi.string().regex(/^[a-zA-Z0-9]{3,30}$/)
     }
   },
 
   // UPDATE /v1/users/:userId
   updateUser: {
     body: {
-      username: Joi.string().required(),
+      username: Joi.string().max(30).required(),
       email: Joi.string().regex(/^([\w-.]+)@((?:[\w]+\.)+)([a-zA-Z]{2,4})$/).required()
     },
     params: {
       userId: Joi.string().hex().required()
     }
   },
+  // POST v1/users/picture
+  uploadPicture: {
+    body: {
+      username: Joi.string().max(30).required()
+    }
+  },
   // POST /v1/users/password/change
   passwordChange: {
     body: {
       token: Joi.string().required(),
-      password: Joi.string().required()
+      password: Joi.string().regex(/^[a-zA-Z0-9]{3,30}$/)
     }
   },
   // POST v1/users/biography
   updateBio: {
     body: {
       username: Joi.string().required(),
-      biography: Joi.string().required()
+      biography: Joi.string().max(140).required()
     }
   },
   // POST v1/users/follow
@@ -92,6 +98,13 @@ export default {
   statsUser: {
     params: {
       userId: Joi.string().required()
+    }
+  },
+  // POST v1/post/tag
+  addTag: {
+    body: {
+      postId: Joi.string().required(),
+      tag: Joi.string().max(50).required()
     }
   }
 };

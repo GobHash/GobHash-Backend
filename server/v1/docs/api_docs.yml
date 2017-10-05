@@ -486,6 +486,57 @@ paths:
           description: "Unexpected error"
           schema:
             $ref: "#/definitions/Error"
+  /post/tag:
+    post:
+      security:
+        - Bearer: []
+      tags:
+      - "Post"
+      summary: Add tag to post
+      description: Add a new tag to post
+      operationId: tagPOST
+      parameters:
+      - name: "tagPOST"
+        in: "body"
+        description: "body of tag post"
+        required: true
+        schema:
+          $ref: "#/definitions/PostTagBody"
+      responses:
+        200:
+          description: "Tag added"
+          schema:
+            type: "object"
+            $ref: "#/definitions/PostEntity"
+        default:
+          description: "Unexpected error"
+          schema:
+            $ref: "#/definitions/Error"
+    delete:
+      security:
+        - Bearer: []
+      tags:
+      - "Post"
+      summary: Delete tag from post
+      description: Delete a new tag to post
+      operationId: tagDelete
+      parameters:
+      - name: "tagDelete"
+        in: "body"
+        description: "body of comment post"
+        required: true
+        schema:
+          $ref: "#/definitions/PostTagBody"
+      responses:
+        200:
+          description: "Tag created"
+          schema:
+            type: "object"
+            $ref: "#/definitions/PostEntity"
+        default:
+          description: "Unexpected error"
+          schema:
+            $ref: "#/definitions/Error"
   /post/like:
     post:
       security:
@@ -727,6 +778,13 @@ definitions:
         type: integer
       posts:
         type: integer
+  PostTagBody:
+    type: object
+    properties:
+      postId:
+        type: string
+      tag:
+        type: string
   Error:
     type: "object"
     properties:
