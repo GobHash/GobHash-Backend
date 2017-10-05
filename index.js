@@ -3,12 +3,15 @@ import polyfill from 'babel-polyfill'; // eslint-disable-line
 import mongoose from 'mongoose';
 import pmx from 'pmx';                 // eslint-disable-line
 import Sequelize from 'sequelize';
+import http from 'http';
+import socket from 'socket.io';
 
 pmx.init({ http: true }); // eslint-disable-line enable http keymetris
 import config from './config/config';  // eslint-disable-line
 import app from './config/express';    // eslint-disable-line
 
-require('./server/v1/sockets/connection');
+const server = http.createServer(app);
+const io = socket.listen(server);
 const debug = require('debug')('express-mongoose-es6-rest-api:index');
 
 
@@ -37,11 +40,33 @@ sequelize
   .catch((err) => {
     console.error('Unable to connect to the database:', err); // eslint-disable-line
   });
+
+io.on('connection', (client) => {
+  client.on('authenticate', (data) => {
+    try {
+      const decoded = jwt.verify(data.token, config.jwtSecret);
+      if (decoded !== undefined) {
+        client.authenticated = true; // eslint-disable-line
+      }
+    } catch (err) {
+      client.authenticated = false; // eslint-disable-line
+      client.disconnect(); // force disconnect not authorized client
+    }
+    if (debug) {
+      console.log(client.authenticated); // eslint-disable-line
+    }
+  });
+  client.on('update_dashboard', () => {
+    // get last valid post
+
+  });
+});
+
 // module.parent check is required to support mocha watch
 // src: https://github.com/mochajs/mocha/issues/1912
 if (!module.parent) {
   // listen on port config.port
-  app.listen(config.port, () => {
+  server.listen(config.port, () => {
     debug(`server started on port ${config.port} (${config.env})`);
   });
 }
