@@ -32,10 +32,10 @@ router.use('/stats', statsRoutes);
 // mount entity routes at /entity
 router.use('/entity', entityRoutes);
 
-//mount columns routes at /column
+// mount columns routes at /column
 router.use('/column', columnRoutes);
 
-//mount operations routes at /operations
+// mount operations routes at /operations
 router.use('/operations', operationRoutes);
 
 

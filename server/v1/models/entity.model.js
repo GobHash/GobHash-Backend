@@ -1,7 +1,7 @@
 import Sequelize from 'sequelize';
 import config from '../../../config/config';
 
-const sequelize = new Sequelize(config.dbUri, { logging: true });
+const sequelize = new Sequelize(config.dbUri, { logging: false });
 /**
  * User Schema
  */
@@ -11,12 +11,12 @@ const Entity = sequelize.define('Entity', {
     field: 'name_entity',
     unique: 'name_entity'
   },
-  display_name:{
+  display_name: {
     type: Sequelize.STRING,
     field: 'display_name_entity',
     unique: 'display_name_entity'
   },
-  visible:{
+  visible: {
     type: Sequelize.BOOLEAN,
     field: 'visible'
   }
@@ -24,6 +24,5 @@ const Entity = sequelize.define('Entity', {
   freezeTableName: true // Model tableName will be the same as the model name
 });
 
-console.log('test')
 Entity.sync();
 export default Entity;

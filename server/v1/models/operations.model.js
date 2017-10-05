@@ -1,7 +1,7 @@
 import Sequelize from 'sequelize';
 import config from '../../../config/config';
 
-const sequelize = new Sequelize(config.dbUri, { logging: true });
+const sequelize = new Sequelize(config.dbUri, { logging: false });
 /**
  * User Schema
  */
@@ -14,14 +14,13 @@ const Operation = sequelize.define('Operation', {
     type: Sequelize.INTEGER,
     field: 'operation_type'
   },
-  value_type:{
-      type: Sequelize.INTEGER,
-      field: 'operation_value_type'
+  value_type: {
+    type: Sequelize.INTEGER,
+    field: 'operation_value_type'
   }
 }, {
   freezeTableName: true // Model tableName will be the same as the model name
 });
 
-console.log('test operation')
 Operation.sync();
 export default Operation;
