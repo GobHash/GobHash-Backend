@@ -26,6 +26,16 @@ sequelize
 .catch(err => {
   console.error('Unable to connect to the database:', err);
 });
+//Conection to database where is save the GuateCompras data
+const sequelizeWidgets = new Sequelize(config.dbUriG);
+sequelize
+.authenticate()
+.then(() => {
+  console.log('Connection two has been established successfully. GuateCompras');
+})
+.catch(err => {
+  console.error('Unable to connect to the database:', err);
+});
 // module.parent check is required to support mocha watch
 // src: https://github.com/mochajs/mocha/issues/1912
 if (!module.parent) {

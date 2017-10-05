@@ -11,4 +11,22 @@ const getOperations = async(req, res) => {
     }
 }
 
-export default { getOperations };
+const getOperationsByType = async(req, res) => {
+    try {
+        const vl = req.params.id
+        console.log("TYPEEEEE")
+        console.log(vl)
+        const operations = await Operation.findAll({
+            where: {
+                type: vl
+            }
+        });
+        return res.json(operations)
+    }
+    catch (e){
+        return res.json(e);
+    }
+}
+
+
+export default { getOperations, getOperationsByType };

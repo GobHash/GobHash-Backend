@@ -12,4 +12,9 @@ router.route('/operations')
     operationCtrl.getOperations
   );
 
+router.route('/type/:id')
+  .get(
+    operationCtrl.getOperationsByType
+  )
+
 export default router;

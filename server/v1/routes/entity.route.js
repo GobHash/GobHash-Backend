@@ -7,7 +7,7 @@ import config from '../../../config/config';
 
 const router = express.Router(); // eslint-disable-line new-cap
 
-router.route('/getEntities')
+router.route('/entities')
   .get(
     entityCtrl.getEntities
   );

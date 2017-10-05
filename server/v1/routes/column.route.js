@@ -7,12 +7,12 @@ import config from '../../../config/config';
 
 const router = express.Router(); // eslint-disable-line new-cap
 
-router.route('/getColumnByEntity/:id')
+router.route('/columns/:id')
   .get(
     columnCtrl.getColumnsByEntity
   );
 
-router.route('/getColumns')
+router.route('/columns')
   .get(
       columnCtrl.getColumns
   )

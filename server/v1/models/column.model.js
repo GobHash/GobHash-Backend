@@ -13,9 +13,22 @@ const Column = sequelize.define('Column', {
     field: 'column_name',
     unique: 'column_name'
   },
+  display_name:{
+    type: Sequelize.STRING,
+    field: 'display_column_name',
+    unique: 'display_column_name'
+  },
   type: {
     type: Sequelize.INTEGER,
     field: 'colum_type'
+  },
+  base_table:{
+    type: Sequelize.STRING,
+    field: 'base_table'
+  },
+  second_table:{
+    type: Sequelize.STRING,
+    field: 'second_table'
   },
   // It is possible to create foreign keys:
  entity_id: {

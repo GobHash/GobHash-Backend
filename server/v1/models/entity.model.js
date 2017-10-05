@@ -10,6 +10,15 @@ const Entity = sequelize.define('Entity', {
     type: Sequelize.STRING,
     field: 'name_entity',
     unique: 'name_entity'
+  },
+  display_name:{
+    type: Sequelize.STRING,
+    field: 'display_name_entity',
+    unique: 'display_name_entity'
+  },
+  visible:{
+    type: Sequelize.BOOLEAN,
+    field: 'visible'
   }
 }, {
   freezeTableName: true // Model tableName will be the same as the model name
