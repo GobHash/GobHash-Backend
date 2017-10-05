@@ -100,6 +100,13 @@ export default {
       userId: Joi.string().required()
     }
   },
+  // GET v1/stats/post
+  statsPost: {
+    query: {
+      limit: Joi.number().greater(-1),
+      skip: Joi.number().greater(-1)
+    }
+  },
   // POST v1/post/tag
   addTag: {
     body: {

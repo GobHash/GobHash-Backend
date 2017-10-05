@@ -115,7 +115,7 @@ PostSchema.statics = {
    * List post in descending order of 'createdAt' timestamp.
    * @param {number} skip - Number of users to be skipped.
    * @param {number} limit - Limit number of users to be returned.
-   * @returns {Promise<User[]>}
+   * @returns {Promise<Post[]>}
    */
   list({ skip = 0, limit = 50 } = {}) {
     return this.find()
@@ -130,11 +130,26 @@ PostSchema.statics = {
    * Get a users feed
    * @param {number} skip - Number of users to be skipped.
    * @param {number} limit - Limit number of users to be returned.
-   * @returns {Promise<User[]>}
+   * @returns {Promise<Post[]>}
    */
   filterFeed({ skip = 0, limit = 15, following = [] } = {}) {
     return this.find({ user: { $in: following } })
       .sort({ createdAt: -1 })
+      .populate('comments.user', 'username picture')
+      .skip(+skip)
+      .limit(+limit)
+      .exec();
+  },
+
+  /**
+   * Get most liked posts
+   * @param {number} skip - Number of users to be skipped.
+   * @param {number} limit - Limit number of users to be returned.
+   * @returns {Promise<Post[]>}
+   */
+  mostLiked(limit, skip) {
+    return this.find()
+      .sort({ 'likes.length': -1 })
       .populate('comments.user', 'username picture')
       .skip(+skip)
       .limit(+limit)

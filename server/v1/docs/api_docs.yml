@@ -643,6 +643,37 @@ paths:
           description: "Unexpected error"
           schema:
             $ref: "#/definitions/Error"
+  /stats/posts/top:
+    get:
+      security:
+        - Bearer: []
+      tags:
+      - "Stats"
+      summary: "Stats for top posts"
+      description: "Get the most liked posts"
+      operationId: "statsPostGET"
+      parameters:
+      - name: "limit"
+        in: "query"
+        description: "limit the number of posts"
+        required: false
+        type: "integer"
+      - name: "skip"
+        in: "query"
+        description: "skip a number of posts"
+        type: "integer"
+        required: false
+      responses:
+        200:
+          description: "UserStats"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/PostEntity"
+        default:
+          description: "Unexpected error"
+          schema:
+            $ref: "#/definitions/Error"
 definitions:
   Login:
     type: "object"
