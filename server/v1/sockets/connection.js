@@ -4,12 +4,10 @@ import jwt from 'jsonwebtoken';
 import http from 'http';
 import config from '../../../config/config';
 
-const port = process.env.PORT || 4004;
 const app = express();
 const server = http.createServer(app);
 const io = socket.listen(server);
 const debug = true;
-server.listen(port);
 
 io.on('connection', (client) => {
   client.on('authenticate', (data) => {
