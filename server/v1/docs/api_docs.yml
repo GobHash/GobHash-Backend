@@ -194,8 +194,6 @@ paths:
           description: "Unexpected error"
           schema:
             $ref: "#/definitions/Error"
-
-
     delete:
       security:
         - Bearer: []
@@ -327,6 +325,40 @@ paths:
           description: "user unfollowed user"
           schema:
             type: "string"
+        default:
+          description: "Unexpected error"
+          schema:
+            $ref: "#/definitions/Error"
+  /users/profile:
+    post:
+      tags:
+      - "User"
+      summary: Set the profile of a user.
+      parameters:
+      - name: "profilePOST"
+        in: "body"
+        description: "Profile fields"
+        required: true
+        schema:
+          $ref: "#/definitions/UserProfile"
+      responses:
+        200:
+          description: "Profile created"
+          schema:
+            type: "string"
+        default:
+          description: "Unexpected error"
+          schema:
+            $ref: "#/definitions/Error"
+    get:
+      tags:
+      - "User"
+      summary: Get the profile of a user
+      responses:
+        200:
+          description: "Profile"
+          schema:
+            $ref: "#/definitions/UserProfile"
         default:
           description: "Unexpected error"
           schema:
@@ -727,6 +759,15 @@ definitions:
       username:
         type: string
       biography:
+        type: string
+  UserProfile:
+    type: object
+    properties:
+      username:
+        type: string
+      biography:
+        type: string
+      occupation:
         type: string
   UserFollow:
     type: "object"

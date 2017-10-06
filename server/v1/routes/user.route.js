@@ -17,19 +17,6 @@ router.route('/')
     validate(paramValidation.createUser),
     userCtrl.create);
 
-router.route('/:userId')
-  /** GET /v1/users/:userId - Get user */
-  .get(expressJwt({ secret: config.jwtSecret }), userCtrl.get)
-
-  /** PUT /v1/users/:userId - Update user */
-  .put(
-    expressJwt({ secret: config.jwtSecret }),
-    validate(paramValidation.updateUser),
-    userCtrl.update)
-
-  /** DELETE /v1/users/:userId - Delete user */
-  .delete(expressJwt({ secret: config.jwtSecret }), userCtrl.remove);
-
 router.route('/password/change')
   // POST /v1/users/password/change - Change Password
   .post(
@@ -65,7 +52,36 @@ router.route('/unfollow')
     validate(paramValidation.followUser),
     userCtrl.unfollowUser
   );
+
+router.route('/profile')
+  /** GET v1/users/profile */
+  .get(
+    expressJwt({ secret: config.jwtSecret }),
+    userCtrl.profile
+  )
+  /** POST v1/users/profile */
+  .post(
+    expressJwt({ secret: config.jwtSecret }),
+    validate(paramValidation.profile),
+    userCtrl.profile
+  );
+
+router.route('/:userId')
+  /** GET /v1/users/:userId - Get user */
+  .get(expressJwt({ secret: config.jwtSecret }), userCtrl.get)
+
+  /** PUT /v1/users/:userId - Update user */
+  .put(
+    expressJwt({ secret: config.jwtSecret }),
+    validate(paramValidation.updateUser),
+    userCtrl.update)
+
+  /** DELETE /v1/users/:userId - Delete user */
+  .delete(expressJwt({ secret: config.jwtSecret }), userCtrl.remove);
+
+
 /** Load user when API with userId route parameter is hit */
 router.param('userId', userCtrl.load);
+
 
 export default router;

@@ -42,10 +42,15 @@ const UserSchema = new mongoose.Schema({
       required: false
     }
   },
+  occupation: {
+    type: String,
+    trim: true,
+    lowercase: false
+  },
   biography: {
     type: String,
     trim: true,
-    lowercase: true
+    lowercase: false
   },
   following: [{
     type: mongoose.Schema.Types.ObjectId,

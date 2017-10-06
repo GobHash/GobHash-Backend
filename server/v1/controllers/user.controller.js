@@ -7,8 +7,10 @@ import User from '../models/user.model';
  */
 const load = async (req, res, next, id) => {
   try {
-    const user = await User.get(id);
-    req.user = user; // eslint-disable-line no-param-reassign
+    if (req.user === null || req.user === undefined) {
+      const user = await User.get(id);
+      req.user = user; // eslint-disable-line no-param-reassign
+    }
     return next();
   } catch (err) {
     return next(err);
@@ -47,6 +49,20 @@ const create = async (req, res) => {
         bcrypt.hash(req.body.email, 10)
       ]);
     const username = req.body.username;
+    // check if username exists
+    const countCheck = await User.where({ username }).count();
+    // if there already exists a username
+    if (countCheck > 0) {
+      return res
+        .status(httpStatus.INTERNAL_SERVER_ERROR)
+        .json({
+          code: 11000,
+          errors: 'Duplicated user',
+          fields_duplicated: {
+            username
+          }
+        });
+    }
     const user = await new User({
       username,
       email: hashEmail,
@@ -257,6 +273,55 @@ const unfollowUser = async (req, res) => {
   }
 };
 
+/**
+ * GET or POST  the profile of a user
+ * @param  {string} req.body.username
+ * @param  {string} req.body.biography
+ * @param  {string} req.body.occupation
+ */
+const profile = async (req, res) => {
+  try {
+    if (req.method === 'GET') {
+      const user = await User.findOne({ _id: req.user.id });
+
+      return res.json({
+        username: user.username,
+        occupation: user.occupation,
+        biography: user.biography
+      });
+    } else if (req.method === 'POST') {
+      const user = await User.get(req.user.id);
+      const username = user.username;
+      // check if username exists
+      const countCheck = await User.where({ username }).count();
+      // if there already exists a username
+      if (countCheck > 0 && username !== req.body.username) {
+        return res
+          .status(httpStatus.INTERNAL_SERVER_ERROR)
+          .json({
+            code: 11000,
+            errors: 'Duplicated user',
+            fields_duplicated: {
+              username
+            }
+          });
+      }
+      user.username = req.body.username;
+      user.occupation = req.body.occupation;
+      user.biography = req.body.biography;
+      await user.save();
+      return res.json({
+        username: user.username,
+        occupation: user.occupation,
+        biography: user.biography
+      });
+    }
+    return res.json('invalid request');
+  } catch (e) {
+    return res.json(e);
+  }
+};
+
 export default {
   load,
   get,
@@ -268,5 +333,6 @@ export default {
   updateBio,
   updatePicture,
   followUser,
-  unfollowUser
+  unfollowUser,
+  profile
 };
