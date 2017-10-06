@@ -1,5 +1,6 @@
 import Post from '../models/post.model';
 import User from '../models/user.model';
+import { emmiter } from '../../../index';
 
 // Create
 const create = async (req, res) => {
@@ -12,9 +13,17 @@ const create = async (req, res) => {
       description: req.body.description,
       tags: req.body.tags
     });
+    const userQuery = await User.findOne({ username: req.user.username });
+    for (let i = 0; i < userQuery.followers.length; i++) { // eslint-disable-line
+      const follower = userQuery.followers[i];
+      if (follower.online) {
+        emmiter.sendToUser(follower, post);
+      }
+    }
     await post.save();
     return res.json(post);
   } catch (e) {
+    console.log(e);
     return res.json(e);
   }
 };
@@ -62,6 +71,7 @@ const addComment = async (req, res) => {
     await post.save();
     return res.json(post.comments[post.comments.length - 1]);
   } catch (e) {
+    console.log(e);
     return res.json(e);
   }
 };

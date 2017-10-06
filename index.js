@@ -5,6 +5,7 @@ import pmx from 'pmx';                 // eslint-disable-line
 import Sequelize from 'sequelize';
 import http from 'http';
 import socket from 'socket.io';
+import { socketConnection, socketEmitter } from './server/v1/sockets/connection';
 
 pmx.init({ http: true }); // eslint-disable-line enable http keymetris
 import config from './config/config';  // eslint-disable-line
@@ -14,6 +15,8 @@ const server = http.createServer(app);
 const io = socket.listen(server);
 const debug = require('debug')('express-mongoose-es6-rest-api:index');
 
+socketConnection(io);
+export const emmiter = socketEmitter(io);
 
 mongoose.connect(config.mongoUri, { server: { socketOptions: { keepAlive: 1 } } });
 mongoose.Promise = global.Promise; // Tell mongoose to use es6 promises
@@ -40,27 +43,6 @@ sequelize
   .catch((err) => {
     console.error('Unable to connect to the database:', err); // eslint-disable-line
   });
-
-io.on('connection', (client) => {
-  client.on('authenticate', (data) => {
-    try {
-      const decoded = jwt.verify(data.token, config.jwtSecret);
-      if (decoded !== undefined) {
-        client.authenticated = true; // eslint-disable-line
-      }
-    } catch (err) {
-      client.authenticated = false; // eslint-disable-line
-      client.disconnect(); // force disconnect not authorized client
-    }
-    if (debug) {
-      console.log(client.authenticated); // eslint-disable-line
-    }
-  });
-  client.on('update_dashboard', () => {
-    // get last valid post
-
-  });
-});
 
 // module.parent check is required to support mocha watch
 // src: https://github.com/mochajs/mocha/issues/1912

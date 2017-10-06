@@ -66,6 +66,10 @@ const UserSchema = new mongoose.Schema({
     type: Boolean,
     default: false
   },
+  online: {
+    type: Boolean,
+    default: false
+  },
   updatedAt: {
     type: Date,
     default: Date.now
@@ -127,6 +131,21 @@ UserSchema.statics = {
       .limit(+limit)
       .exec();
   },
+
+  /**
+   * List all online clients
+   *
+   */
+  listOnline() {
+    return this.find()
+      .select('name username following')
+      .where({ online: true })
+      .populate('following', 'username')
+      .sort({ createdAt: -1 })
+      .skip()
+      .limit()
+      .exec();
+  }
 };
 
 /**
