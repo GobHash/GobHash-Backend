@@ -56,8 +56,7 @@ const UserSchema = new mongoose.Schema({
     ref: 'User'
   }],
   resetPasswordToken: {
-    type: String,
-    unique: true
+    type: String
   },
   resetPasswordExpiration: {
     type: Date
