@@ -13,7 +13,7 @@ const create = async (req, res) => {
       description: req.body.description,
       tags: req.body.tags
     });
-    const userQuery = await User.findOne({ username: req.user.username });
+    const userQuery = await User.get(req.user.id);
     for (let i = 0; i < userQuery.followers.length; i++) { // eslint-disable-line
       const follower = userQuery.followers[i];
       if (follower.online) {
