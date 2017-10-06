@@ -23,7 +23,6 @@ const create = async (req, res) => {
     await post.save();
     return res.json(post);
   } catch (e) {
-    console.log(e);
     return res.json(e);
   }
 };
@@ -71,7 +70,6 @@ const addComment = async (req, res) => {
     await post.save();
     return res.json(post.comments[post.comments.length - 1]);
   } catch (e) {
-    console.log(e);
     return res.json(e);
   }
 };
