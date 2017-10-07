@@ -331,6 +331,8 @@ paths:
             $ref: "#/definitions/Error"
   /users/profile:
     post:
+      security:
+        - Bearer: []
       tags:
       - "User"
       summary: Set the profile of a user.
@@ -340,7 +342,7 @@ paths:
         description: "Profile fields"
         required: true
         schema:
-          $ref: "#/definitions/UserProfile"
+          $ref: "#/definitions/UserProfilePOST"
       responses:
         200:
           description: "Profile created"
@@ -760,6 +762,13 @@ definitions:
         type: string
       biography:
         type: string
+  UserProfilePOST:
+      type: object
+      properties:
+        biography:
+          type: string
+        occupation:
+          type: string
   UserProfile:
     type: object
     properties:

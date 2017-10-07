@@ -70,7 +70,7 @@ describe('## Search APIs', () => {
         .get('/v1/search/users')
         .set('Authorization', jwtToken)
         .query({ username: 'notFound', name: 'notFound' })
-        .expect(httpStatus.NOT_FOUND)
+        .expect(httpStatus.OK)
         .then(() => {
           done();
         })

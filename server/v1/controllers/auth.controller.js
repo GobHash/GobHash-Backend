@@ -27,8 +27,11 @@ const login = async (req, res) => {
   // fetch user from db
   try {
     const user = await User.findOne({ username: req.body.username.toLowerCase() });
+    // compare hashed password
     const valid = await bcrypt.compare(req.body.password, user.password);
+    // if the password is a match
     if (valid === true) {
+      // create a signed token
       const token = jwt.sign({
         username: user.username,
         id: user.id
@@ -85,7 +88,7 @@ const resetPassword = async (req, res) => {
     await user.save();
     const resetURL = `http://localhost:8080/#!/auth/recover/${user.resetPasswordToken}`;
     const data = {
-      from: 'GobHash <me@samples.mailgun.org>',
+      from: 'GobHash <gobhash@mail.gobhash.com>',
       to: req.body.email,
       subject: 'Reestablecer Contraseña',
       text: resetURL
@@ -95,10 +98,14 @@ const resetPassword = async (req, res) => {
     return res.json({ message: 'Email Sent', token: user.resetPasswordToken });
   } catch (e) {
     // user not found
-    return res.status(404).json('User not found');
+    return res.status(httpStatus.NOT_FOUND).json('User not found');
   }
 };
-
+/**
+ * Check if the token provided is valid.
+ * @param  {string} req.params.token The token sent on email.
+ * @return {User} User model with the username populated.
+ */
 const validateResetToken = async (req, res) => {
   try {
     const user = await User.findOne({

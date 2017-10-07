@@ -1,7 +1,12 @@
 import httpStatus from 'http-status';
 import User from '../models/user.model';
 
-
+/**
+ * Search for user in database
+ * @param  {string} req.query.username Search by username
+ * @param  {string} req.query.name Or search by name
+ * @return {User}   User model
+ */
 const searchUser = async (req, res) => {
   try {
     if (req.query.username === undefined && req.query.name === undefined) {
@@ -22,7 +27,7 @@ const searchUser = async (req, res) => {
         .exec();
     }
     if (users.length === 0) {
-      return res.status(httpStatus.NOT_FOUND).json([]);
+      return res.status(httpStatus.OK).json([]);
     }
     return res.status(httpStatus.OK).json(users);
   } catch (e) {

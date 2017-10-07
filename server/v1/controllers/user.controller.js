@@ -291,32 +291,15 @@ const profile = async (req, res) => {
       });
     } else if (req.method === 'POST') {
       const user = await User.findOne({ _id: req.user.id });
-      const username = user.username;
-      // check if username exists
-      const countCheck = await User.where({ username }).count();
-      // if there already exists a username
-      if (countCheck > 0 && username !== req.body.username) {
-        return res
-          .status(httpStatus.INTERNAL_SERVER_ERROR)
-          .json({
-            code: 11000,
-            errors: 'Duplicated user',
-            fields_duplicated: {
-              username
-            }
-          });
-      }
-      user.username = req.body.username;
       user.occupation = req.body.occupation;
       user.biography = req.body.biography;
       await user.save();
       return res.json({
-        username: user.username,
         occupation: user.occupation,
         biography: user.biography
       });
     }
-    return res.json('invalid request');
+    return res.status(httpStatus.BAD_REQUEST).json('invalid request type');
   } catch (e) {
     return res.json(e);
   }
