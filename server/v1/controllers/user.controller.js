@@ -290,7 +290,7 @@ const profile = async (req, res) => {
         biography: user.biography
       });
     } else if (req.method === 'POST') {
-      const user = await User.get(req.user.id);
+      const user = await User.findOne({ _id: req.user.id });
       const username = user.username;
       // check if username exists
       const countCheck = await User.where({ username }).count();

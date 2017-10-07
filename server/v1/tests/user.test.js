@@ -161,6 +161,27 @@ describe('## User APIs', () => {
     });
   });
 
+  describe('# POST /v1/users/profile', () => {
+    it('should SET profile of user', (done) => {
+      request(app)
+        .get('/v1/users/profile')
+        .send({
+          username: validUserCredentials.username,
+          biography: 'test',
+          occupation: 'test'
+        })
+        .set('Authorization', jwtToken)
+        .expect(httpStatus.OK)
+        .then((res) => {
+          expect(res.body).to.be.an('object');
+          expect(res.body).to.have.property('username');
+          expect(res.body).to.have.property('biography');
+          done();
+        })
+        .catch(done);
+    });
+  });
+
   describe('# GET /v1/users/profile', () => {
     it('should get profile of user', (done) => {
       request(app)
@@ -171,27 +192,6 @@ describe('## User APIs', () => {
           expect(res.body).to.be.an('object');
           expect(res.body).to.have.property('username');
           expect(res.body).to.have.property('biography');
-          expect(res.body).to.have.property('occupation');
-          done();
-        })
-        .catch(done);
-    });
-  });
-  describe('# POST /v1/users/profile', () => {
-    it('should SET profile of user', (done) => {
-      request(app)
-        .get('/v1/users/profile')
-        .send({ username: validUserCredentials.username,
-          biography: 'test',
-          occupation: 'test'
-        })
-        .set('Authorization', jwtToken)
-        .expect(httpStatus.OK)
-        .then((res) => {
-          expect(res.body).to.be.an('object');
-          expect(res.body).to.have.property('username');
-          expect(res.body).to.have.property('biography');
-          expect(res.body).to.have.property('occupation');
           done();
         })
         .catch(done);

@@ -6,7 +6,7 @@ export default {
     body: {
       username: Joi.string().max(30).required(),
       email: Joi.string().regex(/^([\w-.]+)@((?:[\w]+\.)+)([a-zA-Z]{2,4})$/).required(),
-      password: Joi.string().min(5).max(30).required()
+      password: Joi.string().min(4).max(30).required()
     }
   },
 
@@ -30,7 +30,7 @@ export default {
   passwordChange: {
     body: {
       token: Joi.string().required(),
-      password: Joi.string().min(5).max(30).required()
+      password: Joi.string().min(4).max(30).required()
     }
   },
   // POST v1/users/biography
