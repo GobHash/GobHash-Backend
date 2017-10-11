@@ -117,7 +117,6 @@ export default {
   // POST v1/users/profile
   profile: {
     body: {
-      username: Joi.string().max(30).required(),
       biography: Joi.string().max(200).required(),
       occupation: Joi.string().max(200).required()
     }
