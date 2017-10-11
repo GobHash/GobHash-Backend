@@ -32,7 +32,7 @@ const UserSchema = new mongoose.Schema({
     location: {
       type: String,
       required: false,
-      default: 'https://www.google.com.gt/url?sa=i&rct=j&q=&esrc=s&source=images&cd=&cad=rja&uact=8&ved=0ahUKEwiVncCriODWAhVGMyYKHc95CpcQjRwIBw&url=http%3A%2F%2Fmountainvistawinery.com%2Ficon-user-default%2F&psig=AOvVaw2Uye5CNKdw22N1kiWgppb-&ust=1507519068514113'
+      default: 'https://s3.us-east-2.amazonaws.com/gobhash/profile/profile.jpeg'
     },
     name: {
       type: String,
