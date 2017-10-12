@@ -21,9 +21,10 @@ const load = async (req, res, next, id) => {
  * Get user
  * @returns {User}
  */
-const get = (req, res) => {
-  if (req.user !== null && req.user !== undefined) {
-    return res.json(req.user);
+const get = async (req, res) => {
+  if (req.params.userId !== null && req.params.userId !== undefined) {
+    const user = await User.get(req.params.userId);
+    return res.json(user);
   }
   const errorMessage = {
     name: 'UserNotFoundException',
@@ -130,6 +131,43 @@ const changePassword = async (req, res) => {
     user.updatedAt = Date.now();
     await user.save();
     return res.json('Password changed');
+  } catch (e) {
+    return res
+      .status(httpStatus.NOT_FOUND)
+      .json(e);
+  }
+};
+
+/**
+ * Update a user's password
+ * @property {number} req.body.currentPassword - current password
+ * @property {number} req.body.password - New password
+ * @returns {User[]}
+ */
+const updatePassword = async (req, res) => {
+  try {
+    const user = await User.findOne({ username: req.user.username.toLowerCase() });
+    // compare hashed password
+    const valid = await bcrypt.compare(req.body.currentPassword, user.password);
+    // if current password matches
+    if (valid === true) {
+      // hash the new password
+      const newPassword = await bcrypt.hash(req.body.password, 10);
+      user.password = newPassword;
+      user.updatedAt = Date.now();
+      await user.save();
+      return res.json({
+        id: user.id,
+        msg: 'password updated successfully'
+      });
+    }
+    // if password doesnt match
+    return res
+      .status(httpStatus.BAD_REQUEST)
+      .json({
+        id: user.id,
+        msg: 'password does not match'
+      });
   } catch (e) {
     return res
       .status(httpStatus.NOT_FOUND)
@@ -313,6 +351,7 @@ export default {
   list,
   remove,
   changePassword,
+  updatePassword,
   updateBio,
   updatePicture,
   followUser,
