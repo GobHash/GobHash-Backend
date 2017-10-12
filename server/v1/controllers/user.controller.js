@@ -259,7 +259,9 @@ const updatePicture = async (req, res) => {
       picture: savedUser.picture
     });
   } catch (e) {
-    return res.json(e);
+    return res
+      .status(httpStatus.BAD_REQUEST)
+      .json(e);
   }
 };
 
