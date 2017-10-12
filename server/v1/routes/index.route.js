@@ -7,6 +7,7 @@ import statsRoutes from './stats.route';
 import entityRoutes from './entity.route';
 import columnRoutes from './column.route';
 import operationRoutes from './operation.route';
+import widgetRoutes from './widgets.route';
 
 const router = express.Router(); // eslint-disable-line new-cap
 
@@ -37,6 +38,9 @@ router.use('/column', columnRoutes);
 
 // mount operations routes at /operations
 router.use('/operations', operationRoutes);
+
+// mount widgets routes at /widgets
+router.use('/widgets', widgetRoutes);
 
 
 export default router;
