@@ -139,6 +139,43 @@ const changePassword = async (req, res) => {
 };
 
 /**
+ * Update a user's password
+ * @property {number} req.body.currentPassword - current password
+ * @property {number} req.body.password - New password
+ * @returns {User[]}
+ */
+const updatePassword = async (req, res) => {
+  try {
+    const user = await User.findOne({ username: req.user.username.toLowerCase() });
+    // compare hashed password
+    const valid = await bcrypt.compare(req.body.currentPassword, user.password);
+    // if current password matches
+    if (valid === true) {
+      // hash the new password
+      const newPassword = await bcrypt.hash(req.body.password, 10);
+      user.password = newPassword;
+      user.updatedAt = Date.now();
+      await user.save();
+      return res.json({
+        id: user.id,
+        msg: 'password updated successfully'
+      });
+    }
+    // if password doesnt match
+    return res
+      .status(httpStatus.BAD_REQUEST)
+      .json({
+        id: user.id,
+        msg: 'password does not match'
+      });
+  } catch (e) {
+    return res
+      .status(httpStatus.NOT_FOUND)
+      .json(e);
+  }
+};
+
+/**
  * Get user list.
  * @property {number} req.query.skip - Number of users to be skipped.
  * @property {number} req.query.limit - Limit number of users to be returned.
@@ -314,6 +351,7 @@ export default {
   list,
   remove,
   changePassword,
+  updatePassword,
   updateBio,
   updatePicture,
   followUser,

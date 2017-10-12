@@ -120,5 +120,12 @@ export default {
       biography: Joi.string().max(200).required(),
       occupation: Joi.string().max(200).required()
     }
+  },
+  // POST v1/users/password/update
+  passwordUpdate: {
+    body: {
+      currentPassword: Joi.string().required(),
+      password: Joi.string().min(4).max(30).required()
+    }
   }
 };

@@ -242,8 +242,33 @@ paths:
           description: "Unexpected error"
           schema:
             $ref: "#/definitions/Error"
+  /users/password/update:
+    post:
+      tags:
+      - "User"
+      summary: Update a user's password
+      description: Update user's password
+      operationId: updatePasswordPOST
+      parameters:
+      - name: "bodyPassword"
+        in: "body"
+        description: "body Password"
+        required: true
+        schema:
+          $ref: "#/definitions/passwordUpdate"
+      responses:
+        200:
+          description: "Password changed message"
+          schema:
+            type: "string"
+        default:
+          description: "Unexpected error"
+          schema:
+            $ref: "#/definitions/Error"
   /users/biography:
     post:
+      security:
+        - Bearer: []
       tags:
       - "User"
       summary: "Update or set the user's biography"
@@ -268,6 +293,8 @@ paths:
             $ref: "#/definitions/Error"
   /users/picture:
     post:
+      security:
+        - Bearer: []
       tags:
       - "User"
       summary: Uploads a file.
@@ -289,6 +316,8 @@ paths:
             $ref: "#/definitions/Error"
   /users/follow:
     post:
+      security:
+        - Bearer: []
       tags:
       - "User"
       summary: Follow a user.
@@ -310,6 +339,8 @@ paths:
             $ref: "#/definitions/Error"
   /users/unfollow:
     post:
+      security:
+        - Bearer: []
       tags:
       - "User"
       summary: Unfollows a user.
@@ -353,6 +384,8 @@ paths:
           schema:
             $ref: "#/definitions/Error"
     get:
+      security:
+        - Bearer: []
       tags:
       - "User"
       summary: Get the profile of a user
@@ -865,6 +898,13 @@ definitions:
       postId:
         type: string
       tag:
+        type: string
+  passwordUpdate:
+    type: object
+    properties:
+      currentPassword:
+        type: string
+      password:
         type: string
   Error:
     type: "object"

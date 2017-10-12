@@ -23,6 +23,14 @@ router.route('/password/change')
     validate(paramValidation.passwordChange),
     userCtrl.changePassword);
 
+router.route('/password/update')
+  // POST /v1/users/password/update - Update Password
+  .post(
+    expressJwt({ secret: config.jwtSecret }),
+    validate(paramValidation.passwordUpdate),
+    userCtrl.updatePassword
+  );
+
 router.route('/biography')
   /** POST v1/users/biography */
   .post(

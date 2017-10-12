@@ -60,6 +60,26 @@ describe('## User APIs', () => {
     });
   });
 
+  describe('# POST /v1/users/password/update', () => {
+    it('should update a users password', (done) => {
+      request(app)
+        .post('/v1/users/password/update')
+        .set('Authorization', jwtToken)
+        .send({
+          currentPassword: validJwtCredentials.password,
+          password: '1234'
+        })
+        .expect(httpStatus.OK)
+        .then((res) => {
+          expect(res.body).to.have.property('id');
+          expect(res.body).to.have.property('msg');
+          expect(res.body.msg).to.equal('password updated successfully');
+          done();
+        })
+        .catch(done);
+    });
+  });
+
   describe('# GET /v1/users/:userId', () => {
     it('should get user details', (done) => {
       request(app)
