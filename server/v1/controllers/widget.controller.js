@@ -47,14 +47,15 @@ const baseQueryHandler = (baseColumn, operation, column) => {
 
 const getDataForPreview = async(req, res) => {
     try{
-        const filters = req.body.filters;
-        const dateFilters = req.body.dateFilters;
+        
+        const filters = req.body.definition.filters;
+        
+        const dateFilters = req.body.definition.dateFilters;
         let baseQuery = "";
 
         //Base Query data
-        let baseColumn = req.body.baseColumn;
-        let category = req.body.category;
-        
+        let baseColumn = req.body.definition.baseColumn;
+        let category = req.body.definition.category;
         baseQuery = baseQueryHandler(baseColumn, category.operation, category.column);
 
 
