@@ -8,7 +8,7 @@ const create = async (req, res) => {
   try {
     const user = req.user.id;
     console.log(req.body);
-    const widget = await new Widget(req.body.dashboard.main);
+    let widget = await new Widget(req.body.dashboard.main);
     const main = await widget.save();
     const post = await new Post({
       user,
@@ -18,13 +18,16 @@ const create = async (req, res) => {
     post.dashboard.main = main;
     console.log(post);
     if (req.body.first_submain !== undefined) {
-      post.dasbhoard.first_submain = new Widget(req.body.first_submain);
+      widget = await new Widget(req.body.first_submain);
+      post.dasbhoard.first_submain = widget;
     }
     if (req.body.second_submain !== undefined) {
-      post.dasbhoard.second_submain = new Widget(req.body.second_submain);
+      widget = await new Widget(req.body.second_submain);
+      post.dasbhoard.second_submain = widget;
     }
     if (req.body.third_submain !== undefined) {
-      post.dasbhoard.third_submain = new Widget(req.body.third_submain);
+      widget = await new Widget(req.body.third_submain);
+      post.dasbhoard.third_submain = widget;
     }
     const userQuery = await User.get(req.user.id);
     for (let i = 0; i < userQuery.followers.length; i++) { // eslint-disable-line

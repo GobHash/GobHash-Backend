@@ -131,7 +131,7 @@ PostSchema.statics = {
   list({ skip = 0, limit = 50 } = {}) {
     return this.find()
       .sort({ createdAt: -1 })
-      .populate('comments.user', 'username picture')
+      .populate('comments.user dashboard.main', 'username picture data definition widgetType entity filters dateFilters baseColumn category')
       .skip(+skip)
       .limit(+limit)
       .exec();
@@ -146,7 +146,7 @@ PostSchema.statics = {
   filterFeed({ skip = 0, limit = 15, following = [] } = {}) {
     return this.find({ user: { $in: following } })
       .sort({ createdAt: -1 })
-      .populate('comments.user', 'username picture')
+      .populate('comments.user dashboard.main', 'username picture data definition widgetType entity filters dateFilters baseColumn category')
       .skip(+skip)
       .limit(+limit)
       .exec();
@@ -161,7 +161,7 @@ PostSchema.statics = {
   mostLiked(limit, skip) {
     return this.find()
       .sort({ 'likes.length': -1 })
-      .populate('comments.user', 'username picture')
+      .populate('comments.user dashboard.main', 'username picture data definition widgetType entity filters dateFilters baseColumn category')
       .skip(+skip)
       .limit(+limit)
       .exec();
