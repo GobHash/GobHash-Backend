@@ -52,7 +52,7 @@ const WidgetSchema = new mongoose.Schema({
         name: {
           type: String
         },
-        type: {
+        column_type: {
           type: Number
         },
         updatedAt: {
@@ -78,9 +78,6 @@ const WidgetSchema = new mongoose.Schema({
         createdAt: {
           type: Date
         }
-      },
-      value: {
-        type: String
       }
     }],
     dateFilters: [{
@@ -97,7 +94,7 @@ const WidgetSchema = new mongoose.Schema({
         name: {
           type: String
         },
-        type: {
+        column_type: {
           type: Number
         },
         updatedAt: {
@@ -123,9 +120,6 @@ const WidgetSchema = new mongoose.Schema({
         createdAt: {
           type: Date
         }
-      },
-      value: {
-        type: String
       }
     }],
     baseColumn: {
@@ -156,10 +150,53 @@ const WidgetSchema = new mongoose.Schema({
     },
     category: {
       operation: {
-        type: String
+        id: {
+          type: Number
+        },
+        name: {
+          type: String
+        },
+        operation_type: {
+          type: String
+        },
+        value_type: {
+          type: Number
+        },
+        createdAt: {
+          type: Date
+        },
+        updatedAt: {
+          type: Date
+        }
       },
       column: {
-        type: String
+        id: {
+          type: Number
+        },
+        name: {
+          type: String
+        },
+        display_name: {
+          type: String
+        },
+        column_type: {
+          type: Number
+        },
+        base_table: {
+          type: String
+        },
+        second_table: {
+          type: String
+        },
+        entity_id: {
+          type: Number
+        },
+        createdAt: {
+          type: Date
+        },
+        updatedAt: {
+          type: Date
+        }
       }
     },
   }
