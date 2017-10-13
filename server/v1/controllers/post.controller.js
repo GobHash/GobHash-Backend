@@ -8,10 +8,8 @@ const create = async (req, res) => {
     const user = req.user.id;
     const post = await new Post({
       user,
-      layout: req.body.layout,
-      title: req.body.title,
-      description: req.body.description,
-      tags: req.body.tags
+      data: req.body.data,
+      definition: req.body.definition
     });
     const userQuery = await User.get(req.user.id);
     for (let i = 0; i < userQuery.followers.length; i++) { // eslint-disable-line

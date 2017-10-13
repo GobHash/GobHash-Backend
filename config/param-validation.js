@@ -62,10 +62,15 @@ export default {
   // POST v1/post
   createPost: {
     body: {
-      layout: Joi.string().required(),
-      title: Joi.string().required(),
-      description: Joi.string().required(),
-      tags: Joi.array()
+      data: Joi.array().required(),
+      definition: {
+        name: Joi.string().max(200).required(),
+        widgetType: Joi.object().required(),
+        filters: Joi.object(),
+        dateFilters: Joi.object(),
+        baseColumn: Joi.object(),
+        category: Joi.object()
+      }
     }
   },
   // DELETE v1/post/delete
