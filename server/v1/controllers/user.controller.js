@@ -261,7 +261,7 @@ const updatePicture = async (req, res) => {
   } catch (e) {
     return res
       .status(httpStatus.BAD_REQUEST)
-      .json(e);
+      .json(JSON.stringify(e));
   }
 };
 
