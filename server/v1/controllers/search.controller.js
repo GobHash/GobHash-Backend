@@ -12,7 +12,7 @@ const searchUser = async (req, res) => {
     if (req.query.username === undefined && req.query.name === undefined) {
       return res.status(httpStatus.NOT_FOUND).json([]);
     }
-    let re = new RegExp(req.query.username, 'i');
+    let re = new RegExp(req.query.username.toLowerCase(), 'i');
     let users = await User
       .find()
       .where('username')

@@ -1,16 +1,31 @@
 import Post from '../models/post.model';
 import User from '../models/user.model';
+import Widget from '../models/widget.model';
 import { emmiter } from '../../../index';
 
 // Create
 const create = async (req, res) => {
   try {
     const user = req.user.id;
+    console.log(req.body);
+    const widget = await new Widget(req.body.dashboard.main);
+    const main = await widget.save();
     const post = await new Post({
       user,
-      data: req.body.data,
-      definition: req.body.definition
+      title: req.body.title,
+      description: req.body.description
     });
+    post.dashboard.main = main;
+    console.log(post);
+    if (req.body.first_submain !== undefined) {
+      post.dasbhoard.first_submain = new Widget(req.body.first_submain);
+    }
+    if (req.body.second_submain !== undefined) {
+      post.dasbhoard.second_submain = new Widget(req.body.second_submain);
+    }
+    if (req.body.third_submain !== undefined) {
+      post.dasbhoard.third_submain = new Widget(req.body.third_submain);
+    }
     const userQuery = await User.get(req.user.id);
     for (let i = 0; i < userQuery.followers.length; i++) { // eslint-disable-line
       const follower = userQuery.followers[i];
@@ -18,9 +33,10 @@ const create = async (req, res) => {
         emmiter.sendToUser(follower, post);
       }
     }
-    await post.save();
-    return res.json(post);
+    const savedPost = await post.save();
+    return res.json(savedPost);
   } catch (e) {
+    console.log(e);
     return res.json(e);
   }
 };

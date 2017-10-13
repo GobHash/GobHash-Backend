@@ -62,14 +62,13 @@ export default {
   // POST v1/post
   createPost: {
     body: {
-      data: Joi.array().required(),
-      definition: {
-        name: Joi.string().max(200).required(),
-        widgetType: Joi.object().required(),
-        filters: Joi.object(),
-        dateFilters: Joi.object(),
-        baseColumn: Joi.object(),
-        category: Joi.object()
+      title: Joi.string().max(100).required(),
+      description: Joi.string().max(500).required(),
+      dasbhoard: {
+        main: Joi.object().required(),
+        first_submain: Joi.object(),
+        second_subdomain: Joi.object(),
+        third_submain: Joi.object()
       }
     }
   },

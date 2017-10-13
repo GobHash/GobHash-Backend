@@ -831,131 +831,529 @@ definitions:
   PostBody:
     type: object
     properties:
-      data:
-        type: array
-        items:
-          type: array
-      definition:
+      title:
+        type: string
+      description:
+        type: string
+      dashboard:
         type: object
         properties:
-          name:
-            type: string
-          widgetType:
+          main:
             type: object
+            required: true
             properties:
-              id:
-                type: integer
-              name:
-                type: string
-          entity:
-            type: object
-            properties:
-              id:
-                type: integer
-              name:
-                type: string
-              visible:
-                type: boolean
-              updatedAt:
-                type: string
-              createdAt:
-                type: string
-          filter:
-            type: array
-            items:
-              type: object
-              properties:
-                hashKey:
-                  type: string
-                column:
-                  type: object
-                  properties:
-                    base_table:
-                      type: string
-                    entity_id:
-                      type: integer
-                    name:
-                      type: string
-                    updatedAt:
-                      type: string
-                    createdAt:
-                      type: string
-                  operation:
+              data:
+                type: array
+                items:
+                  type: array
+              definition:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  widgetType:
                     type: object
                     properties:
                       id:
                         type: integer
                       name:
                         type: string
-                      value_type:
-                        type: integer
-                      updatedAt:
-                        type: string
-                      createdAt:
-                        type: string
-                  value:
-                    type: string
-          dateFilters:
-            type: array
-            items:
-              type: object
-              properties:
-                hashKey:
-                  type: string
-                column:
-                  type: object
-                  properties:
-                    base_table:
-                      type: string
-                    entity_id:
-                      type: integer
-                    name:
-                      type: string
-                    updatedAt:
-                      type: string
-                    createdAt:
-                      type: string
-                  operation:
+                  entity:
                     type: object
                     properties:
                       id:
                         type: integer
                       name:
                         type: string
-                      value_type:
-                        type: integer
+                      visible:
+                        type: boolean
                       updatedAt:
                         type: string
                       createdAt:
                         type: string
-                  value:
+                  filter:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        hashKey:
+                          type: string
+                        column:
+                          type: object
+                          properties:
+                            base_table:
+                              type: string
+                            entity_id:
+                              type: integer
+                            name:
+                              type: string
+                            updatedAt:
+                              type: string
+                            createdAt:
+                              type: string
+                          operation:
+                            type: object
+                            properties:
+                              id:
+                                type: integer
+                              name:
+                                type: string
+                              value_type:
+                                type: integer
+                              updatedAt:
+                                type: string
+                              createdAt:
+                                type: string
+                          value:
+                            type: string
+                  dateFilters:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        hashKey:
+                          type: string
+                        column:
+                          type: object
+                          properties:
+                            base_table:
+                              type: string
+                            entity_id:
+                              type: integer
+                            name:
+                              type: string
+                            updatedAt:
+                              type: string
+                            createdAt:
+                              type: string
+                          operation:
+                            type: object
+                            properties:
+                              id:
+                                type: integer
+                              name:
+                                type: string
+                              value_type:
+                                type: integer
+                              updatedAt:
+                                type: string
+                              createdAt:
+                                type: string
+                          value:
+                            type: string
+                    baseColumn:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        name:
+                          type: string
+                        base_type:
+                          type: string
+                        base_table:
+                          type: string
+                        second_table:
+                          type: string
+                        entity_id:
+                          type: integer
+                        createdAt:
+                          type: string
+                        updatedAt:
+                          type: string
+                    category:
+                      type: object
+                      properties:
+                        operation:
+                          type: string
+                        column:
+                  type: string
+          first_submain:
+            type: object
+            required: false
+            properties:
+              data:
+                type: array
+                items:
+                  type: array
+              definition:
+                type: object
+                properties:
+                  name:
                     type: string
-            baseColumn:
-              type: object
-              properties:
-                id:
-                  type: integer
-                name:
+                  widgetType:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      name:
+                        type: string
+                  entity:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      name:
+                        type: string
+                      visible:
+                        type: boolean
+                      updatedAt:
+                        type: string
+                      createdAt:
+                        type: string
+                  filter:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        hashKey:
+                          type: string
+                        column:
+                          type: object
+                          properties:
+                            base_table:
+                              type: string
+                            entity_id:
+                              type: integer
+                            name:
+                              type: string
+                            updatedAt:
+                              type: string
+                            createdAt:
+                              type: string
+                          operation:
+                            type: object
+                            properties:
+                              id:
+                                type: integer
+                              name:
+                                type: string
+                              value_type:
+                                type: integer
+                              updatedAt:
+                                type: string
+                              createdAt:
+                                type: string
+                          value:
+                            type: string
+                  dateFilters:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        hashKey:
+                          type: string
+                        column:
+                          type: object
+                          properties:
+                            base_table:
+                              type: string
+                            entity_id:
+                              type: integer
+                            name:
+                              type: string
+                            updatedAt:
+                              type: string
+                            createdAt:
+                              type: string
+                          operation:
+                            type: object
+                            properties:
+                              id:
+                                type: integer
+                              name:
+                                type: string
+                              value_type:
+                                type: integer
+                              updatedAt:
+                                type: string
+                              createdAt:
+                                type: string
+                          value:
+                            type: string
+                    baseColumn:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        name:
+                          type: string
+                        base_type:
+                          type: string
+                        base_table:
+                          type: string
+                        second_table:
+                          type: string
+                        entity_id:
+                          type: integer
+                        createdAt:
+                          type: string
+                        updatedAt:
+                          type: string
+                    category:
+                      type: object
+                      properties:
+                        operation:
+                          type: string
+                        column:
                   type: string
-                base_type:
-                  type: string
-                base_table:
-                  type: string
-                second_table:
-                  type: string
-                entity_id:
-                  type: integer
-                createdAt:
-                  type: string
-                updatedAt:
-                  type: string
-            category:
-              type: object
-              properties:
-                operation:
-                  type: string
-                column:
-                  type: string
+          second_submain:
+            type: object
+            required: false
+            properties:
+              data:
+                type: array
+                items:
+                  type: array
+              definition:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  widgetType:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      name:
+                        type: string
+                  entity:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      name:
+                        type: string
+                      visible:
+                        type: boolean
+                      updatedAt:
+                        type: string
+                      createdAt:
+                        type: string
+                  filter:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        hashKey:
+                          type: string
+                        column:
+                          type: object
+                          properties:
+                            base_table:
+                              type: string
+                            entity_id:
+                              type: integer
+                            name:
+                              type: string
+                            updatedAt:
+                              type: string
+                            createdAt:
+                              type: string
+                          operation:
+                            type: object
+                            properties:
+                              id:
+                                type: integer
+                              name:
+                                type: string
+                              value_type:
+                                type: integer
+                              updatedAt:
+                                type: string
+                              createdAt:
+                                type: string
+                          value:
+                            type: string
+                  dateFilters:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        hashKey:
+                          type: string
+                        column:
+                          type: object
+                          properties:
+                            base_table:
+                              type: string
+                            entity_id:
+                              type: integer
+                            name:
+                              type: string
+                            updatedAt:
+                              type: string
+                            createdAt:
+                              type: string
+                          operation:
+                            type: object
+                            properties:
+                              id:
+                                type: integer
+                              name:
+                                type: string
+                              value_type:
+                                type: integer
+                              updatedAt:
+                                type: string
+                              createdAt:
+                                type: string
+                          value:
+                            type: string
+                    baseColumn:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        name:
+                          type: string
+                        base_type:
+                          type: string
+                        base_table:
+                          type: string
+                        second_table:
+                          type: string
+                        entity_id:
+                          type: integer
+                        createdAt:
+                          type: string
+                        updatedAt:
+                          type: string
+                    category:
+                      type: object
+                      properties:
+                        operation:
+                          type: string
+                        column:
+                          type: string
+                  third_submain:
+                    type: object
+                    required: false
+                    properties:
+                      data:
+                        type: array
+                        items:
+                          type: array
+                      definition:
+                        type: object
+                        properties:
+                          name:
+                            type: string
+                          widgetType:
+                            type: object
+                            properties:
+                              id:
+                                type: integer
+                              name:
+                                type: string
+                          entity:
+                            type: object
+                            properties:
+                              id:
+                                type: integer
+                              name:
+                                type: string
+                              visible:
+                                type: boolean
+                              updatedAt:
+                                type: string
+                              createdAt:
+                                type: string
+                          filter:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                hashKey:
+                                  type: string
+                                column:
+                                  type: object
+                                  properties:
+                                    base_table:
+                                      type: string
+                                    entity_id:
+                                      type: integer
+                                    name:
+                                      type: string
+                                    updatedAt:
+                                      type: string
+                                    createdAt:
+                                      type: string
+                                  operation:
+                                    type: object
+                                    properties:
+                                      id:
+                                        type: integer
+                                      name:
+                                        type: string
+                                      value_type:
+                                        type: integer
+                                      updatedAt:
+                                        type: string
+                                      createdAt:
+                                        type: string
+                                  value:
+                                    type: string
+                          dateFilters:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                hashKey:
+                                  type: string
+                                column:
+                                  type: object
+                                  properties:
+                                    base_table:
+                                      type: string
+                                    entity_id:
+                                      type: integer
+                                    name:
+                                      type: string
+                                    updatedAt:
+                                      type: string
+                                    createdAt:
+                                      type: string
+                                  operation:
+                                    type: object
+                                    properties:
+                                      id:
+                                        type: integer
+                                      name:
+                                        type: string
+                                      value_type:
+                                        type: integer
+                                      updatedAt:
+                                        type: string
+                                      createdAt:
+                                        type: string
+                                  value:
+                                    type: string
+                            baseColumn:
+                              type: object
+                              properties:
+                                id:
+                                  type: integer
+                                name:
+                                  type: string
+                                base_type:
+                                  type: string
+                                base_table:
+                                  type: string
+                                second_table:
+                                  type: string
+                                entity_id:
+                                  type: integer
+                                createdAt:
+                                  type: string
+                                updatedAt:
+                                  type: string
+                            category:
+                              type: object
+                              properties:
+                                operation:
+                                  type: string
+                                column:
+                                  type: string
   PostCommentBody:
     type: object
     properties:
