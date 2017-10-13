@@ -17,15 +17,15 @@ const create = async (req, res) => {
     });
     post.dashboard.main = main;
     console.log(post);
-    if (req.body.first_submain !== undefined) {
+    if (req.body.dasbhoard.first_submain !== undefined) {
       widget = await new Widget(req.body.first_submain);
       post.dasbhoard.first_submain = widget;
     }
-    if (req.body.second_submain !== undefined) {
+    if (req.body.dasbhoard.second_submain !== undefined) {
       widget = await new Widget(req.body.second_submain);
       post.dasbhoard.second_submain = widget;
     }
-    if (req.body.third_submain !== undefined) {
+    if (req.body.dasbhoard.third_submain !== undefined) {
       widget = await new Widget(req.body.third_submain);
       post.dasbhoard.third_submain = widget;
     }
