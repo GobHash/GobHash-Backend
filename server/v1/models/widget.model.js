@@ -39,9 +39,6 @@ const WidgetSchema = new mongoose.Schema({
       }
     },
     filters: [{
-      hashKey: {
-        type: String
-      },
       column: {
         base_table: {
           type: String
@@ -81,9 +78,6 @@ const WidgetSchema = new mongoose.Schema({
       }
     }],
     dateFilters: [{
-      hashKey: {
-        type: String
-      },
       column: {
         base_table: {
           type: String
