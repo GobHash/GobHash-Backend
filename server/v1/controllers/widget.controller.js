@@ -16,7 +16,7 @@ const replaceAll = (search, replacement, target) => {
 
 const baseQueryHandler = (baseColumn, operation, column) => {
     let sqlOperation = "";
-    if(column.second_table != "dim_fecha"){
+    if(column.second_table != "dim_fecha" && baseColumn.second_table != "dim_fecha"){
         switch(operation.name){
             case "Contar": {
                 sqlOperation = "COUNT(" + 'q.' + column.name + ") as value"
@@ -37,11 +37,105 @@ const baseQueryHandler = (baseColumn, operation, column) => {
         let sqlColumn = column.name;
         let calculateColumn = "q." + baseColumn.name;
         let groupBy =  calculateColumn;
-        let selectFrom = "" ;
-        let query = sqlClient.select().field(sqlOperation).field(calculateColumn).from(sqlClient.select().field(column.name).field(baseColumn.name).from("consolidated_table"), "q").group(groupBy);
+        let selectFrom = sqlClient.select().distinct().field(column.name).field(baseColumn.name).from("consolidated_table");
+        let query = sqlClient.select().field(sqlOperation).field(calculateColumn).from(selectFrom, "q").group(groupBy);
 
         return query.toString();
     }
+    else if (column.second_table != "dim_fecha" && baseColumn.second_table == "dim_fecha"){
+        let sqlOperation = "";
+        switch(operation.name){
+            case "Contar": {
+                sqlOperation = "COUNT(" + 'q.' + column.name + ") as value"
+                break;
+            }
+            case "Sumar":{
+                sqlOperation = "SUM(" + 'q.' + column.name + ") as value"
+                break;
+            }
+            case "Promedio":{
+                sqlOperation = "AVG(" + 'q.' + column.name + ") as value"
+                break;
+            }
+            default: {
+                break;              
+            }
+        } 
+
+        let joinDateField = "b." + baseColumn.date_column;
+        let joinOpFielf = "a." + column.name;
+        let joinCondition = "a." + baseColumn.name + "=" + "b.id_fecha";
+        let sqlColumn = column.date_column;
+        let displayColumn = "q." +  baseColumn.date_column;
+        let groupBy = displayColumn;
+        let selectFrom = sqlClient.select().distinct().field(joinOpFielf).field(joinDateField).from("consolidated_table","a").join("dim_fecha","b",joinCondition);
+        let query = sqlClient.select().field(sqlOperation).field(displayColumn).from(selectFrom, "q").group(groupBy);
+        return query.toString();
+    }
+    else if (column.second_table == "dim_fecha" && baseColumn.second_table != "dim_fecha"){
+        let sqlOperation = "";
+        switch(operation.name){
+            case "Contar": {
+                sqlOperation = "COUNT(" + 'q.' + column.date_column + ") as value"
+                break;
+            }
+            case "Sumar":{
+                sqlOperation = "SUM(" + 'q.' + column.date_column + ") as value"
+                break;
+            }
+            case "Promedio":{
+                sqlOperation = "AVG(" + 'q.' + column.date_column + ") as value"
+                break;
+            }
+            default: {
+                break;              
+            }
+        } 
+
+        let joinDateField = "b." + column.name ;
+        let joinOpFielf = "a." + baseColumn.name;
+        let joinCondition = "a." + column.name + "=" + "b.id_fecha";
+        let realColumn = "b." + column.date_column;
+        let sqlColumn = column.name;
+        let displayColumn = "q." +  baseColumn.name;
+        let groupBy = displayColumn;
+        let selectFrom = sqlClient.select().distinct().field(joinOpFielf).field(realColumn).from("consolidated_table","a").join("dim_fecha","b",joinCondition);
+        let query = sqlClient.select().field(sqlOperation).field(displayColumn).from(selectFrom, "q").group(groupBy);
+        return query.toString();
+    }else{
+        let sqlOperation = "";
+        switch(operation.name){
+            case "Contar": {
+                sqlOperation = "COUNT(" + 'q.' + column.date_column + ") as value"
+                break;
+            }
+            case "Sumar":{
+                sqlOperation = "SUM(" + 'q.' + column.date_column + ") as value"
+                break;
+            }
+            case "Promedio":{
+                sqlOperation = "AVG(" + 'q.' + column.date_column + ") as value"
+                break;
+            }
+            default: {
+                break;              
+            }
+        } 
+
+        let joinDateField = "b." + column.name ;
+        let joinOpFielf = "a." + baseColumn.name;
+        let joinCondition = "a." + column.name + "=" + "b.id_fecha";
+        let realColumn = "b." + column.date_column;
+        let sqlColumn = column.name;
+        let displayColumn = "q." +  baseColumn.date_column;
+        let groupBy = displayColumn;
+        let selectFrom = sqlClient.select().distinct().field(joinOpFielf).field(realColumn).from("consolidated_table","a").join("dim_fecha","b",joinCondition);
+        let query = sqlClient.select().field(sqlOperation).field(displayColumn).from(selectFrom, "q").group(groupBy);
+        return query.toString();
+    }
+
+
+    
     
 };
 
@@ -77,7 +171,7 @@ const getDataForPreview = async(req, res) => {
 
         //Run query
         
-        let queryString = replaceAll("`","",baseQuery.toString());
+        let queryString = replaceAll("`","",baseQuery);   
         const data = await sequelize.query(queryString);
         
         return res.json(data);
