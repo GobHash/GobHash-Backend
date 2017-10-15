@@ -9,8 +9,7 @@ const sequelize = new Sequelize(config.dbUri, { logging: false });
 const Column = sequelize.define('Column', {
   name: {
     type: Sequelize.STRING,
-    field: 'column_name',
-    unique: 'column_name'
+    field: 'column_name'
   },
   display_name: {
     type: Sequelize.STRING,
@@ -28,6 +27,10 @@ const Column = sequelize.define('Column', {
   second_table: {
     type: Sequelize.STRING,
     field: 'second_table'
+  },
+  date_column:{
+    type: Sequelize.STRING,
+    field: 'date_column'
   },
   // It is possible to create foreign keys:
   entity_id: {
