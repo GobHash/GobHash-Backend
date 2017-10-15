@@ -10,7 +10,7 @@
     <link href='css/railscasts.css' rel='stylesheet' />
   </head>
   <body>
-    <!--START--><div id='app'><div class="container unlimiter" data-reactroot="" data-reactid="1" data-react-checksum="-1762850724"><div class="fixed-top fixed-right space-left16" data-reactid="2"><div class="fill-light col6 pin-right" data-reactid="3"></div></div><div class="space-top5 scroll-styled overflow-auto pad1 width16 sidebar fixed-left fill-dark dark" data-reactid="4"><div class="pad0x small" data-reactid="5"><div class="small pad0x quiet space-top1" data-reactid="6">Introducción</div><a href="#nuestro-api" class="line-height15 pad0x pad00y quiet block " data-reactid="7">Nuestro API</a><div class="small pad0x quiet space-top1" data-reactid="8">Empezando</div><a href="#usando-el-api" class="line-height15 pad0x pad00y quiet block " data-reactid="9">Usando el API</a><div class="small pad0x quiet space-top1" data-reactid="10">Ejemplo</div></div></div><div class="space-left16" data-reactid="11"><div class="" data-reactid="12"><div class="clearfix" data-reactid="13"><div data-title="Nuestro API" class="keyline-top section contain clearfix " data-reactid="14"><div class="space-bottom8 col6 pad2x prose clip" data-reactid="15"><h2 id="nuestro-api">Nuestro API</h2>
+    <!--START--><div id='app'><div class="container unlimiter" data-reactroot="" data-reactid="1" data-react-checksum="-1658027511"><div class="fixed-top fixed-right space-left16" data-reactid="2"><div class="fill-light col6 pin-right" data-reactid="3"></div></div><div class="space-top5 scroll-styled overflow-auto pad1 width16 sidebar fixed-left fill-dark dark" data-reactid="4"><div class="pad0x small" data-reactid="5"><div class="small pad0x quiet space-top1" data-reactid="6">Introducción</div><a href="#nuestro-api" class="line-height15 pad0x pad00y quiet block " data-reactid="7">Nuestro API</a><div class="small pad0x quiet space-top1" data-reactid="8">Empezando</div><a href="#usando-el-api" class="line-height15 pad0x pad00y quiet block " data-reactid="9">Usando el API</a><div class="small pad0x quiet space-top1" data-reactid="10">Ejemplo</div></div></div><div class="space-left16" data-reactid="11"><div class="" data-reactid="12"><div class="clearfix" data-reactid="13"><div data-title="Nuestro API" class="keyline-top section contain clearfix " data-reactid="14"><div class="space-bottom8 col6 pad2x prose clip" data-reactid="15"><h2 id="nuestro-api">Nuestro API</h2>
 <p>Bienvenido al API de GobHash! Esta es parte de nuestra documentación</p>
 <p>Esta documentación es generada a través de Markdown utilizando
 <a href="https://github.com/tmcw/docbox">docbox</a>,
@@ -66,9 +66,36 @@ Parámetros tipo query: son contenidos en una tabla con un encabezado de opción
     <span class="hljs-attr">"username"</span>: <span class="hljs-string">"test"</span>,
     <span class="hljs-attr">"id"</span>: <span class="hljs-string">"1234"</span>
 }</pre>
-</div></div></div></div></div><div class="fixed-top space-left16" data-reactid="21"><div class="events fill-light bottom-shadow pad1 col6 pin-topright  " data-reactid="22"><div class="space-right1 small quiet inline" data-reactid="23">Show examples in:</div><div class="rounded-toggle inline short" data-reactid="24"><a class="strong active" data-reactid="25">cURL</a><a class="strong " data-reactid="26">Python</a><a class="strong " data-reactid="27">JS</a><a class="strong " data-reactid="28">nodejs</a></div><div class="fr pad0" data-reactid="29"><a title="Display as 1 column" style="cursor:pointer;" class="icon quiet caret-left pad0 fill-darken0 round" data-reactid="30"></a></div></div></div><div class="fill-dark dark bottom-shadow fixed-top pad0 width16" data-reactid="31"><div class="strong small pad0
-
-          space-left4 line-height15" data-reactid="32"><a href="/" class="active space-top1 space-left1 pin-topleft icon round dark pad0 icon-fix" data-reactid="33"><img src="./media/logo.png" width="35" data-reactid="34"/></a><!-- react-text: 35 -->GobHash API Documentation<!-- /react-text --></div></div></div></div><!--STOP-->
+</div></div><div data-title="Feed en Tiempo Real con WebSockets (Solo JS)" class="keyline-top section contain clearfix " data-reactid="21"><div class="space-bottom8 col6 pad2x prose clip" data-reactid="22"><h3 id="feed-en-tiempo-real-con-websockets-solo-js">Feed en Tiempo Real con WebSockets (Solo JS)</h3>
+<ol>
+<li>Se conecta al servidor.</li>
+</ol>
+<ul>
+<li>El hosting actual no permite long polling por lo que hay que especificarle explicítamente web sockets como protocolo.</li>
+</ul>
+<ol start="2">
+<li>Autenticarse </li>
+</ol>
+<ul>
+<li>
+<p>El servidor necesita del token JWT para verificar la autenticidad de la conexión.</p>
+</li>
+<li>
+<p>Si el token es inválido el servidor desconectará automáticamente al cliente.</p>
+</li>
+</ul>
+<ul>
+<li>Si el token es válido se emitirá una señal en el canal de <code>authenticated</code> y el cliente lo puede recibir así. Y se guardará al usuario en un estado de online.</li>
+</ul>
+<ol start="3">
+<li>Feed</li>
+</ol>
+<ul>
+<li>Una vez autenticado, a los clientes online puedne escuchar a post en tiempo real en el siguiente evento.</li>
+</ul>
+</div></div></div></div></div><div class="fixed-top space-left16" data-reactid="23"><div class="events fill-light bottom-shadow pad1 col6 pin-topright  " data-reactid="24"><div class="space-right1 small quiet inline" data-reactid="25">Show examples in:</div><div class="rounded-toggle inline short" data-reactid="26"><a class="strong active" data-reactid="27">cURL</a><a class="strong " data-reactid="28">Python</a><a class="strong " data-reactid="29">JS</a><a class="strong " data-reactid="30">nodejs</a></div><div class="fr pad0" data-reactid="31"><a title="Display as 1 column" style="cursor:pointer;" class="icon quiet caret-left pad0 fill-darken0 round" data-reactid="32"></a></div></div></div><div class="fill-dark dark bottom-shadow fixed-top pad0 width16" data-reactid="33"><div class="strong small pad0
+          
+          space-left4 line-height15" data-reactid="34"><a href="/" class="active space-top1 space-left1 pin-topleft icon round dark pad0 icon-fix" data-reactid="35"><img src="./media/logo.png" width="35" data-reactid="36"/></a><!-- react-text: 37 -->GobHash API Documentation<!-- /react-text --></div></div></div></div><!--STOP-->
     <script src='bundle.js'></script>
   </body>
 </html>

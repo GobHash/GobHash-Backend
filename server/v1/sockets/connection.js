@@ -17,13 +17,12 @@ const socketConnection = (io) => {
           const user = await User.get(decoded.id);
           user.online = true;
           await user.save();
+          client.emit('authenticated', { auth: true });
         }
       } catch (err) {
+        client.emit('authenticated', { auth: false });
         client.authenticated = false; // eslint-disable-line
         client.disconnect(); // force disconnect not authorized client
-      }
-      if (debug) {
-        console.log(client.authenticated); // eslint-disable-line
       }
     });
     client.on('disconnect', async () => {
