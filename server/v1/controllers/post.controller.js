@@ -2,6 +2,7 @@ import Post from '../models/post.model';
 import User from '../models/user.model';
 import Widget from '../models/widget.model';
 import { emmiter } from '../../../index';
+import mongoose from 'mongoose';
 
 // Create
 const create = async (req, res) => {
@@ -17,19 +18,31 @@ const create = async (req, res) => {
     });
     post.dashboard.main = main;
     if ('first_submain' in post.dashboard) {
-      widget = await new Widget(req.body.dashboard.first_submain);
-      const first_submain = await widget.save();
-      post.dashboard.first_submain = first_submain;
+      try {
+        widget = await new Widget(req.body.dashboard.first_submain);
+        const first_submain = await widget.save();
+        post.dashboard.first_submain = first_submain;
+      } catch (e) {
+
+      }
     }
     if ('second_submain' in post.dashboard) {
-      widget = await new Widget(req.body.dashboard.second_submain);
-      const second_submain = await widget.save();
-      post.dashboard.second_submain = second_submain;
+      try {
+        widget = await new Widget(req.body.dashboard.second_submain);
+        const second_submain = await widget.save();
+        post.dashboard.second_submain = second_submain;
+      } catch (e) {
+
+      }
     }
     if ('third_submain' in post.dashboard) {
-      widget = await new Widget(req.body.dashboard.third_submain);
-      const third_submain = await widget.save();
-      post.dashboard.third_submain = third_submain;
+      try{
+        widget = await new Widget(req.body.dashboard.third_submain);
+        const third_submain = await widget.save();
+        post.dashboard.third_submain = third_submain;
+      } catch (e) {
+
+      }
     }
     console.log(req.body.dashboard);
     const userQuery = await User.get(req.user.id);
@@ -229,6 +242,37 @@ const removeTag = async (req, res) => {
     return res.json(e);
   }
 };
+/**
+ * Check if user can like post
+ * @param  {string} req.params.userId User Id
+ * @param  {string} req.params.postID Post Id
+ * @return {boolean} True can like, False otherwise
+ */
+const checkValidLike = async (req, res) => {
+  try {
+    // find post
+    const post = await Post.get(req.params.postId);
+    const likes = post.likes;
+    if ((likes.filter((l) => { return l.user == req.params.userId })).length !== 0) {
+      return res.json({
+        userId: req.params.userId,
+        canLike: false,
+        msg: 'User already liked this post'
+      });
+    }
+    // if user is not in already in liked
+    // then user can like
+    return res.json({
+      userId: req.params.userId,
+      canLike: true,
+      msg: 'User has not liked this post'
+    });
+
+
+  } catch (e) {
+    return res.json(e);
+  }
+};
 
 export default {
   create,
@@ -241,5 +285,6 @@ export default {
   deleteLike,
   addTag,
   removeTag,
-  feed
+  feed,
+  checkValidLike
 };

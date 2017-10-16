@@ -678,6 +678,33 @@ paths:
           description: "Unexpected error"
           schema:
             $ref: "#/definitions/Error"
+  /post/like/validation/{postId}/{userId}:
+    get:
+      security:
+        - Bearer: []
+      tags:
+      - "Post"
+      summary: Verify if user can like post
+      description: Verify if user can like post
+      operationId: likeValidationPOST
+      parameters:
+      - name: "postId"
+        in: "path"
+        description: "Id of Post"
+        required: true
+      - name: "userId"
+        in: "path"
+        description: "Id of user"
+        required: true
+      responses:
+        200:
+          description: "Can like Post"
+          schema:
+            type: "boolean"
+        default:
+          description: "Unexpected error"
+          schema:
+            $ref: "#/definitions/Error"
   /search/users:
     get:
       security:

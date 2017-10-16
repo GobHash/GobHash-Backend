@@ -131,5 +131,13 @@ export default {
       currentPassword: Joi.string().required(),
       password: Joi.string().min(4).max(30).required()
     }
+  },
+  // GET v1/post/like/validate/:postId/:userId
+  validateLike: {
+    params: {
+      userId: Joi.string().min(1).required(),
+      postId: Joi.string().min(1).required()
+    }
   }
+
 };

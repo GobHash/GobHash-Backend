@@ -64,6 +64,14 @@ router.route('/like')
     postCtrl.deleteLike
   );
 
+router.route('/like/validation/:postId/:userId')
+  /** GET v1/post/like/validation/:postId/:userId */
+  .get(
+    expressJwt({ secret: config.jwtSecret }),
+    validate(paramValidation.validateLike),
+    postCtrl.checkValidLike
+  );
+
 router.route('/tag')
   /** POST v1/post/tag */
   .post(
