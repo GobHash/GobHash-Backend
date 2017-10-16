@@ -508,8 +508,8 @@ paths:
         - Bearer: []
       tags:
       - "Post"
-      summary: Get one post according to following
-      description: Get one post according to following
+      summary: Get list of posts according to following users
+      description: Get list of posts according to following users
       operationId: GetFeedPOST
       parameters:
       - name: "userId"
