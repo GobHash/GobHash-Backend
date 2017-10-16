@@ -100,7 +100,7 @@ PostSchema.statics = {
    */
   get(id) {
     return this.findById(id)
-      .populate('comments.user dashboard.main', 'username picture data definition widgetType entity filters dateFilters baseColumn category')
+      .populate('comments.user dashboard.main dashboard.first_submain dashboard.second_submain dashboard.third_submain', 'username picture data definition widgetType entity filters dateFilters baseColumn category')
       .exec()
       .then((post) => {
         if (post) {
