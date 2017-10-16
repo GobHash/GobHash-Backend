@@ -16,6 +16,21 @@ const create = async (req, res) => {
       description: req.body.description
     });
     post.dashboard.main = main;
+    if ('first_submain' in post.dashboard) {
+      widget = await new Widget(req.body.dashboard.first_submain);
+      const first_submain = await widget.save();
+      post.dashboard.first_submain = first_submain;
+    }
+    if ('second_submain' in post.dashboard) {
+      widget = await new Widget(req.body.dashboard.second_submain);
+      const second_submain = await widget.save();
+      post.dashboard.second_submain = second_submain;
+    }
+    if ('third_submain' in post.dashboard) {
+      widget = await new Widget(req.body.dashboard.third_submain);
+      const third_submain = await widget.save();
+      post.dashboard.third_submain = third_submain;
+    }
     console.log(req.body.dashboard);
     const userQuery = await User.get(req.user.id);
     for (let i = 0; i < userQuery.followers.length; i++) { // eslint-disable-line

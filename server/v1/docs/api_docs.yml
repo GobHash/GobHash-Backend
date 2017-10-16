@@ -502,6 +502,31 @@ paths:
           description: "Unexpected error"
           schema:
             $ref: "#/definitions/Error"
+  /post/feed/{userId}:
+    get:
+      security:
+        - Bearer: []
+      tags:
+      - "Post"
+      summary: Get one post according to following
+      description: Get one post according to following
+      operationId: GetFeedPOST
+      parameters:
+      - name: "userId"
+        in: "path"
+        description: "User id"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "Posts"
+          schema:
+            type: "object"
+            $ref: "#/definitions/PostEntity"
+        default:
+          description: "Unexpected error"
+          schema:
+            $ref: "#/definitions/Error"
   /post/comment:
     post:
       security:
