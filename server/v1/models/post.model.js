@@ -100,7 +100,7 @@ PostSchema.statics = {
    */
   get(id) {
     return this.findById(id)
-      .populate('comments.user dashboard.main dashboard.first_submain dashboard.second_submain dashboard.third_submain', 'username picture data definition widgetType entity filters dateFilters baseColumn category')
+      .populate('comments.user dashboard.main dashboard.first_submain dashboard.second_submain dashboard.third_submain user', 'username picture data definition widgetType entity filters dateFilters baseColumn category')
       .exec()
       .then((post) => {
         if (post) {
@@ -147,7 +147,7 @@ PostSchema.statics = {
   filterFeed({ skip = 0, limit = 15, following = [] } = {}) {
     return this.find({ user: { $in: following } })
       .sort({ createdAt: -1 })
-      .populate('comments.user dashboard.main', 'username picture data definition widgetType entity filters dateFilters baseColumn category')
+      .populate('comments.user dashboard.main user', 'username picture data definition widgetType entity filters dateFilters baseColumn category')
       .skip(+skip)
       .limit(+limit)
       .exec();
