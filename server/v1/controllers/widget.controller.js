@@ -4,7 +4,14 @@ import sqlClient from 'squel'
 import Sequelize from 'sequelize';
 import config from '../../../config/config';
 
-const sequelize = new Sequelize(config.dbUriG, { logging: false });
+const sequelize = new Sequelize(config.dbUriG, {
+  define: {
+    charset: 'utf8',
+    collate: 'utf8_general_ci',
+    timestamps: true
+  },
+  logging: false
+});
 
 const selectWithOutOperation = "select {0}";
 const fromWithOutJoins = "from {0}";
@@ -31,8 +38,8 @@ const baseQueryHandler = (baseColumn, operation, column) => {
                 break;
             }
             default: {
-                break;              
-            } 
+                break;
+            }
         }
         let sqlColumn = column.name;
         let calculateColumn = "q." + baseColumn.name;
@@ -65,9 +72,9 @@ const baseQueryHandler = (baseColumn, operation, column) => {
                 break;
             }
             default: {
-                break;              
+                break;
             }
-        } 
+        }
 
         let joinDateField = "b." + baseColumn.date_column;
         let joinOpFielf = "a." + column.name;
@@ -101,9 +108,9 @@ const baseQueryHandler = (baseColumn, operation, column) => {
                 break;
             }
             default: {
-                break;              
+                break;
             }
-        } 
+        }
 
         let joinDateField = "b." + column.name ;
         let joinOpFielf = "a." + baseColumn.name;
@@ -138,9 +145,9 @@ const baseQueryHandler = (baseColumn, operation, column) => {
                 break;
             }
             default: {
-                break;              
+                break;
             }
-        } 
+        }
 
         let joinDateField = "b." + column.name ;
         let joinOpFielf = "a." + baseColumn.name;
@@ -160,15 +167,15 @@ const baseQueryHandler = (baseColumn, operation, column) => {
     }
 
 
-    
-    
+
+
 };
 
 const getDataForPreview = async(req, res) => {
     try{
-        
+
         const filters = req.body.definition.filters;
-        
+
         const dateFilters = req.body.definition.dateFilters;
         let baseQuery = "";
 
@@ -181,7 +188,7 @@ const getDataForPreview = async(req, res) => {
         //Filters data
         const filterColumns = []
         const filterOperations = []
-        
+
         if(filters.length > 0){
             filters.forEach(function(item, index){
                 if(item.column =! null && item.operation != null){
@@ -195,10 +202,10 @@ const getDataForPreview = async(req, res) => {
 
 
         //Run query
-        
-        let queryString = replaceAll("`","",baseQuery);   
+
+        let queryString = replaceAll("`","",baseQuery);
         const data = await sequelize.query(queryString);
-        
+
         return res.json(data);
     }
     catch (e) {
@@ -211,4 +218,4 @@ const getDataForPreview = async(req, res) => {
 export default {
     getDataForPreview
   };
-  
+
