@@ -44,7 +44,14 @@ const baseQueryHandler = (baseColumn, operation, column) => {
         let sqlColumn = column.name;
         let calculateColumn = "q." + baseColumn.name;
         let groupBy =  calculateColumn;
-        let selectFrom = sqlClient.select().distinct().field(column.name).field(baseColumn.name).from("consolidated_table");
+        let selectFrom = "";
+        if( baseColumn.name == "monto" || column.name == "monto"){
+            selectFrom = sqlClient.select().distinct().field("nit_proveedor").field("nog").field(column.name).field(baseColumn.name).from("consolidated_table");
+        }
+        else{
+            selectFrom = sqlClient.select().distinct().field("nog").field(column.name).field(baseColumn.name).from("consolidated_table");
+        }
+        
         let query = sqlClient.select().field(sqlOperation).field(calculateColumn).from(selectFrom, "q").group(groupBy);
 
         return query.toString();
@@ -75,7 +82,13 @@ const baseQueryHandler = (baseColumn, operation, column) => {
         let sqlColumn = column.date_column;
         let displayColumn = "q." +  baseColumn.date_column;
         let groupBy = displayColumn;
-        let selectFrom = sqlClient.select().distinct().field(joinOpFielf).field(joinDateField).from("consolidated_table","a").join("dim_fecha","b",joinCondition);
+        let selectFrom = "";
+        if( baseColumn.name == "monto" || column.name == "monto"){
+            selectFrom = sqlClient.select().distinct().field("a.nit_proveedor").field("a.nog").field(joinOpFielf).field(joinDateField).from("consolidated_table","a").join("dim_fecha","b",joinCondition);
+        }
+        else{
+            selectFrom = sqlClient.select().distinct().field("a.nog").field(joinOpFielf).field(joinDateField).from("consolidated_table","a").join("dim_fecha","b",joinCondition);
+        }
         let query = sqlClient.select().field(sqlOperation).field(displayColumn).from(selectFrom, "q").group(groupBy);
         return query.toString();
     }
@@ -106,7 +119,14 @@ const baseQueryHandler = (baseColumn, operation, column) => {
         let sqlColumn = column.name;
         let displayColumn = "q." +  baseColumn.name;
         let groupBy = displayColumn;
-        let selectFrom = sqlClient.select().distinct().field(joinOpFielf).field(realColumn).from("consolidated_table","a").join("dim_fecha","b",joinCondition);
+        let selectFrom = "";
+        if( baseColumn.name == "monto" || column.name == "monto"){
+            selectFrom = sqlClient.select().distinct().field("a.nit_proveedor").field("a.nog").field(joinOpFielf).field(realColumn).from("consolidated_table","a").join("dim_fecha","b",joinCondition);
+        }
+        else{
+            selectFrom = sqlClient.select().distinct().field("a.nog").field(joinOpFielf).field(realColumn).from("consolidated_table","a").join("dim_fecha","b",joinCondition);
+        }
+        
         let query = sqlClient.select().field(sqlOperation).field(displayColumn).from(selectFrom, "q").group(groupBy);
         return query.toString();
     }else{
@@ -136,7 +156,12 @@ const baseQueryHandler = (baseColumn, operation, column) => {
         let sqlColumn = column.name;
         let displayColumn = "q." +  baseColumn.date_column;
         let groupBy = displayColumn;
-        let selectFrom = sqlClient.select().distinct().field(joinOpFielf).field(realColumn).from("consolidated_table","a").join("dim_fecha","b",joinCondition);
+        let selectFrom = "";
+        if( baseColumn.name == "monto" || column.name == "monto"){
+            selectFrom = sqlClient.select().distinct().field("a.nit_proveedor").field("a.nog").field(joinOpFielf).field(realColumn).from("consolidated_table","a").join("dim_fecha","b",joinCondition);
+        }else{
+            selectFrom = sqlClient.select().distinct().field("a.nog").field(joinOpFielf).field(realColumn).from("consolidated_table","a").join("dim_fecha","b",joinCondition);
+        }
         let query = sqlClient.select().field(sqlOperation).field(displayColumn).from(selectFrom, "q").group(groupBy);
         return query.toString();
     }
