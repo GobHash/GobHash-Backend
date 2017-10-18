@@ -2,6 +2,7 @@
 import polyfill from 'babel-polyfill'; // eslint-disable-line
 import mongoose from 'mongoose';
 import pmx from 'pmx';                 // eslint-disable-line
+import newrelic from 'newrelic';       // eslint-disable-line
 import Sequelize from 'sequelize';
 import http from 'http';
 import socket from 'socket.io';
