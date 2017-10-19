@@ -3,8 +3,10 @@ import config from '../../../config/config';
 import User from '../models/user.model';
 
 const debug = true;
+let clients = {};
 const socketConnection = (io) => {
   io.on('connection', (client) => {
+
     client.on('authenticate', async (data) => {
       try {
         const decoded = jwt.verify(data.token, config.jwtSecret);
@@ -16,8 +18,8 @@ const socketConnection = (io) => {
           const user = await User.get(decoded.id);
           user.online = true;
           await user.save();
+          clients[decoded.id] = client;
           client.emit('authenticated', { auth: true });
-          io.to(user._id).emit('update_feed', {});
         } else {
           client.emit('authenticated', { auth: false });
         }
@@ -44,8 +46,9 @@ const socketConnection = (io) => {
 const socketEmitter = (io) => {
   const object = {
     sendToUser(follower, post) {
-      io.sockets.emit('update_feed', {});
-      io.to(follower._id).emit('update_feed', post);
+      console.log('sendingg', follower._id);
+      const socket = clients[follower._id];
+      socket.emit('update_feed', post);
     }
   };
   return object;
