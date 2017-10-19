@@ -50,5 +50,28 @@
     <!-- Placed at the end of the document so the pages load faster -->
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
   <!--   <script src="../../../../assets/js/ie10-viewport-bug-workaround.js"></script> -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.1/socket.io.slim.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pouchdb/6.2.0/pouchdb.min.js"></script>
+  <script>
+$(function() {
+  var socket = io('https://api-dev.gobhash.com',
+    {
+      transports: ['websocket']
+    }
+  );
+  socket.emit('authenticate', {
+    token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFtb3JhbGVzIiwiaWQiOiI1OWRlYWJjYWI4OGU3MjAwMzhmNTM4OGMiLCJpYXQiOjE1MDgzODA5NDEsImV4cCI6MTUxMDk3Mjk0MX0.PJzX1D9FaKudj4cMo_1HWLLddfRFZgyerk_rF1nTnjs',
+  });
+  socket.on('authenticated', function(data) {
+    console.log(data.auth); // true or false
+  });
+  socket.on('update_feed', function(data) {
+    // donde data es el post definido en el modelo Post.
+    console.log(data);
+});
+});
+  </script>
   </body>
 </html>
