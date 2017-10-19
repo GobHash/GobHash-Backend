@@ -49,7 +49,7 @@ const socketEmitter = (io) => {
     sendToUser(follower, post) {
       console.log('sendingg', follower._id);
       console.log(io);
-      io.sockets.socket(follower._id).emit('update_feed', post);
+      io.to(follower._id).emit('update_feed', post);
     }
   };
   return object;
