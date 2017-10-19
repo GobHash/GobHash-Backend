@@ -44,7 +44,9 @@ const socketConnection = (io) => {
 const socketEmitter = (io) => {
   const object = {
     sendToUser(follower, post) {
-      io.to(follower.id).volatile.emit('update_feed', post);
+      console.log('follower', follower);
+      console.log('send data', post);
+      io.to(follower.id).emit('update_feed', post);
     }
   };
   return object;
