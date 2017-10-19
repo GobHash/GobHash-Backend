@@ -104,10 +104,10 @@ const baseQueryHandler = (baseColumn, operation, column, filterList) => {
         let groupBy =  calculateColumn;
         let selectFrom = "";
         if( baseColumn.name == "monto" || column.name == "monto"){
-            selectFrom = sqlClient.select().distinct().field("a.nit_proveedor").field("a.nog").field(column.name).field("a."+baseColumn.name).from("consolidated_table","a").join("dim_fecha","b","b.id_fecha = a.fecha_adjudicada");
+            selectFrom = sqlClient.select().distinct().field("a.nit_proveedor").field("a.nog").field("a." + column.name).field("a."+baseColumn.name).from("consolidated_table","a").join("dim_fecha","b","b.id_fecha = a.fecha_adjudicada");
         }
         else{
-            selectFrom = sqlClient.select().distinct().field("a.nog").field(column.name).field("a."+baseColumn.name).from("consolidated_table","a").join("dim_fecha","b","b.id_fecha = a.fecha_adjudicada")
+            selectFrom = sqlClient.select().distinct().field("a.nog").field("a." + column.name).field("a."+baseColumn.name).from("consolidated_table","a").join("dim_fecha","b","b.id_fecha = a.fecha_adjudicada")
         }
         if(filterList[0] != undefined){
             if (filterList[0].length > 0){
