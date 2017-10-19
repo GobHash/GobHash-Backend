@@ -4534,9 +4534,9 @@ netmask@^1.0.6:
   version "1.0.6"
   resolved "https://registry.yarnpkg.com/netmask/-/netmask-1.0.6.tgz#20297e89d86f6f6400f250d9f4f6b4c1945fcd35"
 
-newrelic@^2.2.2:
-  version "2.2.2"
-  resolved "https://registry.yarnpkg.com/newrelic/-/newrelic-2.2.2.tgz#ea896bd2d3803a6a77f9be3cff882845ccbf4fb0"
+newrelic@^2.3.0:
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/newrelic/-/newrelic-2.3.0.tgz#175fadb740729d099c35d9c7875ffda2c3b39ed1"
   dependencies:
     concat-stream "^1.5.0"
     https-proxy-agent "^0.3.5"

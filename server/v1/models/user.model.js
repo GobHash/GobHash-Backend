@@ -111,7 +111,7 @@ UserSchema.statics = {
    */
   get(id) {
     return this.findById(id)
-      .select('name username biography createdAt updatedAt picture followers following')
+      .select('name username biography createdAt updatedAt picture followers following occupation')
       .populate('followers following', 'username biography picture online')
       .exec()
       .then((user) => {
