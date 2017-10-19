@@ -12,13 +12,11 @@ const socketConnection = (io) => {
           client.authenticated = true; // eslint-disable-line
           // join user to a room according to his unique id
           client.join(decoded.id);
-          console.log('id', decoded.id);
           // mark user as online
           const user = await User.get(decoded.id);
           user.online = true;
           await user.save();
           client.emit('authenticated', { auth: true });
-          io.to(user._id).emit('update_feed', {test:'test'})
         } else {
           client.emit('authenticated', { auth: false });
         }
@@ -45,8 +43,6 @@ const socketConnection = (io) => {
 const socketEmitter = (io) => {
   const object = {
     sendToUser(follower, post) {
-      console.log('follower', follower._id);
-      console.log('send data', post);
       io.to(follower._id).emit('update_feed', post);
     }
   };

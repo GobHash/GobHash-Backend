@@ -49,7 +49,6 @@ const create = async (req, res) => {
     for (let i = 0; i < userQuery.followers.length; i++) { // eslint-disable-line
       const follower = userQuery.followers[i];
       if (follower.online) {
-        console.log('before send');
         emmiter.sendToUser(follower, post);
       }
     }
