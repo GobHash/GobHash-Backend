@@ -5,7 +5,7 @@ import User from '../models/user.model';
 const debug = true;
 var clients = {}; //eslint-disable-line
 const socketConnection = (io) => {
-  io.sockets.on('connection', (client) => {
+  io.on('connection', (client) => {
 
     client.on('authenticate', async (data) => {
       try {
@@ -49,9 +49,11 @@ const socketConnection = (io) => {
 const socketEmitter = (io) => {
   const object = {
     sendToUser(follower, post) {
-      console.log('sendingg', follower._id);
-      console.log(io);
-      io.sockets.in(follower._id).emit('update_feed', post);
+      io.on('connection', (client) => {
+        console.log('sendingg', follower._id);
+        console.log(io);
+        io.to(follower._id).emit('update_feed', post);
+      });
     }
   };
   return object;
