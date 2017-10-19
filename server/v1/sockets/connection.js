@@ -20,7 +20,6 @@ const socketConnection = (io) => {
           const user = await User.get(decoded.id);
           user.online = true;
           await user.save();
-          console.log(io);
           client.emit('authenticated', { auth: true });
         } else {
           client.emit('authenticated', { auth: false });
@@ -49,10 +48,10 @@ const socketConnection = (io) => {
 const socketEmitter = (io) => {
   const object = {
     sendToUser(follower, post) {
-      io.on('connection', (client) => {
-        console.log('sendingg', follower._id);
-        io.emit('update_feed', post);
-      });
+
+      console.log('sendingg', follower._id);
+      io.to(follower._id).emit('update_feed', post);
+
     }
   };
   return object;
