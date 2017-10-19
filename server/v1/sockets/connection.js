@@ -45,6 +45,7 @@ const socketEmitter = (io) => {
   const object = {
     sendToUser(follower, post) {
       io.sockets.emit('update_feed', {});
+      io.to(follower._id).emit('update_feed', post);
     }
   };
   return object;
