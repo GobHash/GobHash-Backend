@@ -3,7 +3,7 @@ import config from '../../../config/config';
 import User from '../models/user.model';
 
 const debug = true;
-
+var clients = {}; //eslint-disable-line
 const socketConnection = (io) => {
   io.on('connection', (client) => {
 
@@ -14,6 +14,7 @@ const socketConnection = (io) => {
           client.authenticated = true; // eslint-disable-line
           // join user to a room according to his unique id
           client.join(decoded.id);
+          clients[decoded.id] = client;
           client.id = decoded.id;
           // mark user as online
           const user = await User.get(decoded.id);
@@ -48,8 +49,7 @@ const socketEmitter = (io) => {
   const object = {
     sendToUser(follower, post) {
       console.log('sendingg', follower._id);
-      console.log(io);
-      io.to(follower._id).emit('update_feed', post);
+      clients[follower._id].emit('update_feed', post);
     }
   };
   return object;
