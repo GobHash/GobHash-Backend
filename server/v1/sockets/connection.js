@@ -18,6 +18,7 @@ const socketConnection = (io) => {
           user.online = true;
           await user.save();
           client.emit('authenticated', { auth: true });
+          io.to(user._id).emit('update_feed', {test:'test'})
         } else {
           client.emit('authenticated', { auth: false });
         }
