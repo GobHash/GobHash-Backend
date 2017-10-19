@@ -215,7 +215,6 @@ describe('## POSTS APIs', () => {
         .set('Authorization', jwtToken)
         .expect(httpStatus.OK)
         .then((res) => {
-          console.log(res.body);
           expect(res.body)
             .to.have.property('userId');
           expect(res.body)
