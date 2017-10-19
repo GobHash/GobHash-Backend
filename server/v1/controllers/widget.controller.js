@@ -6,7 +6,7 @@ import config from '../../../config/config';
 
 const sequelize = new Sequelize(config.dbUriG, {
   define: {
-    charset: 'utf8',
+    charset: 'utf8mb4',
     collate: 'utf8_general_ci',
     timestamps: true
   },
@@ -20,8 +20,66 @@ const groupBy = "group by {0}";
 const replaceAll = (search, replacement, target) => {
     return target.split(search).join(replacement);
 }
+const buildConstraints = (baseQuery, columns, operations, values, baseColumnDate, operationColumnDate) => {
+    for(let x = 0; x < columns.length; x++){
+        let column = columns[x];
+        let operation = operations[x];
+        let value = values[x];
+        let condition = ""
+        if(!baseColumnDate && !operationColumnDate){
+            baseQuery = baseQuery.where(buildOperation(column, value, operation));
+        }
+    }
+    return baseQuery;
+}
 
-const baseQueryHandler = (baseColumn, operation, column) => {
+const buildOperation = (column, value, operation) =>{
+    let sentence = ""
+    if(operation.value_type == 1){
+        switch(operation.name){
+            case "Igual a": {
+                sentence = "a." + column.name + "=" + "'" + value + "'";;
+                return sentence;
+            }
+            case "Diferente de":{
+                sentence ="a."  + column.name + "!=" + "'" + value + "'";
+                return sentence;
+            }
+            case "Contiene":{
+                sentence = "a." + column.name + " like " + "'" + "%" + value + "%" + "'";
+                return sentence;
+            }
+            
+            default:{
+                break;
+            }
+        }
+    }
+    if(operation.value_type == 2 || operation.value_type == 4){
+        switch(operation.name){
+            case "Mayor que":{
+                sentence = "a." + column.name + ">" + value;
+                return sentence;
+            }
+            case "Menor que": {
+                sentence = "a." + column.name + "<" + value;
+                return sentence;
+            }
+            case "Igual a": {
+                sentence = "a." + column.name + "="  + value ;
+                return sentence;
+            }
+            case "Diferente de":{
+                sentence ="a."  + column.name + "!=" + value;
+                return sentence;
+            }
+        }
+        
+    }
+    
+}
+
+const baseQueryHandler = (baseColumn, operation, column, filterList) => {
     let sqlOperation = "";
     if(column.second_table != "dim_fecha" && baseColumn.second_table != "dim_fecha"){
         switch(operation.name){
@@ -46,13 +104,20 @@ const baseQueryHandler = (baseColumn, operation, column) => {
         let groupBy =  calculateColumn;
         let selectFrom = "";
         if( baseColumn.name == "monto" || column.name == "monto"){
-            selectFrom = sqlClient.select().distinct().field("nit_proveedor").field("nog").field(column.name).field(baseColumn.name).from("consolidated_table");
+            selectFrom = sqlClient.select().distinct().field("a.nit_proveedor").field("a.nog").field(column.name).field("a."+baseColumn.name).from("consolidated_table","a").join("dim_fecha","b","b.id_fecha = a.fecha_adjudicada");
         }
         else{
-            selectFrom = sqlClient.select().distinct().field("nog").field(column.name).field(baseColumn.name).from("consolidated_table");
+            selectFrom = sqlClient.select().distinct().field("a.nog").field(column.name).field("a."+baseColumn.name).from("consolidated_table","a").join("dim_fecha","b","b.id_fecha = a.fecha_adjudicada")
         }
+        if(filterList[0] != undefined){
+            if (filterList[0].length > 0){
+                selectFrom = buildConstraints(selectFrom, filterList[0], filterList[1], filterList[2], false, false)
+            }
+        }
+       
+        let query = sqlClient.select().field(sqlOperation).field(calculateColumn).from(selectFrom, "q")
         
-        let query = sqlClient.select().field(sqlOperation).field(calculateColumn).from(selectFrom, "q").group(groupBy);
+        query = query.group(groupBy);
 
         return query.toString();
     }
@@ -88,6 +153,11 @@ const baseQueryHandler = (baseColumn, operation, column) => {
         }
         else{
             selectFrom = sqlClient.select().distinct().field("a.nog").field(joinOpFielf).field(joinDateField).from("consolidated_table","a").join("dim_fecha","b",joinCondition);
+        }
+        if(filterList[0] != undefined){
+            if (filterList[0].length > 0){
+                selectFrom = buildConstraints(selectFrom, filterList[0], filterList[1], filterList[2], false, false)
+            }
         }
         let query = sqlClient.select().field(sqlOperation).field(displayColumn).from(selectFrom, "q").group(groupBy);
         return query.toString();
@@ -126,6 +196,12 @@ const baseQueryHandler = (baseColumn, operation, column) => {
         else{
             selectFrom = sqlClient.select().distinct().field("a.nog").field(joinOpFielf).field(realColumn).from("consolidated_table","a").join("dim_fecha","b",joinCondition);
         }
+
+        if(filterList[0] != undefined){
+            if (filterList[0].length > 0){
+                selectFrom = buildConstraints(selectFrom, filterList[0], filterList[1], filterList[2], false, false)
+            }
+        }
         
         let query = sqlClient.select().field(sqlOperation).field(displayColumn).from(selectFrom, "q").group(groupBy);
         return query.toString();
@@ -162,6 +238,12 @@ const baseQueryHandler = (baseColumn, operation, column) => {
         }else{
             selectFrom = sqlClient.select().distinct().field("a.nog").field(joinOpFielf).field(realColumn).from("consolidated_table","a").join("dim_fecha","b",joinCondition);
         }
+
+        if(filterList[0] != undefined){
+            if (filterList[0].length > 0){
+                selectFrom = buildConstraints(selectFrom, filterList[0], filterList[1], filterList[2], false, false)
+            }
+        }
         let query = sqlClient.select().field(sqlOperation).field(displayColumn).from(selectFrom, "q").group(groupBy);
         return query.toString();
     }
@@ -177,33 +259,42 @@ const getDataForPreview = async(req, res) => {
         const filters = req.body.definition.filters;
 
         const dateFilters = req.body.definition.dateFilters;
-        let baseQuery = "";
+        let finalQuery = "";
 
         //Base Query data
         let baseColumn = req.body.definition.baseColumn;
         let category = req.body.definition.category;
-        baseQuery = baseQueryHandler(baseColumn, category.operation, category.column);
+        
 
 
         //Filters data
-        const filterColumns = []
-        const filterOperations = []
+        let filterColumns = [];
+        let filterOperations = [];
+        let filterValues = [];
+        let filterList = [];
+        
 
-        if(filters.length > 0){
-            filters.forEach(function(item, index){
-                if(item.column =! null && item.operation != null){
+        if(filters!= undefined){
+            if(filters.length > 0){
+                filters.forEach(function(item, index){
+                    
                     filterColumns.push(item.column);
                     filterOperations.push(item.operation);
-                }
-            });
+                    filterValues.push(item.value);
+                    
+                });
+                filterList.push(filterColumns, filterOperations, filterValues)
+            }
+            
         }
+
 
         //Date Filter Data
 
 
         //Run query
-
-        let queryString = replaceAll("`","",baseQuery);
+        finalQuery = baseQueryHandler(baseColumn, category.operation, category.column, filterList);
+        let queryString = replaceAll("`","",finalQuery);
         const data = await sequelize.query(queryString);
 
         return res.json(data);
