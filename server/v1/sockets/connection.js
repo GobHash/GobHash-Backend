@@ -19,6 +19,7 @@ const socketConnection = (io) => {
           user.online = true;
           await user.save();
           clients[decoded.id] = client;
+          console.log(clients);
           client.emit('authenticated', { auth: true });
         } else {
           client.emit('authenticated', { auth: false });
@@ -49,7 +50,7 @@ const socketEmitter = (io) => {
       console.log('sendingg', follower._id);
       console.log(clients)
       const socket = clients[follower._id];
-      socket.emit('update_feed', post);
+      io.emit('update_feed', post);
     }
   };
   return object;
