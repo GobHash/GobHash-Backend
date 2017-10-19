@@ -1,8 +1,8 @@
 // config should be imported before importing any other file
+import newrelic from 'newrelic';       // eslint-disable-line
 import polyfill from 'babel-polyfill'; // eslint-disable-line
 import mongoose from 'mongoose';
 import pmx from 'pmx';                 // eslint-disable-line
-import newrelic from 'newrelic';       // eslint-disable-line
 import Sequelize from 'sequelize';
 import http from 'http';
 import socket from 'socket.io';
