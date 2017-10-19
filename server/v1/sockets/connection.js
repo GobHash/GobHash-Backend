@@ -12,7 +12,7 @@ const socketConnection = (io) => {
           client.authenticated = true; // eslint-disable-line
           // join user to a room according to his unique id
           client.join(decoded.id);
-          client.id = decoded.id; // eslint-disable-line
+          console.log('id', decoded.id);
           // mark user as online
           const user = await User.get(decoded.id);
           user.online = true;
