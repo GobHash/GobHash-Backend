@@ -16,8 +16,8 @@ const server = http.createServer(app);
 const io = socket.listen(server);
 const debug = require('debug')('express-mongoose-es6-rest-api:index');
 
-socketConnection(io);
-export const emmiter = socketEmitter(io);
+const connectedIO = socketConnection(io);
+export const emmiter = socketEmitter(connectedIO);
 
 mongoose.connect(config.mongoUri, { server: { socketOptions: { keepAlive: 1 } } });
 mongoose.Promise = global.Promise; // Tell mongoose to use es6 promises

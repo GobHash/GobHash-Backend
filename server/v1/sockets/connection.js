@@ -43,13 +43,14 @@ const socketConnection = (io) => {
       }
     });
   });
+  return io;
 };
 
 const socketEmitter = (io) => {
   const object = {
     sendToUser(follower, post) {
       console.log('sendingg', follower._id);
-      clients[follower._id].emit('update_feed', post);
+      io.to(follower._id).emit('update_feed', post);
     }
   };
   return object;
