@@ -7,9 +7,7 @@ const socketConnection = (io) => {
   io.on('connection', (client) => {
     client.on('authenticate', async (data) => {
       try {
-        console.log(data);
         const decoded = jwt.verify(data.token, config.jwtSecret);
-        console.log(decoded);
         if (decoded !== undefined) {
           client.authenticated = true; // eslint-disable-line
           // join user to a room according to his unique id
@@ -20,8 +18,9 @@ const socketConnection = (io) => {
           user.online = true;
           await user.save();
           client.emit('authenticated', { auth: true });
+        } else {
+          client.emit('authenticated', { auth: false });
         }
-        client.emit('authenticated', { auth: false });
       } catch (err) {
         client.emit('authenticated', { auth: false });
         client.authenticated = false; // eslint-disable-line
