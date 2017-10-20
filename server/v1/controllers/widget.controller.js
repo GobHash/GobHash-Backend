@@ -36,17 +36,18 @@ const buildConstraints = (baseQuery, columns, operations, values, baseColumnDate
 const buildOperation = (column, value, operation) =>{
     let sentence = ""
     if(operation.value_type == 1){
+        let upperValue = value.toUpperCase();
         switch(operation.name){
             case "Igual a": {
-                sentence = "a." + column.name + "=" + "'" + value + "'";;
+                sentence = "a." + column.name + "=" + "'" + upperValue + "'";;
                 return sentence;
             }
             case "Diferente de":{
-                sentence ="a."  + column.name + "!=" + "'" + value + "'";
+                sentence ="a."  + column.name + "!=" + "'" + upperValue + "'";
                 return sentence;
             }
             case "Contiene":{
-                sentence = "a." + column.name + " like " + "'" + "%" + value + "%" + "'";
+                sentence = "a." + column.name + " like " + "'" + "%" + upperValue + "%" + "'";
                 return sentence;
             }
             
