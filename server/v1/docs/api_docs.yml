@@ -883,6 +883,10 @@ definitions:
         type: string
   PostBody:
     type: object
+    required:
+    - dashboard
+    - title
+    - description
     properties:
       title:
         type: string
@@ -1023,7 +1027,6 @@ definitions:
                             type: string
           first_submain:
             type: object
-            required: false
             properties:
               data:
                 type: array
@@ -1154,7 +1157,6 @@ definitions:
                         type: string
           second_submain:
             type: object
-            required: false
             properties:
               data:
                 type: array
@@ -1285,7 +1287,6 @@ definitions:
                         type: string
           third_submain:
             type: object
-            required: false
             properties:
               data:
                 type: array
