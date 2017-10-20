@@ -166,6 +166,7 @@ PostSchema.statics = {
     return this.find()
       .sort({ 'likes.length': -1 })
       .populate('comments.user dashboard.main', 'username picture data definition widgetType entity filters dateFilters baseColumn category')
+      .populate('user', 'username')
       .skip(+skip)
       .limit(+limit)
       .exec();

@@ -318,7 +318,7 @@ describe('## POSTS APIs', () => {
         .send({ postId: validPost._id })
         .expect(httpStatus.OK)
         .then((res) => {
-          expect(res.body._id).to.equal(validPost._id);
+          expect(res.body.deleted).to.be.true;
           done();
         })
         .catch(done);

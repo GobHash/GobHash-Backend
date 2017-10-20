@@ -136,7 +136,7 @@ const remove = async (req, res) => {
     const post = await Post.get(req.body.postId);
     // delete post
     await post.remove();
-    return res.json(post);
+    return res.json({ deleted: true });
   } catch (e) {
     return res.json(e);
   }
