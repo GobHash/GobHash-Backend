@@ -1,11 +1,12 @@
 // config should be imported before importing any other file
+import newrelic from 'newrelic';       // eslint-disable-line
 import polyfill from 'babel-polyfill'; // eslint-disable-line
 import mongoose from 'mongoose';
 import pmx from 'pmx';                 // eslint-disable-line
-import newrelic from 'newrelic';       // eslint-disable-line
 import Sequelize from 'sequelize';
 import http from 'http';
 import socket from 'socket.io';
+import redis from 'socket.io-redis';
 import { socketConnection, socketEmitter } from './server/v1/sockets/connection';
 
 pmx.init({ http: true }); // eslint-disable-line enable http keymetris
@@ -14,10 +15,11 @@ import app from './config/express';    // eslint-disable-line
 
 const server = http.createServer(app);
 const io = socket.listen(server);
+io.adapter(redis(config.redisURL));
 const debug = require('debug')('express-mongoose-es6-rest-api:index');
 
-socketConnection(io);
-export const emmiter = socketEmitter(io);
+const connectedIO = socketConnection(io);
+export const emmiter = socketEmitter(connectedIO);
 
 mongoose.connect(config.mongoUri, { server: { socketOptions: { keepAlive: 1 } } });
 mongoose.Promise = global.Promise; // Tell mongoose to use es6 promises

@@ -8,7 +8,6 @@ import mongoose from 'mongoose';
 const create = async (req, res) => {
   try {
     const user = req.user.id;
-    console.log(req.body);
     let widget = await new Widget(req.body.dashboard.main);
     const main = await widget.save();
     const post = await new Post({
@@ -44,12 +43,10 @@ const create = async (req, res) => {
 
       }
     }
-    console.log(req.body.dashboard);
     const userQuery = await User.get(req.user.id);
     for (let i = 0; i < userQuery.followers.length; i++) { // eslint-disable-line
       const follower = userQuery.followers[i];
       if (follower.online) {
-        console.log('before send');
         emmiter.sendToUser(follower, post);
       }
     }

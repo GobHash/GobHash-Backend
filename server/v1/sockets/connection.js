@@ -3,8 +3,10 @@ import config from '../../../config/config';
 import User from '../models/user.model';
 
 const debug = true;
+var clients = {}; //eslint-disable-line
 const socketConnection = (io) => {
   io.on('connection', (client) => {
+
     client.on('authenticate', async (data) => {
       try {
         const decoded = jwt.verify(data.token, config.jwtSecret);
@@ -12,7 +14,8 @@ const socketConnection = (io) => {
           client.authenticated = true; // eslint-disable-line
           // join user to a room according to his unique id
           client.join(decoded.id);
-          client.id = decoded.id; // eslint-disable-line
+          clients[decoded.id] = client;
+          client.id = decoded.id;
           // mark user as online
           const user = await User.get(decoded.id);
           user.online = true;
@@ -39,14 +42,13 @@ const socketConnection = (io) => {
       }
     });
   });
+  return io;
 };
 
 const socketEmitter = (io) => {
   const object = {
     sendToUser(follower, post) {
-      console.log('follower', follower);
-      console.log('send data', post);
-      io.to(follower.id).emit('update_feed', post);
+      io.to(follower._id).emit('update_feed', post);
     }
   };
   return object;

@@ -1622,7 +1622,7 @@ debug-fabulous@>=0.1.1:
     memoizee "0.4.X"
     object-assign "4.X"
 
-debug@2, debug@2.6.9, debug@^2.1.2, debug@^2.2.0, debug@^2.6.3, debug@^2.6.8, debug@^2.6.9, debug@~2.6.0, debug@~2.6.4, debug@~2.6.6:
+debug@2, debug@2.6.9, debug@^2.1.2, debug@^2.2.0, debug@^2.6.3, debug@^2.6.8, debug@^2.6.9, debug@~2.6.0, debug@~2.6.4, debug@~2.6.6, debug@~2.6.8:
   version "2.6.9"
   resolved "https://registry.yarnpkg.com/debug/-/debug-2.6.9.tgz#5d128515df134ff327e90a4c93f4e077a536341f"
   dependencies:
@@ -2805,9 +2805,9 @@ glogg@^1.0.0:
   dependencies:
     sparkles "^1.0.0"
 
-gobhash-swagger@^2.0.6:
-  version "2.0.6"
-  resolved "https://registry.yarnpkg.com/gobhash-swagger/-/gobhash-swagger-2.0.6.tgz#0fd84893e1ca14c2d7e74edac2437abf8838afdd"
+gobhash-swagger@^2.0.7:
+  version "2.0.7"
+  resolved "https://registry.yarnpkg.com/gobhash-swagger/-/gobhash-swagger-2.0.7.tgz#13a5c23af0cba6b3ed8978a808c3a63b95514dd7"
 
 got@^3.2.0:
   version "3.3.1"
@@ -4636,6 +4636,10 @@ normalize-path@^2.0.0, normalize-path@^2.0.1, normalize-path@^2.1.1:
   dependencies:
     remove-trailing-separator "^1.0.1"
 
+notepack.io@~2.1.2:
+  version "2.1.2"
+  resolved "https://registry.yarnpkg.com/notepack.io/-/notepack.io-2.1.2.tgz#94a47f5e4ce4ace1f3d71b27c6f83c7163393c52"
+
 npm-run-path@^2.0.0:
   version "2.0.2"
   resolved "https://registry.yarnpkg.com/npm-run-path/-/npm-run-path-2.0.2.tgz#35a9232dfa35d7067b4cb2ddf2357b1871536c5f"
@@ -5438,7 +5442,7 @@ redis-parser@^2.6.0:
   version "2.6.0"
   resolved "https://registry.yarnpkg.com/redis-parser/-/redis-parser-2.6.0.tgz#52ed09dacac108f1a631c07e9b69941e7a19504b"
 
-redis@^2.1.0:
+redis@^2.1.0, redis@~2.8.0:
   version "2.8.0"
   resolved "https://registry.yarnpkg.com/redis/-/redis-2.8.0.tgz#202288e3f58c49f6079d97af7a10e1303ae14b02"
   dependencies:
@@ -6049,6 +6053,16 @@ socket.io-parser@~3.1.1:
     has-binary2 "~1.0.2"
     isarray "2.0.1"
 
+socket.io-redis@^5.2.0:
+  version "5.2.0"
+  resolved "https://registry.yarnpkg.com/socket.io-redis/-/socket.io-redis-5.2.0.tgz#8fe2ad9445fc50886fb70abc759d67403d5899df"
+  dependencies:
+    debug "~2.6.8"
+    notepack.io "~2.1.2"
+    redis "~2.8.0"
+    socket.io-adapter "~1.1.0"
+    uid2 "0.0.3"
+
 socket.io@^2.0.3:
   version "2.0.3"
   resolved "https://registry.yarnpkg.com/socket.io/-/socket.io-2.0.3.tgz#4359f06a24933ae6bd087798af78c680eae345e3"
@@ -6567,6 +6581,10 @@ uid-safe@~2.1.5:
   resolved "https://registry.yarnpkg.com/uid-safe/-/uid-safe-2.1.5.tgz#2b3d5c7240e8fc2e58f8aa269e5ee49c0857bd3a"
   dependencies:
     random-bytes "~1.0.0"
+
+uid2@0.0.3:
+  version "0.0.3"
+  resolved "https://registry.yarnpkg.com/uid2/-/uid2-0.0.3.tgz#483126e11774df2f71b8b639dcd799c376162b82"
 
 ultron@~1.1.0:
   version "1.1.0"
