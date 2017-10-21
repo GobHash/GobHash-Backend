@@ -4,7 +4,7 @@ import mailcomposer from 'mailcomposer';
 import config from '../../../config/config';
 
 const apiKey = config.mailgun_key;
-const domain = 'mailgun.newtonlabs.com.gt';
+const domain = 'mailgun.gobhash.com.gt';
 const mailgun = require('mailgun-js')({ apiKey, domain });
 
 const source = fs.readFileSync('server/v1/helpers/email-inlined.html', 'utf8');
@@ -15,7 +15,7 @@ const sendEmail = (data, htmlData) => {
   const html = template(htmlData);
 
   const mail = mailcomposer({
-    from: 'GobHash <no-reply@gobhash.com>',
+    from: 'GobHash <no-reply@mail.gobhash.com.gt>',
     to: data.to,
     subject: data.subject,
     html
