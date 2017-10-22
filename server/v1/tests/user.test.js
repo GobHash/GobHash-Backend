@@ -181,7 +181,7 @@ describe('## User APIs', () => {
     });
   });
 
-  describe('# POST /v1/users/profile', () => {
+  describe('# PATCH /v1/users/profile', () => {
     it('should SET profile of user', (done) => {
       request(app)
         .patch('/v1/users/profile')
@@ -193,7 +193,7 @@ describe('## User APIs', () => {
         .expect(httpStatus.OK)
         .then((res) => {
           expect(res.body).to.be.an('object');
-          expect(res.body).to.have.property('username');
+          expect(res.body).to.have.property('occupation');
           expect(res.body).to.have.property('biography');
           done();
         })
