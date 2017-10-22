@@ -1,5 +1,6 @@
 import httpStatus from 'http-status';
 import User from '../models/user.model';
+import Post from '../models/post.model';
 
 /**
  * Search for user in database
@@ -35,4 +36,36 @@ const searchUser = async (req, res) => {
   }
 };
 
-export default { searchUser };
+/**
+ * Search for a post in database
+ */
+const searchPost = async (req, res) => {
+  try {
+    if (req.query.title === undefined && req.query.username === undefined) {
+      return res.status(httpStatus.NOT_FOUND).json([]);
+    }
+    if (req.query.username !== undefined) {
+      let posts = await Post
+        .find()
+        .populate('user', 'username')
+        .exec();
+      posts = posts.filter((p) => p.user.username.includes(req.query.username));
+      return res.status(httpStatus.OK).json(posts);
+    }
+    if (req.query.title !== undefined) {
+      re = new RegExp(req.query.title, 'i');
+      const posts = await Post
+        .find()
+        .where('title')
+        .regex(re)
+        .exec();
+      return res.status(httpStatus.OK).json(posts);
+    }
+    return res.status(httpStatus.OK).json([]);
+
+  } catch (e) {
+    return res.json(e);
+  }
+};
+
+export default { searchUser, searchPost };

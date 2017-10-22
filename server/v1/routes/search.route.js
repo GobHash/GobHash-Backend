@@ -13,3 +13,10 @@ router.route('/users')
     expressJwt({ secret: config.jwtSecret }),
     searchCtrl.searchUser
   );
+
+router.route('/posts')
+  /** GET /v1/search/posts - Search for posts */
+  .get(
+    expressJwt({ secret: config.jwtSecret }),
+    searchCtrl.searchPost
+  );

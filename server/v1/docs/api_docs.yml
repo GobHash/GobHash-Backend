@@ -737,6 +737,37 @@ paths:
           description: "Unexpected error"
           schema:
             $ref: "#/definitions/Error"
+  /search/posts:
+    get:
+      security:
+        - Bearer: []
+      tags:
+      - "Search"
+      summary: "Find posts"
+      description: "Find posts by username or title."
+      operationId: "findPostsGET"
+      parameters:
+      - name: "username"
+        in: "query"
+        description: "username of user"
+        required: false
+        type: "string"
+      - name: "title"
+        in: "query"
+        description: "title of posts"
+        required: false
+        type: "string"
+      responses:
+        200:
+          description: "Post"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/PostBody"
+        default:
+          description: "Unexpected error"
+          schema:
+            $ref: "#/definitions/Error"
   /stats/user/{userId}:
     get:
       security:
