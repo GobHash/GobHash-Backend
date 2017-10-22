@@ -18,13 +18,13 @@ router.route('/')
     userCtrl.create);
 
 router.route('/password/change')
-  // POST /v1/users/password/change - Change Password
+  // PATCH /v1/users/password/change - Change Password
   .patch(
     validate(paramValidation.passwordChange),
     userCtrl.changePassword);
 
 router.route('/password/update')
-  // POST /v1/users/password/update - Update Password
+  // PATCH /v1/users/password/update - Update Password
   .patch(
     expressJwt({ secret: config.jwtSecret }),
     validate(paramValidation.passwordUpdate),
@@ -32,7 +32,7 @@ router.route('/password/update')
   );
 
 router.route('/biography')
-  /** POST v1/users/biography */
+  /** PATCH v1/users/biography */
   .patch(
     expressJwt({ secret: config.jwtSecret }),
     validate(paramValidation.updateBio),
@@ -67,7 +67,7 @@ router.route('/profile')
     expressJwt({ secret: config.jwtSecret }),
     userCtrl.profile
   )
-  /** POST v1/users/profile */
+  /** PATCH v1/users/profile */
   .patch(
     expressJwt({ secret: config.jwtSecret }),
     validate(paramValidation.profile),

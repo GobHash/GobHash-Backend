@@ -329,7 +329,7 @@ const profile = async (req, res) => {
         occupation: user.occupation,
         biography: user.biography
       });
-    } else if (req.method === 'POST') {
+    } else if (req.method === 'PATCH') {
       const user = await User.findOne({ _id: req.user.id });
       user.occupation = req.body.occupation;
       user.biography = req.body.biography;
@@ -339,7 +339,9 @@ const profile = async (req, res) => {
         biography: user.biography
       });
     }
-    return res.status(httpStatus.BAD_REQUEST).json('invalid request type');
+    return res
+      .status(httpStatus.BAD_REQUEST)
+      .json('invalid request type');
   } catch (e) {
     return res.json(e);
   }
