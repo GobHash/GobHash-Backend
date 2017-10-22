@@ -186,7 +186,6 @@ describe('## User APIs', () => {
       request(app)
         .patch('/v1/users/profile')
         .send({
-          username: validUserCredentials.username,
           biography: 'test',
           occupation: 'test'
         })
