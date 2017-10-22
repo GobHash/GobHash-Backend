@@ -86,7 +86,7 @@ const resetPassword = async (req, res) => {
     user.resetPasswordToken = crypto.randomBytes(20).toString('hex');
     user.resetPasswordExpiration = Date.now() + 3600000; // 1 hour from now
     await user.save();
-    const resetURL = `http://localhost:8080/#!/auth/recover/${user.resetPasswordToken}`;
+    const resetURL = `https://gobhash.com/#!/auth/recover/${user.resetPasswordToken}`;
     const data = {
       from: 'GobHash <gobhash@mail.gobhash.com>',
       to: req.body.email,
