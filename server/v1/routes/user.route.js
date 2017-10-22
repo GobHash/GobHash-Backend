@@ -19,13 +19,13 @@ router.route('/')
 
 router.route('/password/change')
   // POST /v1/users/password/change - Change Password
-  .post(
+  .patch(
     validate(paramValidation.passwordChange),
     userCtrl.changePassword);
 
 router.route('/password/update')
   // POST /v1/users/password/update - Update Password
-  .post(
+  .patch(
     expressJwt({ secret: config.jwtSecret }),
     validate(paramValidation.passwordUpdate),
     userCtrl.updatePassword
@@ -33,7 +33,7 @@ router.route('/password/update')
 
 router.route('/biography')
   /** POST v1/users/biography */
-  .post(
+  .patch(
     expressJwt({ secret: config.jwtSecret }),
     validate(paramValidation.updateBio),
     userCtrl.updateBio
@@ -68,7 +68,7 @@ router.route('/profile')
     userCtrl.profile
   )
   /** POST v1/users/profile */
-  .post(
+  .patch(
     expressJwt({ secret: config.jwtSecret }),
     validate(paramValidation.profile),
     userCtrl.profile

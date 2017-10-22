@@ -398,7 +398,7 @@ paths:
           description: "Unexpected error"
           schema:
             $ref: "#/definitions/Error"
-  /post/:
+  /posts/:
     post:
       security:
         - Bearer: []
@@ -477,7 +477,7 @@ paths:
           description: "Unexpected error"
           schema:
             $ref: "#/definitions/Error"
-  /post/{postId}:
+  /posts/{postId}:
      get:
       security:
         - Bearer: []
@@ -502,7 +502,7 @@ paths:
           description: "Unexpected error"
           schema:
             $ref: "#/definitions/Error"
-  /post/feed/{userId}:
+  /posts/feed/{userId}:
     get:
       security:
         - Bearer: []
@@ -527,7 +527,7 @@ paths:
           description: "Unexpected error"
           schema:
             $ref: "#/definitions/Error"
-  /post/comment:
+  /posts/comment:
     post:
       security:
         - Bearer: []
@@ -578,7 +578,7 @@ paths:
           description: "Unexpected error"
           schema:
             $ref: "#/definitions/Error"
-  /post/tag:
+  /posts/tag:
     post:
       security:
         - Bearer: []
@@ -628,7 +628,7 @@ paths:
           description: "Unexpected error"
           schema:
             $ref: "#/definitions/Error"
-  /post/like:
+  /posts/like:
     post:
       security:
         - Bearer: []
@@ -677,7 +677,7 @@ paths:
           description: "Unexpected error"
           schema:
             $ref: "#/definitions/Error"
-  /post/like/validation/{postId}/{userId}:
+  /posts/like/validation/{postId}/{userId}:
     get:
       security:
         - Bearer: []

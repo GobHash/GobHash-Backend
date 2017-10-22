@@ -23,7 +23,7 @@ router.use('/users', userRoutes);
 router.use('/auth', authRoutes);
 
 // mount post routes at /post
-router.use('/post', postRoutes);
+router.use('/posts', postRoutes);
 
 // mount search routes at /search
 router.use('/search', searchRoutes);

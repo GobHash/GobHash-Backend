@@ -130,10 +130,10 @@ describe('## POSTS APIs', () => {
         .catch(done);
     });
   });
-  describe('# POST /v1/post/', () => {
+  describe('# POST /v1/posts/', () => {
     it('Create new POST', (done) => {
       request(app)
-        .post('/v1/post')
+        .post('/v1/posts')
         .set('Authorization', jwtToken)
         .send(validPost)
         .expect(httpStatus.OK)
@@ -152,10 +152,10 @@ describe('## POSTS APIs', () => {
         .catch(done);
     });
   });
-  describe('# GET /v1/post/', () => {
+  describe('# GET /v1/posts/', () => {
     it('should get one post', (done) => {
       request(app)
-        .get(`/v1/post/${validPost.id}`)
+        .get(`/v1/posts/${validPost.id}`)
         .set('Authorization', jwtToken)
         .expect(httpStatus.OK)
         .then(() => {
@@ -164,10 +164,10 @@ describe('## POSTS APIs', () => {
         .catch(done);
     });
   });
-  describe('# GET /v1/post/', () => {
+  describe('# GET /v1/posts/', () => {
     it('should get all posts', (done) => {
       request(app)
-        .get('/v1/post')
+        .get('/v1/posts')
         .set('Authorization', jwtToken)
         .expect(httpStatus.OK)
         .then((res) => {
@@ -177,10 +177,10 @@ describe('## POSTS APIs', () => {
         .catch(done);
     });
   });
-  describe('# POST /v1/post/comment', () => {
+  describe('# POST /v1/posts/comment', () => {
     it('add comment to post', (done) => {
       request(app)
-        .post('/v1/post/comment')
+        .post('/v1/posts/comment')
         .set('Authorization', jwtToken)
         .send({ content: 'test content', postId: validPost._id })
         .expect(httpStatus.OK)
@@ -193,10 +193,10 @@ describe('## POSTS APIs', () => {
         .catch(done);
     });
   });
-  describe('# DELETE /v1/post/comment', () => {
+  describe('# DELETE /v1/posts/comment', () => {
     it('delete comment from post', (done) => {
       request(app)
-        .delete('/v1/post/comment')
+        .delete('/v1/posts/comment')
         .set('Authorization', jwtToken)
         .send({ commentId: comment._id, postId: validPost._id })
         .expect(httpStatus.OK)
@@ -208,10 +208,10 @@ describe('## POSTS APIs', () => {
         .catch(done);
     });
   });
-  describe('# GET /v1/post/like/validation/:postId/:userId', () => {
+  describe('# GET /v1/posts/like/validation/:postId/:userId', () => {
     it('Check if user can like post', (done) => {
       request(app)
-        .get(`/v1/post/like/validation/${validPost._id}/${validUserCredentials._id}`)
+        .get(`/v1/posts/like/validation/${validPost._id}/${validUserCredentials._id}`)
         .set('Authorization', jwtToken)
         .expect(httpStatus.OK)
         .then((res) => {
@@ -226,10 +226,10 @@ describe('## POSTS APIs', () => {
         .catch(done);
     });
   });
-  describe('# POST /v1/post/like', () => {
+  describe('# POST /v1/posts/like', () => {
     it('add like to post', (done) => {
       request(app)
-        .post('/v1/post/like')
+        .post('/v1/posts/like')
         .set('Authorization', jwtToken)
         .send({ postId: validPost._id })
         .expect(httpStatus.OK)
@@ -242,10 +242,10 @@ describe('## POSTS APIs', () => {
     });
   });
 
-  describe('# GET /v1/post/like/validation/:postId/:userId', () => {
+  describe('# GET /v1/posts/like/validation/:postId/:userId', () => {
     it('Check if user can like post', (done) => {
       request(app)
-        .get(`/v1/post/like/validation/${validPost._id}/${validUserCredentials._id}`)
+        .get(`/v1/posts/like/validation/${validPost._id}/${validUserCredentials._id}`)
         .set('Authorization', jwtToken)
         .expect(httpStatus.OK)
         .then((res) => {
@@ -260,10 +260,10 @@ describe('## POSTS APIs', () => {
         .catch(done);
     });
   });
-  describe('# DELETE /v1/post/like', () => {
+  describe('# DELETE /v1/posts/like', () => {
     it('remove like from post', (done) => {
       request(app)
-        .delete('/v1/post/like')
+        .delete('/v1/posts/like')
         .set('Authorization', jwtToken)
         .send({ postId: validPost._id })
         .expect(httpStatus.OK)
@@ -276,10 +276,10 @@ describe('## POSTS APIs', () => {
     });
   });
 
-  describe('# POST /v1/post/tag', () => {
+  describe('# POST /v1/posts/tag', () => {
     it('add tag to post', (done) => {
       request(app)
-        .post('/v1/post/tag')
+        .post('/v1/posts/tag')
         .set('Authorization', jwtToken)
         .send({ postId: validPost._id, tag: 'tag_test' })
         .expect(httpStatus.OK)
@@ -292,10 +292,10 @@ describe('## POSTS APIs', () => {
     });
   });
 
-  describe('# DELETE /v1/post/tag', () => {
+  describe('# DELETE /v1/posts/tag', () => {
     it('remove tag from post', (done) => {
       request(app)
-        .delete('/v1/post/tag')
+        .delete('/v1/posts/tag')
         .set('Authorization', jwtToken)
         .send({ postId: validPost._id, tag: 'tag_test' })
         .expect(httpStatus.OK)
@@ -310,10 +310,10 @@ describe('## POSTS APIs', () => {
     });
   });
 
-  describe('# DELETE /v1/post', () => {
+  describe('# DELETE /v1/posts', () => {
     it('delete post', (done) => {
       request(app)
-        .delete('/v1/post/')
+        .delete('/v1/posts/')
         .set('Authorization', jwtToken)
         .send({ postId: validPost._id })
         .expect(httpStatus.OK)

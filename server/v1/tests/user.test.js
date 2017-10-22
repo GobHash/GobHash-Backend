@@ -63,7 +63,7 @@ describe('## User APIs', () => {
   describe('# POST /v1/users/password/update', () => {
     it('should update a users password', (done) => {
       request(app)
-        .post('/v1/users/password/update')
+        .patch('/v1/users/password/update')
         .set('Authorization', jwtToken)
         .send({
           currentPassword: validJwtCredentials.password,
@@ -109,7 +109,7 @@ describe('## User APIs', () => {
     it('should set users biography', (done) => {
       user.biography = 'test';
       request(app)
-        .post('/v1/users/biography')
+        .patch('/v1/users/biography')
         .set('Authorization', jwtToken)
         .send(user)
         .then((res) => {
@@ -184,7 +184,7 @@ describe('## User APIs', () => {
   describe('# POST /v1/users/profile', () => {
     it('should SET profile of user', (done) => {
       request(app)
-        .get('/v1/users/profile')
+        .patch('/v1/users/profile')
         .send({
           username: validUserCredentials.username,
           biography: 'test',
