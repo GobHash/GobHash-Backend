@@ -119,7 +119,19 @@ describe('## User APIs', () => {
         .catch(done);
     });
   });
-
+  describe('# GET /v1/users/follow/:userId/check', () => {
+    it('Check if user can follow another user', (done) => {
+      request(app)
+        .get(`/v1/users/follow/${user.id}/check`)
+        .set('Authorization', jwtToken)
+        .then((res) => {
+          expect(res.body.canFollow)
+            .to.be.true
+          done();
+        })
+        .catch(done);
+    });
+  });
   describe('# POST /v1/users/follow', () => {
     it('should follow a user', (done) => {
       request(app)

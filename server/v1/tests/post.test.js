@@ -136,7 +136,7 @@ describe('## POSTS APIs', () => {
         .post('/v1/posts')
         .set('Authorization', jwtToken)
         .send(validPost)
-        .expect(httpStatus.OK)
+        .expect(httpStatus.CREATED)
         .then((res) => {
           expect(res.body)
             .to.have.property('user');

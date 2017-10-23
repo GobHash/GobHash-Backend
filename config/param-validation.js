@@ -138,6 +138,12 @@ export default {
       userId: Joi.string().min(1).required(),
       postId: Joi.string().min(1).required()
     }
+  },
+  // GET v1/users/follow/:userId/check
+  checkFollow: {
+    params: {
+      userId: Joi.string().min(1).required()
+    }
   }
 
 };

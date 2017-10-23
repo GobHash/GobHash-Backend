@@ -267,7 +267,7 @@ const updatePicture = async (req, res) => {
 
 /**
  * Follow another user
- * @return {String}operation status
+ * @return {String} operation status
  */
 const followUser = async (req, res) => {
   try {
@@ -347,6 +347,23 @@ const profile = async (req, res) => {
   }
 };
 
+/**
+ * Check if current can follow another user
+ * @param  {string} req.params.userId to check
+ * @return {boolean} true or false
+ */
+const checkFollow = async (req, res) => {
+  try {
+    const user = await User.get(req.user.id);
+    // check if user in session is already following
+    // user in param
+    const canFollow = user.following.includes(req.params.userId) ? false: true;
+    return res.json({ canFollow });
+  } catch (e) {
+    return res.json(e);
+  }
+};
+
 export default {
   load,
   get,
@@ -360,5 +377,6 @@ export default {
   updatePicture,
   followUser,
   unfollowUser,
-  profile
+  profile,
+  checkFollow
 };

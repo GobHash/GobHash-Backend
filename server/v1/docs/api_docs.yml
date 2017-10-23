@@ -398,6 +398,27 @@ paths:
           description: "Unexpected error"
           schema:
             $ref: "#/definitions/Error"
+  /users/follow/{userId}/check:
+    get:
+      security:
+        - Bearer: []
+      tags:
+      - "User"
+      summary: Check if user in session can follow user in param
+      parameters:
+      - name: "userId"
+        in: "path"
+        required: true
+        description: "User id to check"
+      responses:
+        200:
+          description: "Profile created"
+          schema:
+            type: "boolean"
+        default:
+          description: "Unexpected error"
+          schema:
+            $ref: "#/definitions/Error"
   /posts/:
     post:
       security:

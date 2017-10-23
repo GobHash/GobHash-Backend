@@ -87,6 +87,13 @@ router.route('/:userId')
   /** DELETE /v1/users/:userId - Delete user */
   .delete(expressJwt({ secret: config.jwtSecret }), userCtrl.remove);
 
+router.route('/follow/:userId/check')
+  /** GET /v1/users/follow/:userId/check */
+  .get(
+    expressJwt({ secret: config.jwtSecret }),
+    validate(paramValidation.checkFollow),
+    userCtrl.checkFollow
+  );
 
 /** Load user when API with userId route parameter is hit */
 router.param('userId', userCtrl.load);
