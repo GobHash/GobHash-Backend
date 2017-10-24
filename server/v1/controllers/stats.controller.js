@@ -36,7 +36,7 @@ const userStats = async (req, res, next) => {
 const postStats = async (req, res, next) => {
   try {
     // default params of optional query params
-    const { limit = 5, skip = 0 } = req.query;
+    const { limit = 2, skip = 0 } = req.query;
     // query the most liked posts
     const posts = await Post.mostLiked(limit, skip);
     // return posts
