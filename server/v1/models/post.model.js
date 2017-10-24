@@ -111,6 +111,21 @@ PostSchema.statics = {
         return Promise.reject(err);
       });
   },
+  /** GET posts of a user */
+  getUserFeed(userId) {
+    return this.find()
+      .populate('comments.user dashboard.main dashboard.first_submain dashboard.second_submain dashboard.third_submain', 'username picture data definition widgetType entity filters dateFilters baseColumn category')
+      .populate('user', 'username')
+      .where('user', userId)
+      .exec()
+      .then((post) => {
+        if (post) {
+          return post;
+        }
+        const err = new APIError('Post id does not exist', httpStatus.NOT_FOUND);
+        return Promise.reject(err);
+      });
+  },
   /**
    * Count the number of posts of a user
    * @param  { integer } id user id
@@ -146,7 +161,7 @@ PostSchema.statics = {
    * @param {number} limit - Limit number of users to be returned.
    * @returns {Promise<Post[]>}
    */
-  filterFeed({ skip = 0, limit = 15, following = [] } = {}) {
+  filterFeed({ limit = 15, skip = 0, following = [] } = {}) {
     return this.find({ user: { $in: following } })
       .sort({ createdAt: -1 })
       .populate('comments.user dashboard.main', 'username picture data definition widgetType entity filters dateFilters baseColumn category')

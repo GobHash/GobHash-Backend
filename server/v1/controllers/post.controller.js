@@ -200,6 +200,20 @@ const deleteLike = async (req, res) => {
 };
 
 /**
+ * Get a user's posts
+ */
+const userFeed = async (req, res) => {
+  try {
+    const userId = req.params.userId;
+    const posts = await Post.getUserFeed(userId);
+    return res.json(posts);
+  } catch (e) {
+    console.log(e);
+    return res.json(e);
+  }
+};
+
+/**
  * Get the feed for a user
  * @param  req.param.userId The users id
  * @param  req.query.limit
@@ -288,6 +302,7 @@ export default {
   deleteLike,
   addTag,
   removeTag,
+  userFeed,
   feed,
   checkValidLike
 };
