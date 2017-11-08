@@ -144,6 +144,12 @@ export default {
     params: {
       userId: Joi.string().min(1).required()
     }
+  },
+  // GET v1/posts/user/:userId
+  userFeed: {
+    params: {
+      userId: Joi.string().min(1).required()
+    }
   }
 
 };

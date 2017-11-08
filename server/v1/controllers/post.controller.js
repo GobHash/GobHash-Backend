@@ -48,7 +48,10 @@ const create = async (req, res) => {
     for (let i = 0; i < userQuery.followers.length; i++) { // eslint-disable-line
       const follower = userQuery.followers[i];
       if (follower.online) {
-        emmiter.sendToUser(follower, post);
+        let postWithUser = post;
+        // assign username for post render
+        postWithUser.user.username = req.user.username;
+        emmiter.sendToUser(follower, postWithUser);
       }
     }
     const savedPost = await post.save();
@@ -197,6 +200,20 @@ const deleteLike = async (req, res) => {
 };
 
 /**
+ * Get a user's posts
+ */
+const userFeed = async (req, res) => {
+  try {
+    const userId = req.params.userId;
+    const posts = await Post.getUserFeed(userId);
+    return res.json(posts);
+  } catch (e) {
+    console.log(e);
+    return res.json(e);
+  }
+};
+
+/**
  * Get the feed for a user
  * @param  req.param.userId The users id
  * @param  req.query.limit
@@ -285,6 +302,7 @@ export default {
   deleteLike,
   addTag,
   removeTag,
+  userFeed,
   feed,
   checkValidLike
 };
