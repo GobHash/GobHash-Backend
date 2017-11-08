@@ -20,7 +20,8 @@ const groupBy = "group by {0}";
 const replaceAll = (search, replacement, target) => {
     return target.split(search).join(replacement);
 }
-const buildConstraints = (baseQuery, columns, operations, values, baseColumnDate, operationColumnDate) => {
+
+const buildDateConstraints = (baseQuery, columns, operations, values, baseColumnDate, operationColumnDate) =>{
     for(let x = 0; x < columns.length; x++){
         let column = columns[x];
         let operation = operations[x];
@@ -31,6 +32,28 @@ const buildConstraints = (baseQuery, columns, operations, values, baseColumnDate
         }
     }
     return baseQuery;
+}
+
+const buildConstraints = (baseQuery, columns, operations, values, baseColumnDate, operationColumnDate) => {
+    for(let x = 0; x < columns.length; x++){
+        let column = columns[x];
+        let operation = operations[x];
+        let value = values[x];
+        let condition = ""
+        if(!baseColumnDate && !operationColumnDate){
+            
+        }
+    }
+    return baseQuery;
+}
+
+const buildDateJoins = (baseQuery, column, value, operation) =>{
+
+}
+
+const buildDateOperations = (column, value, operation) =>{
+    let sentenece = "";
+
 }
 
 const buildOperation = (column, value, operation) =>{
@@ -80,7 +103,7 @@ const buildOperation = (column, value, operation) =>{
     
 }
 
-const baseQueryHandler = (baseColumn, operation, column, filterList) => {
+const baseQueryHandler = (baseColumn, operation, column, filterList, dateFilterList) => {
     let sqlOperation = "";
     if(column.second_table != "dim_fecha" && baseColumn.second_table != "dim_fecha"){
         switch(operation.name){
@@ -115,6 +138,7 @@ const baseQueryHandler = (baseColumn, operation, column, filterList) => {
                 selectFrom = buildConstraints(selectFrom, filterList[0], filterList[1], filterList[2], false, false)
             }
         }
+        
        
         let query = sqlClient.select().field(sqlOperation).field(calculateColumn).from(selectFrom, "q")
         
@@ -258,7 +282,6 @@ const getDataForPreview = async(req, res) => {
     try{
 
         const filters = req.body.definition.filters;
-
         const dateFilters = req.body.definition.dateFilters;
         let finalQuery = "";
 
@@ -291,10 +314,27 @@ const getDataForPreview = async(req, res) => {
 
 
         //Date Filter Data
+        let dateFilterColumns = [];
+        let dateFilterOperations = [];
+        let dateFilterValues = [];
+        let dateFilterList = [];
+        if(dateFilters!= undefined){
+            if(dateFilters.length > 0){
+                dateFilters.forEach(function(item, index){
+                    
+                    dateFilterColumns.push(item.column);
+                    dateFilterOperations.push(item.operation);
+                    dateFilterValues.push(item.date1);
+                    
+                });
+                dateFilterList.push(dateFilterColumns, dateFilterOperations, dateFilterValues)
+            }
+            
+        }
 
 
         //Run query
-        finalQuery = baseQueryHandler(baseColumn, category.operation, category.column, filterList);
+        finalQuery = baseQueryHandler(baseColumn, category.operation, category.column, filterList, dateFilterList);
         let queryString = replaceAll("`","",finalQuery);
         const data = await sequelize.query(queryString);
 
