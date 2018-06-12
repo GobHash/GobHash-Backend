@@ -1,5 +1,5 @@
 # GobHash-Backend 
-[![Build Status](https://travis-ci.com/fcpauldiaz/GobHash-Backend.svg?token=BA4QqVvYrBdqHBsnJ9LK&branch=master)](https://travis-ci.com/fcpauldiaz/GobHash-Backend)
+[![Build Status](https://travis-ci.org/GobHash/GobHash-Backend.svg?branch=master)](https://travis-ci.org/GobHash/GobHash-Backend)
 [![codecov](https://codecov.io/gh/fcpauldiaz/GobHash-Backend/branch/master/graph/badge.svg?token=t65HH8ifWC)](https://codecov.io/gh/fcpauldiaz/GobHash-Backend)
 [![Known Vulnerabilities](https://img.shields.io/badge/vulnerabilities-0-green.svg?style=flat-square)](https://snyk.io/test/github/fcpauldiaz/GobHash-Backend)
 [![Code Climate](https://img.shields.io/codeclimate/github/kabisaict/flow.svg)](https://codeclimate.com/repos/5928f59b3a349502850008b4)
