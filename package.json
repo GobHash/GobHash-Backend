@@ -6,12 +6,12 @@
   "main": "index.js",
   "private": false,
   "engines": {
-    "node": ">=4.8.0",
-    "npm": ">=2.15.11",
+    "node": ">=6.8.0",
+    "npm": ">=4.15.11",
     "yarn": ">=0.20.3"
   },
   "scripts": {
-    "start": "pm2 start dist/index.js -i 4 --attach && pm2 link cnylh3vhw2pxtvf 1r8u14nfdcfribv",
+    "start": "pm2 start dist/index.js -i 2 --attach && pm2 link cnylh3vhw2pxtvf 1r8u14nfdcfribv",
     "dev": "gulp serve",
     "start:debug": "cross-env DEBUG=express-mongoose-es6-rest-api:* yarn start",
     "build": "gulp",
@@ -69,8 +69,8 @@
     "express-session": "^1.15.6",
     "express-validation": "1.0.2",
     "express-winston": "2.5.0",
-    "gobhash-swagger": "^2.0.6",
-    "gulp": "4.0.0",
+    "gobhash-swagger": "^2.0.7",
+    "gulp": "3.9.1",
     "gulp-babel": "7.0.0",
     "gulp-load-plugins": "^1.2.0",
     "gulp-newer": "^1.1.0",
@@ -88,6 +88,7 @@
     "morgan": "1.9.0",
     "multer": "^1.3.0",
     "multer-s3": "^2.7.0",
+    "newrelic": "^2.3.0",
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
     "pg": "^7.3.0",
@@ -98,6 +99,8 @@
     "sequelize": "^4.2.0",
     "snyk": "^1.41.1",
     "socket.io": "^2.0.3",
+    "socket.io-redis": "^5.2.0",
+    "squel": "^5.12.0",
     "winston": "2.3.1"
   },
   "devDependencies": {

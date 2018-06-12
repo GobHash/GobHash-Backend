@@ -4,6 +4,10 @@ import authRoutes from './auth.route';
 import postRoutes from './post.route';
 import searchRoutes from './search.route';
 import statsRoutes from './stats.route';
+import entityRoutes from './entity.route';
+import columnRoutes from './column.route';
+import operationRoutes from './operation.route';
+import widgetRoutes from './widgets.route';
 
 const router = express.Router(); // eslint-disable-line new-cap
 
@@ -19,12 +23,24 @@ router.use('/users', userRoutes);
 router.use('/auth', authRoutes);
 
 // mount post routes at /post
-router.use('/post', postRoutes);
+router.use('/posts', postRoutes);
 
 // mount search routes at /search
 router.use('/search', searchRoutes);
 
 // mount statistics routes at /stats
 router.use('/stats', statsRoutes);
+// mount entity routes at /entity
+router.use('/entity', entityRoutes);
+
+// mount columns routes at /column
+router.use('/column', columnRoutes);
+
+// mount operations routes at /operations
+router.use('/operations', operationRoutes);
+
+// mount widgets routes at /widgets
+router.use('/widgets', widgetRoutes);
+
 
 export default router;

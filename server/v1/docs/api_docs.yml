@@ -194,8 +194,6 @@ paths:
           description: "Unexpected error"
           schema:
             $ref: "#/definitions/Error"
-
-
     delete:
       security:
         - Bearer: []
@@ -222,7 +220,7 @@ paths:
           schema:
             $ref: "#/definitions/Error"
   /users/password/change:
-    post:
+    patch:
       tags:
       - "User"
       summary: Change a user's password
@@ -244,8 +242,33 @@ paths:
           description: "Unexpected error"
           schema:
             $ref: "#/definitions/Error"
+  /users/password/update:
+    patch:
+      tags:
+      - "User"
+      summary: Update a user's password
+      description: Update user's password
+      operationId: updatePasswordPOST
+      parameters:
+      - name: "bodyPassword"
+        in: "body"
+        description: "body Password"
+        required: true
+        schema:
+          $ref: "#/definitions/passwordUpdate"
+      responses:
+        200:
+          description: "Password changed message"
+          schema:
+            type: "string"
+        default:
+          description: "Unexpected error"
+          schema:
+            $ref: "#/definitions/Error"
   /users/biography:
-    post:
+    patch:
+      security:
+        - Bearer: []
       tags:
       - "User"
       summary: "Update or set the user's biography"
@@ -270,6 +293,8 @@ paths:
             $ref: "#/definitions/Error"
   /users/picture:
     post:
+      security:
+        - Bearer: []
       tags:
       - "User"
       summary: Uploads a file.
@@ -291,6 +316,8 @@ paths:
             $ref: "#/definitions/Error"
   /users/follow:
     post:
+      security:
+        - Bearer: []
       tags:
       - "User"
       summary: Follow a user.
@@ -312,6 +339,8 @@ paths:
             $ref: "#/definitions/Error"
   /users/unfollow:
     post:
+      security:
+        - Bearer: []
       tags:
       - "User"
       summary: Unfollows a user.
@@ -331,7 +360,66 @@ paths:
           description: "Unexpected error"
           schema:
             $ref: "#/definitions/Error"
-  /post/:
+  /users/profile:
+    patch:
+      security:
+        - Bearer: []
+      tags:
+      - "User"
+      summary: Set the profile of a user.
+      parameters:
+      - name: "profilePOST"
+        in: "body"
+        description: "Profile fields"
+        required: true
+        schema:
+          $ref: "#/definitions/UserProfilePOST"
+      responses:
+        200:
+          description: "Profile created"
+          schema:
+            type: "string"
+        default:
+          description: "Unexpected error"
+          schema:
+            $ref: "#/definitions/Error"
+    get:
+      security:
+        - Bearer: []
+      tags:
+      - "User"
+      summary: Get the profile of a user
+      responses:
+        200:
+          description: "Profile"
+          schema:
+            $ref: "#/definitions/UserProfile"
+        default:
+          description: "Unexpected error"
+          schema:
+            $ref: "#/definitions/Error"
+  /users/follow/{userId}/check:
+    get:
+      security:
+        - Bearer: []
+      tags:
+      - "User"
+      summary: Check if user in session can follow user in param
+      parameters:
+      - name: "userId"
+        in: "path"
+        required: true
+        description: "User id to check"
+      responses:
+        200:
+          description: "Profile created"
+          schema:
+            type: "boolean"
+        default:
+          description: "Unexpected error"
+          schema:
+            $ref: "#/definitions/Error"
+  /posts/:
     post:
       security:
         - Bearer: []
@@ -380,7 +468,7 @@ paths:
         200:
           description: "Post created"
           schema:
-            $ref: "#/definitions/PostEntity"
+            $ref: "#/definitions/PostBody"
         default:
           description: "Unexpected error"
           schema:
@@ -410,7 +498,7 @@ paths:
           description: "Unexpected error"
           schema:
             $ref: "#/definitions/Error"
-  /post/{postId}:
+  /posts/{postId}:
      get:
       security:
         - Bearer: []
@@ -430,12 +518,62 @@ paths:
           description: "Post created"
           schema:
             type: "object"
-            $ref: "#/definitions/PostEntity"
+            $ref: "#/definitions/PostBody"
         default:
           description: "Unexpected error"
           schema:
             $ref: "#/definitions/Error"
-  /post/comment:
+  /posts/user/{userId}:
+     get:
+      security:
+        - Bearer: []
+      tags:
+      - "Post"
+      summary: Get all the posts of a user
+      description: Get all the posts of a user
+      operationId: GetUserPOST
+      parameters:
+      - name: "userId"
+        in: "path"
+        description: "User id"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "List of posts"
+          schema:
+            type: "object"
+            $ref: "#/definitions/PostBody"
+        default:
+          description: "Unexpected error"
+          schema:
+            $ref: "#/definitions/Error"
+  /posts/feed/{userId}:
+    get:
+      security:
+        - Bearer: []
+      tags:
+      - "Post"
+      summary: Get list of posts according to following users
+      description: Get list of posts according to following users
+      operationId: GetFeedPOST
+      parameters:
+      - name: "userId"
+        in: "path"
+        description: "User id"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "Posts"
+          schema:
+            type: "object"
+            $ref: "#/definitions/PostBody"
+        default:
+          description: "Unexpected error"
+          schema:
+            $ref: "#/definitions/Error"
+  /posts/comment:
     post:
       security:
         - Bearer: []
@@ -456,7 +594,7 @@ paths:
           description: "Comment created"
           schema:
             type: "object"
-            $ref: "#/definitions/PostEntity"
+            $ref: "#/definitions/PostBody"
         default:
           description: "Unexpected error"
           schema:
@@ -478,15 +616,65 @@ paths:
           $ref: "#/definitions/PostCommentDeleteBody"
       responses:
         200:
-          description: "Post created"
+          description: "Post deleted"
           schema:
             type: "object"
-            $ref: "#/definitions/PostEntity"
+            $ref: "#/definitions/PostDelete"
         default:
           description: "Unexpected error"
           schema:
             $ref: "#/definitions/Error"
-  /post/like:
+  /posts/tag:
+    post:
+      security:
+        - Bearer: []
+      tags:
+      - "Post"
+      summary: Add tag to post
+      description: Add a new tag to post
+      operationId: tagPOST
+      parameters:
+      - name: "tagPOST"
+        in: "body"
+        description: "body of tag post"
+        required: true
+        schema:
+          $ref: "#/definitions/PostTagBody"
+      responses:
+        200:
+          description: "Tag added"
+          schema:
+            type: "object"
+            $ref: "#/definitions/PostBody"
+        default:
+          description: "Unexpected error"
+          schema:
+            $ref: "#/definitions/Error"
+    delete:
+      security:
+        - Bearer: []
+      tags:
+      - "Post"
+      summary: Delete tag from post
+      description: Delete a new tag to post
+      operationId: tagDelete
+      parameters:
+      - name: "tagDelete"
+        in: "body"
+        description: "body of comment post"
+        required: true
+        schema:
+          $ref: "#/definitions/PostTagBody"
+      responses:
+        200:
+          description: "Tag deleted"
+          schema:
+            type: "integer"
+        default:
+          description: "Unexpected error"
+          schema:
+            $ref: "#/definitions/Error"
+  /posts/like:
     post:
       security:
         - Bearer: []
@@ -535,6 +723,35 @@ paths:
           description: "Unexpected error"
           schema:
             $ref: "#/definitions/Error"
+  /posts/like/validation/{postId}/{userId}:
+    get:
+      security:
+        - Bearer: []
+      tags:
+      - "Post"
+      summary: Verify if user can like post
+      description: Verify if user can like post
+      operationId: likeValidationPOST
+      parameters:
+      - name: "postId"
+        in: "path"
+        description: "Id of Post"
+        required: true
+        type: string
+      - name: "userId"
+        in: "path"
+        description: "Id of user"
+        required: true
+        type: string
+      responses:
+        200:
+          description: "Can like Post"
+          schema:
+            type: "boolean"
+        default:
+          description: "Unexpected error"
+          schema:
+            $ref: "#/definitions/Error"
   /search/users:
     get:
       security:
@@ -566,6 +783,37 @@ paths:
           description: "Unexpected error"
           schema:
             $ref: "#/definitions/Error"
+  /search/posts:
+    get:
+      security:
+        - Bearer: []
+      tags:
+      - "Search"
+      summary: "Find posts"
+      description: "Find posts by username or title."
+      operationId: "findPostsGET"
+      parameters:
+      - name: "username"
+        in: "query"
+        description: "username of user"
+        required: false
+        type: "string"
+      - name: "title"
+        in: "query"
+        description: "title of posts"
+        required: false
+        type: "string"
+      responses:
+        200:
+          description: "Post"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/PostBody"
+        default:
+          description: "Unexpected error"
+          schema:
+            $ref: "#/definitions/Error"
   /stats/user/{userId}:
     get:
       security:
@@ -588,6 +836,37 @@ paths:
             type: "array"
             items:
               $ref: "#/definitions/UserStats"
+        default:
+          description: "Unexpected error"
+          schema:
+            $ref: "#/definitions/Error"
+  /stats/posts/top:
+    get:
+      security:
+        - Bearer: []
+      tags:
+      - "Stats"
+      summary: "Stats for top posts"
+      description: "Get the most liked posts"
+      operationId: "statsPostGET"
+      parameters:
+      - name: "limit"
+        in: "query"
+        description: "limit the number of posts"
+        required: false
+        type: "integer"
+      - name: "skip"
+        in: "query"
+        description: "skip a number of posts"
+        type: "integer"
+        required: false
+      responses:
+        200:
+          description: "UserStats"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/PostBody"
         default:
           description: "Unexpected error"
           schema:
@@ -646,6 +925,22 @@ definitions:
         type: string
       biography:
         type: string
+  UserProfilePOST:
+      type: object
+      properties:
+        biography:
+          type: string
+        occupation:
+          type: string
+  UserProfile:
+    type: object
+    properties:
+      username:
+        type: string
+      biography:
+        type: string
+      occupation:
+        type: string
   UserFollow:
     type: "object"
     properties:
@@ -665,13 +960,538 @@ definitions:
         type: string
   PostBody:
     type: object
+    required:
+    - dashboard
+    - title
+    - description
     properties:
-      layout:
-        type: string
       title:
         type: string
       description:
         type: string
+      dashboard:
+        type: object
+        properties:
+          main:
+            type: object
+            properties:
+              data:
+                type: array
+                items:
+                  type: array
+              definition:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  widgetType:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      name:
+                        type: string
+                  entity:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      name:
+                        type: string
+                      visible:
+                        type: boolean
+                      updatedAt:
+                        type: string
+                      createdAt:
+                        type: string
+                  filter:
+                    type:
+                      array
+                    items:
+                      type: object
+                      properties:
+                        hashKey:
+                          type: string
+                        value:
+                          type: string
+                        column:
+                          type: object
+                          properties:
+                            base_table:
+                              type: string
+                            entity_id:
+                              type: integer
+                            name:
+                              type: string
+                            updatedAt:
+                              type: string
+                            createdAt:
+                              type: string
+                        operation:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                            name:
+                              type: string
+                            value_type:
+                              type: integer
+                            updatedAt:
+                              type: string
+                            createdAt:
+                              type: string
+                  dateFilters:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        hashKey:
+                          type: string
+                        value:
+                          type: string
+                        column:
+                          type: object
+                          properties:
+                            base_table:
+                              type: string
+                            entity_id:
+                              type: integer
+                            name:
+                              type: string
+                            updatedAt:
+                              type: string
+                            createdAt:
+                              type: string
+                        operation:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                            name:
+                              type: string
+                            value_type:
+                              type: integer
+                            updatedAt:
+                              type: string
+                            createdAt:
+                              type: string
+
+                  baseColumn:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      name:
+                        type: string
+                      base_type:
+                        type: string
+                      base_table:
+                        type: string
+                      second_table:
+                        type: string
+                      entity_id:
+                        type: integer
+                      createdAt:
+                        type: string
+                      updatedAt:
+                        type: string
+                      category:
+                        type: object
+                        properties:
+                          operation:
+                            type: string
+                          column:
+                            type: string
+          first_submain:
+            type: object
+            properties:
+              data:
+                type: array
+                items:
+                  type: array
+              definition:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  widgetType:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      name:
+                        type: string
+                  entity:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      name:
+                        type: string
+                      visible:
+                        type: boolean
+                      updatedAt:
+                        type: string
+                      createdAt:
+                        type: string
+                  filter:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        hashKey:
+                          type: string
+                        value:
+                          type: string
+                        column:
+                          type: object
+                          properties:
+                            base_table:
+                              type: string
+                            entity_id:
+                              type: integer
+                            name:
+                              type: string
+                            updatedAt:
+                              type: string
+                            createdAt:
+                              type: string
+                        operation:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                            name:
+                              type: string
+                            value_type:
+                              type: integer
+                            updatedAt:
+                              type: string
+                            createdAt:
+                              type: string
+
+                  dateFilters:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        hashKey:
+                          type: string
+                        value:
+                          type: string
+                        column:
+                          type: object
+                          properties:
+                            base_table:
+                              type: string
+                            entity_id:
+                              type: integer
+                            name:
+                              type: string
+                            updatedAt:
+                              type: string
+                            createdAt:
+                              type: string
+                        operation:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                            name:
+                              type: string
+                            value_type:
+                              type: integer
+                            updatedAt:
+                              type: string
+                            createdAt:
+                              type: string
+
+                  baseColumn:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      name:
+                        type: string
+                      base_type:
+                        type: string
+                      base_table:
+                        type: string
+                      second_table:
+                        type: string
+                      entity_id:
+                        type: integer
+                      createdAt:
+                        type: string
+                      updatedAt:
+                        type: string
+                  category:
+                    type: object
+                    properties:
+                      operation:
+                        type: string
+                      column:
+                        type: string
+          second_submain:
+            type: object
+            properties:
+              data:
+                type: array
+                items:
+                  type: array
+              definition:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  widgetType:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      name:
+                        type: string
+                  entity:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      name:
+                        type: string
+                      visible:
+                        type: boolean
+                      updatedAt:
+                        type: string
+                      createdAt:
+                        type: string
+                  filter:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        hashKey:
+                          type: string
+                        value:
+                          type: string
+                        column:
+                          type: object
+                          properties:
+                            base_table:
+                              type: string
+                            entity_id:
+                              type: integer
+                            name:
+                              type: string
+                            updatedAt:
+                              type: string
+                            createdAt:
+                              type: string
+                        operation:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                            name:
+                              type: string
+                            value_type:
+                              type: integer
+                            updatedAt:
+                              type: string
+                            createdAt:
+                              type: string
+
+                  dateFilters:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        hashKey:
+                          type: string
+                        value:
+                          type: string
+                        column:
+                          type: object
+                          properties:
+                            base_table:
+                              type: string
+                            entity_id:
+                              type: integer
+                            name:
+                              type: string
+                            updatedAt:
+                              type: string
+                            createdAt:
+                              type: string
+                        operation:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                            name:
+                              type: string
+                            value_type:
+                              type: integer
+                            updatedAt:
+                              type: string
+                            createdAt:
+                              type: string
+
+                  baseColumn:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      name:
+                        type: string
+                      base_type:
+                        type: string
+                      base_table:
+                        type: string
+                      second_table:
+                        type: string
+                      entity_id:
+                        type: integer
+                      createdAt:
+                        type: string
+                      updatedAt:
+                        type: string
+                  category:
+                    type: object
+                    properties:
+                      operation:
+                        type: string
+                      column:
+                        type: string
+          third_submain:
+            type: object
+            properties:
+              data:
+                type: array
+                items:
+                  type: array
+              definition:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  widgetType:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      name:
+                        type: string
+                  entity:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      name:
+                        type: string
+                      visible:
+                        type: boolean
+                      updatedAt:
+                        type: string
+                      createdAt:
+                        type: string
+                  filter:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        hashKey:
+                          type: string
+                        value:
+                          type: string
+                        column:
+                          type: object
+                          properties:
+                            base_table:
+                              type: string
+                            entity_id:
+                              type: integer
+                            name:
+                              type: string
+                            updatedAt:
+                              type: string
+                            createdAt:
+                              type: string
+                        operation:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                            name:
+                              type: string
+                            value_type:
+                              type: integer
+                            updatedAt:
+                              type: string
+                            createdAt:
+                              type: string
+
+                  dateFilters:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        hashKey:
+                          type: string
+                        value:
+                          type: string
+                        column:
+                          type: object
+                          properties:
+                            base_table:
+                              type: string
+                            entity_id:
+                              type: integer
+                            name:
+                              type: string
+                            updatedAt:
+                              type: string
+                            createdAt:
+                              type: string
+                        operation:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                            name:
+                              type: string
+                            value_type:
+                              type: integer
+                            updatedAt:
+                              type: string
+                            createdAt:
+                              type: string
+
+                  baseColumn:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      name:
+                        type: string
+                      base_type:
+                        type: string
+                      base_table:
+                        type: string
+                      second_table:
+                        type: string
+                      entity_id:
+                        type: integer
+                      createdAt:
+                        type: string
+                      updatedAt:
+                        type: string
+                  category:
+                    type: object
+                    properties:
+                      operation:
+                        type: string
+                      column:
+                        type: string
   PostCommentBody:
     type: object
     properties:
@@ -727,6 +1547,25 @@ definitions:
         type: integer
       posts:
         type: integer
+  PostTagBody:
+    type: object
+    properties:
+      postId:
+        type: string
+      tag:
+        type: string
+  passwordUpdate:
+    type: object
+    properties:
+      currentPassword:
+        type: string
+      password:
+        type: string
+  PostDelete:
+    type: object
+    properties:
+      deleted:
+        type: boolean
   Error:
     type: "object"
     properties:

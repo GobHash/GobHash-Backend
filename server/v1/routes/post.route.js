@@ -25,6 +25,14 @@ router.route('/')
     postCtrl.remove
   );
 
+router.route('/user/:userId')
+  /** GET a users posts */
+  .get(
+    expressJwt({ secret: config.jwtSecret }),
+    validate(paramValidation.userFeed),
+    postCtrl.userFeed
+  );
+
 router.route('/feed/:userId')
   /** GET a users posts according to their following */
   .get(
@@ -62,6 +70,27 @@ router.route('/like')
     expressJwt({ secret: config.jwtSecret }),
     validate(paramValidation.addLike),
     postCtrl.deleteLike
+  );
+
+router.route('/like/validation/:postId/:userId')
+  /** GET v1/post/like/validation/:postId/:userId */
+  .get(
+    expressJwt({ secret: config.jwtSecret }),
+    validate(paramValidation.validateLike),
+    postCtrl.checkValidLike
+  );
+
+router.route('/tag')
+  /** POST v1/post/tag */
+  .post(
+    expressJwt({ secret: config.jwtSecret }),
+    validate(paramValidation.addTag),
+    postCtrl.addTag
+  )
+  .delete(
+    expressJwt({ secret: config.jwtSecret }),
+    validate(paramValidation.addTag),
+    postCtrl.removeTag
   );
 
 export default router;

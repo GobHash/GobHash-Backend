@@ -4,34 +4,40 @@ export default {
   // POST /v1/users
   createUser: {
     body: {
-      username: Joi.string().required(),
+      username: Joi.string().max(30).required(),
       email: Joi.string().regex(/^([\w-.]+)@((?:[\w]+\.)+)([a-zA-Z]{2,4})$/).required(),
-      password: Joi.string().required()
+      password: Joi.string().min(4).max(30).required()
     }
   },
 
   // UPDATE /v1/users/:userId
   updateUser: {
     body: {
-      username: Joi.string().required(),
+      username: Joi.string().max(30).required(),
       email: Joi.string().regex(/^([\w-.]+)@((?:[\w]+\.)+)([a-zA-Z]{2,4})$/).required()
     },
     params: {
       userId: Joi.string().hex().required()
     }
   },
+  // POST v1/users/picture
+  uploadPicture: {
+    body: {
+      username: Joi.string().max(30).required()
+    }
+  },
   // POST /v1/users/password/change
   passwordChange: {
     body: {
       token: Joi.string().required(),
-      password: Joi.string().required()
+      password: Joi.string().min(4).max(30).required()
     }
   },
   // POST v1/users/biography
   updateBio: {
     body: {
       username: Joi.string().required(),
-      biography: Joi.string().required()
+      biography: Joi.string().max(140).required()
     }
   },
   // POST v1/users/follow
@@ -56,10 +62,14 @@ export default {
   // POST v1/post
   createPost: {
     body: {
-      layout: Joi.string().required(),
-      title: Joi.string().required(),
-      description: Joi.string().required(),
-      tags: Joi.array()
+      title: Joi.string().max(100).required(),
+      description: Joi.string().max(500).required(),
+      dasbhoard: {
+        main: Joi.object().required(),
+        first_submain: Joi.object(),
+        second_subdomain: Joi.object(),
+        third_submain: Joi.object()
+      }
     }
   },
   // DELETE v1/post/delete
@@ -93,5 +103,53 @@ export default {
     params: {
       userId: Joi.string().required()
     }
+  },
+  // GET v1/stats/post
+  statsPost: {
+    query: {
+      limit: Joi.number().greater(-1),
+      skip: Joi.number().greater(-1)
+    }
+  },
+  // POST v1/post/tag
+  addTag: {
+    body: {
+      postId: Joi.string().required(),
+      tag: Joi.string().max(50).required()
+    }
+  },
+  // POST v1/users/profile
+  profile: {
+    body: {
+      biography: Joi.string().max(200).required(),
+      occupation: Joi.string().max(200).required()
+    }
+  },
+  // POST v1/users/password/update
+  passwordUpdate: {
+    body: {
+      currentPassword: Joi.string().required(),
+      password: Joi.string().min(4).max(30).required()
+    }
+  },
+  // GET v1/post/like/validate/:postId/:userId
+  validateLike: {
+    params: {
+      userId: Joi.string().min(1).required(),
+      postId: Joi.string().min(1).required()
+    }
+  },
+  // GET v1/users/follow/:userId/check
+  checkFollow: {
+    params: {
+      userId: Joi.string().min(1).required()
+    }
+  },
+  // GET v1/posts/user/:userId
+  userFeed: {
+    params: {
+      userId: Joi.string().min(1).required()
+    }
   }
+
 };

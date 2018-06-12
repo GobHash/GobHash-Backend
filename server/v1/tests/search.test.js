@@ -70,8 +70,23 @@ describe('## Search APIs', () => {
         .get('/v1/search/users')
         .set('Authorization', jwtToken)
         .query({ username: 'notFound', name: 'notFound' })
-        .expect(httpStatus.NOT_FOUND)
+        .expect(httpStatus.OK)
         .then(() => {
+          done();
+        })
+        .catch(done);
+    });
+  });
+
+  describe('# GET /v1/search/posts', () => {
+    it('should find post', (done) => {
+      request(app)
+        .get('/v1/search/posts')
+        .set('Authorization', jwtToken)
+        .query({ username: 'test' })
+        .expect(httpStatus.OK)
+        .then((res) => {
+          expect(res.body).to.be.an('array');
           done();
         })
         .catch(done);

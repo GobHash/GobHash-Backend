@@ -31,21 +31,29 @@ const UserSchema = new mongoose.Schema({
   picture: {
     location: {
       type: String,
-      required: false
+      required: false,
+      default: 'https://s3.us-east-2.amazonaws.com/gobhash/profile/profile.jpeg'
     },
     name: {
       type: String,
-      required: false
+      required: false,
+      default: 'default-unique-image'
     },
     originalName: {
       type: String,
-      required: false
+      required: false,
+      default: 'default-image'
     }
+  },
+  occupation: {
+    type: String,
+    trim: true,
+    lowercase: false
   },
   biography: {
     type: String,
     trim: true,
-    lowercase: true
+    lowercase: false
   },
   following: [{
     type: mongoose.Schema.Types.ObjectId,
@@ -56,13 +64,16 @@ const UserSchema = new mongoose.Schema({
     ref: 'User'
   }],
   resetPasswordToken: {
-    type: String,
-    unique: true
+    type: String
   },
   resetPasswordExpiration: {
     type: Date
   },
   admin: {
+    type: Boolean,
+    default: false
+  },
+  online: {
     type: Boolean,
     default: false
   },
@@ -100,8 +111,8 @@ UserSchema.statics = {
    */
   get(id) {
     return this.findById(id)
-      .select('name username biography createdAt updatedAt picture followers following')
-      .populate('followers following', 'username biography picture')
+      .select('name username biography createdAt updatedAt picture followers following occupation')
+      .populate('followers following', 'username biography picture online')
       .exec()
       .then((user) => {
         if (user) {
@@ -127,6 +138,21 @@ UserSchema.statics = {
       .limit(+limit)
       .exec();
   },
+
+  /**
+   * List all online clients
+   *
+   */
+  listOnline() {
+    return this.find()
+      .select('name username following')
+      .where({ online: true })
+      .populate('following', 'username')
+      .sort({ createdAt: -1 })
+      .skip()
+      .limit()
+      .exec();
+  }
 };
 
 /**

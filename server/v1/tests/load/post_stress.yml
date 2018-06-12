@@ -1,0 +1,12 @@
+config:
+  target: 'https://api-dev.gobhash.com'
+  phases:
+    - duration: 10
+      arrivalRate: 20
+  defaults:
+    headers:
+      Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFtb3JhbGVzIiwiaWQiOiI1OWRlYWJjYWI4OGU3MjAwMzhmNTM4OGMiLCJpYXQiOjE1MDgzODA5NDEsImV4cCI6MTUxMDk3Mjk0MX0.PJzX1D9FaKudj4cMo_1HWLLddfRFZgyerk_rF1nTnjs'
+scenarios:
+  - flow:
+    - get:
+        url: "/v1/post"

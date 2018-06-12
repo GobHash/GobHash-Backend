@@ -15,4 +15,11 @@ router.route('/user/:userId')
     statsCtrl.userStats
   );
 
+router.route('/posts/top')
+  /** GET v1/stats/posts/top */
+  .get(
+    validate(paramValidation.statsPost),
+    statsCtrl.postStats
+  );
+
 export default router;

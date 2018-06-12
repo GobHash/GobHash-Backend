@@ -55,4 +55,18 @@ describe('## Stats APIs', () => {
         .catch(done);
     });
   });
+
+  describe('# GET /v1/stats/posts/top', () => {
+    it('get top posts', (done) => {
+      request(app)
+        .get('/v1/stats/posts/top')
+        .set('Authorization', jwtToken)
+        .expect(httpStatus.OK)
+        .then((res) => {
+          expect(res.body).to.be.an('array');
+          done();
+        })
+        .catch(done);
+    });
+  });
 });

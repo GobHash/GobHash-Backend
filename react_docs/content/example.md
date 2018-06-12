@@ -89,3 +89,67 @@ request(options, function (error, response, body) {
     "id": "1234"
 }
 ```
+### Feed en Tiempo Real con WebSockets (Solo JS)
+
+1. Se conecta al servidor.
+
+
+* El hosting actual no permite long polling por lo que hay que especificarle explicítamente web sockets como protocolo.
+
+<br/>
+<br/>
+<br/>
+
+```javascript
+var url = 'https://api.gobhash.com'; // api url
+var socket = io(url,
+  {
+  transports: ['websocket']
+  }
+);
+```
+
+<br/>
+
+
+2. Autenticarse 
+
+* El servidor necesita del token JWT para verificar la autenticidad de la conexión.
+
+* Si el token es inválido el servidor desconectará automáticamente al cliente.
+
+
+```javascript
+
+socket.emit('authenticate', {
+  token: 'Token JWT'
+});
+```
+<br/>
+
+
+* Si el token es válido se emitirá una señal en el canal de `authenticated` y el cliente lo puede recibir así. Y se guardará al usuario en un estado de online.
+
+```javascript
+socket.on('authenticated', function(data) {
+  console.log(data.auth); // true or false
+});
+```
+
+<br/>
+
+
+
+3. Feed
+
+* Una vez autenticado, a los clientes online puedne escuchar a post en tiempo real en el siguiente evento.
+
+```javascript
+socket.on('update_feed', function(data) {
+  //donde data es el post definido en el modelo Post.
+});
+```
+
+
+
+

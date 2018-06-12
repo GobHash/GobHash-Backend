@@ -2,7 +2,6 @@ import mongoose from 'mongoose';
 import httpStatus from 'http-status';
 import APIError from '../helpers/APIError';
 
-
 /**
  * Post Schema
  */
@@ -12,19 +11,31 @@ const PostSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User'
   },
-  layout: {
-    type: String,
-    required: true,
-    trim: true
-  },
   title: {
     type: String,
-    required: true,
-    trim: true
+    required: true
   },
   description: {
     type: String,
-    required: false
+    required: true
+  },
+  dashboard: {
+    main: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Widget'
+    },
+    first_submain: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Widget'
+    },
+    second_submain: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Widget'
+    },
+    third_submain: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Widget'
+    }
   },
   comments: [{
     user: {
@@ -89,6 +100,23 @@ PostSchema.statics = {
    */
   get(id) {
     return this.findById(id)
+      .populate('comments.user dashboard.main dashboard.first_submain dashboard.second_submain dashboard.third_submain', 'username picture data definition widgetType entity filters dateFilters baseColumn category')
+      .populate('user', 'username')
+      .exec()
+      .then((post) => {
+        if (post) {
+          return post;
+        }
+        const err = new APIError('Post id does not exist', httpStatus.NOT_FOUND);
+        return Promise.reject(err);
+      });
+  },
+  /** GET posts of a user */
+  getUserFeed(userId) {
+    return this.find()
+      .populate('comments.user dashboard.main dashboard.first_submain dashboard.second_submain dashboard.third_submain', 'username picture data definition widgetType entity filters dateFilters baseColumn category')
+      .populate('user', 'username')
+      .where('user', userId)
       .exec()
       .then((post) => {
         if (post) {
@@ -115,12 +143,13 @@ PostSchema.statics = {
    * List post in descending order of 'createdAt' timestamp.
    * @param {number} skip - Number of users to be skipped.
    * @param {number} limit - Limit number of users to be returned.
-   * @returns {Promise<User[]>}
+   * @returns {Promise<Post[]>}
    */
   list({ skip = 0, limit = 50 } = {}) {
     return this.find()
       .sort({ createdAt: -1 })
-      .populate('comments.user', 'username picture')
+      .populate('comments.user dashboard.main', 'username picture data definition widgetType entity filters dateFilters baseColumn category')
+      .populate('user', 'username')
       .skip(+skip)
       .limit(+limit)
       .exec();
@@ -130,12 +159,29 @@ PostSchema.statics = {
    * Get a users feed
    * @param {number} skip - Number of users to be skipped.
    * @param {number} limit - Limit number of users to be returned.
-   * @returns {Promise<User[]>}
+   * @returns {Promise<Post[]>}
    */
-  filterFeed({ skip = 0, limit = 15, following = [] } = {}) {
+  filterFeed({ limit = 15, skip = 0, following = [] } = {}) {
     return this.find({ user: { $in: following } })
       .sort({ createdAt: -1 })
-      .populate('comments.user', 'username picture')
+      .populate('comments.user dashboard.main', 'username picture data definition widgetType entity filters dateFilters baseColumn category')
+      .populate('user', 'username')
+      .skip(+skip)
+      .limit(+limit)
+      .exec();
+  },
+
+  /**
+   * Get most liked posts
+   * @param {number} skip - Number of users to be skipped.
+   * @param {number} limit - Limit number of users to be returned.
+   * @returns {Promise<Post[]>}
+   */
+  mostLiked(limit, skip) {
+    return this.find()
+      .sort({ 'likes.length': -1 })
+      .populate('comments.user dashboard.main', 'username picture data definition widgetType entity filters dateFilters baseColumn category')
+      .populate('user', 'username')
       .skip(+skip)
       .limit(+limit)
       .exec();

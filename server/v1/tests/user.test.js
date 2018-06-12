@@ -60,6 +60,26 @@ describe('## User APIs', () => {
     });
   });
 
+  describe('# POST /v1/users/password/update', () => {
+    it('should update a users password', (done) => {
+      request(app)
+        .patch('/v1/users/password/update')
+        .set('Authorization', jwtToken)
+        .send({
+          currentPassword: validJwtCredentials.password,
+          password: '1234'
+        })
+        .expect(httpStatus.OK)
+        .then((res) => {
+          expect(res.body).to.have.property('id');
+          expect(res.body).to.have.property('msg');
+          expect(res.body.msg).to.equal('password updated successfully');
+          done();
+        })
+        .catch(done);
+    });
+  });
+
   describe('# GET /v1/users/:userId', () => {
     it('should get user details', (done) => {
       request(app)
@@ -89,7 +109,7 @@ describe('## User APIs', () => {
     it('should set users biography', (done) => {
       user.biography = 'test';
       request(app)
-        .post('/v1/users/biography')
+        .patch('/v1/users/biography')
         .set('Authorization', jwtToken)
         .send(user)
         .then((res) => {
@@ -99,19 +119,19 @@ describe('## User APIs', () => {
         .catch(done);
     });
   });
-  describe('# POST /v1/users/picture', () => {
-    it('should set users picture', (done) => {
+  describe('# GET /v1/users/follow/:userId/check', () => {
+    it('Check if user can follow another user', (done) => {
       request(app)
-        .post('/v1/users/picture')
+        .get(`/v1/users/follow/${user.id}/check`)
         .set('Authorization', jwtToken)
-        .send(user)
-        .then(() => {
+        .then((res) => {
+          expect(res.body.canFollow)
+            .to.be.true
           done();
         })
         .catch(done);
     });
   });
-
   describe('# POST /v1/users/follow', () => {
     it('should follow a user', (done) => {
       request(app)
@@ -167,6 +187,42 @@ describe('## User APIs', () => {
         .expect(httpStatus.OK)
         .then((res) => {
           expect(res.body).to.be.an('array');
+          done();
+        })
+        .catch(done);
+    });
+  });
+
+  describe('# PATCH /v1/users/profile', () => {
+    it('should SET profile of user', (done) => {
+      request(app)
+        .patch('/v1/users/profile')
+        .send({
+          biography: 'test',
+          occupation: 'test'
+        })
+        .set('Authorization', jwtToken)
+        .expect(httpStatus.OK)
+        .then((res) => {
+          expect(res.body).to.be.an('object');
+          expect(res.body).to.have.property('occupation');
+          expect(res.body).to.have.property('biography');
+          done();
+        })
+        .catch(done);
+    });
+  });
+
+  describe('# GET /v1/users/profile', () => {
+    it('should get profile of user', (done) => {
+      request(app)
+        .get('/v1/users/profile')
+        .set('Authorization', jwtToken)
+        .expect(httpStatus.OK)
+        .then((res) => {
+          expect(res.body).to.be.an('object');
+          expect(res.body).to.have.property('username');
+          expect(res.body).to.have.property('biography');
           done();
         })
         .catch(done);

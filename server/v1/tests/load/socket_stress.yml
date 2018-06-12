@@ -1,0 +1,15 @@
+config:
+  target: "http://localhost:3000"
+  phases:
+    - duration: 1
+      arrivalRate: 1
+  socketio:
+    transports: ["websocket"]
+scenarios:
+  - engine: "socketio"
+    flow:
+      - emit:
+          channel: "authenticate"
+          data: "{ token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFtb3JhbGVzIiwiaWQiOiI1OWRlYWJjYWI4OGU3MjAwMzhmNTM4OGMiLCJpYXQiOjE1MDgzODA5NDEsImV4cCI6MTUxMDk3Mjk0MX0.PJzX1D9FaKudj4cMo_1HWLLddfRFZgyerk_rF1nTnjs'}"
+          response:
+            channel: "authenticated"

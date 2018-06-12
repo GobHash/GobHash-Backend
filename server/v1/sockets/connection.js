@@ -1,33 +1,57 @@
-import socket from 'socket.io';
-import express from 'express';
 import jwt from 'jsonwebtoken';
-import http from 'http';
 import config from '../../../config/config';
+import User from '../models/user.model';
 
-const port = 4004;
-const app = express();
-const server = http.createServer(app);
-const io = socket.listen(server);
 const debug = true;
-server.listen(port);
+var clients = {}; //eslint-disable-line
+const socketConnection = (io) => {
+  io.on('connection', (client) => {
 
-io.on('connection', (client) => {
-  client.on('authenticate', (data) => {
-    try {
-      const decoded = jwt.verify(data.token, config.jwtSecret);
-      if (decoded !== undefined) {
-        client.authenticated = true; // eslint-disable-line
+    client.on('authenticate', async (data) => {
+      try {
+        const decoded = jwt.verify(data.token, config.jwtSecret);
+        if (decoded !== undefined) {
+          client.authenticated = true; // eslint-disable-line
+          // join user to a room according to his unique id
+          client.join(decoded.id);
+          clients[decoded.id] = client;
+          client.id = decoded.id;
+          // mark user as online
+          const user = await User.get(decoded.id);
+          user.online = true;
+          await user.save();
+          client.emit('authenticated', { auth: true });
+        } else {
+          client.emit('authenticated', { auth: false });
+        }
+      } catch (err) {
+        client.emit('authenticated', { auth: false });
+        client.authenticated = false; // eslint-disable-line
+        client.disconnect(); // force disconnect not authorized client
       }
-    } catch (err) {
-      client.authenticated = false; // eslint-disable-line
-      client.disconnect(); // force disconnect not authorized client
-    }
-    if (debug) {
-      console.log(client.authenticated); // eslint-disable-line
-    }
+    });
+    client.on('disconnect', async () => {
+      try {
+        const user = await User.get(client.id);
+        user.online = false;
+        await user.save();
+        client.disconnect();
+      } catch (e) {
+        client.authenticated = false; // eslint-disable-line
+        client.disconnect();
+      }
+    });
   });
-  client.on('update_dashboard', () => {
-    // get last valid post
+  return io;
+};
 
-  });
-});
+const socketEmitter = (io) => {
+  const object = {
+    sendToUser(follower, post) {
+      io.to(follower._id).emit('update_feed', post);
+    }
+  };
+  return object;
+};
+
+export { socketConnection, socketEmitter };

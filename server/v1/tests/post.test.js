@@ -9,6 +9,8 @@ chai.config.includeStack = true;
 
 describe('## POSTS APIs', () => {
   const validUserCredentials = {
+    _id: '5949bdae7428fa4d772bad52',
+    name: 'nameT',
     username: 'test',
     password: '1234',
     email: 'address@newtonlabs.com.gt'
@@ -17,7 +19,96 @@ describe('## POSTS APIs', () => {
   let validPost = {
     title: 'test',
     description: 'test',
-    layout: 'test',
+    dashboard: {
+      main: {
+        definition: {
+          name: 'tes',
+          widgetType: {
+            id: 1,
+            name: 'Gr\u00e1fico de Pie'
+          },
+          entity: {
+            id: 2,
+            name: 'fact_adjudicacion',
+            display_name: 'Adjudicaci\u00f3n',
+            visible: true,
+            createdAt: '2017-08-08T06:00:00.000Z',
+            updatedAt: '2017-08-08T06:00:00.000Z'
+          },
+          filters: [
+            {
+              column: null,
+              operation: null,
+              value: null
+            }
+          ],
+          dateFilters: [
+            {
+              column: null,
+              operation: null,
+              date1: null,
+              date2: null
+            }
+          ],
+          baseColumn: {
+            id: 6,
+            name: 'categoria',
+            display_name: 'categor\u00eda',
+            type: 1,
+            base_table: 'fact_adjudicacion',
+            second_table: '',
+            entity_id: 2,
+            createdAt: '2017-08-08T06:00:00.000Z',
+            updatedAt: '2017-08-08T06:00:00.000Z'
+          },
+          category: {
+            operation: {
+              id: 1,
+              name: 'Sumar',
+              type: 2,
+              value_type: 2,
+              createdAt: '2017-08-08T06:00:00.000Z',
+              updatedAt: '2017-08-08T06:00:00.000Z'
+            },
+            column: {
+              id: 7,
+              name: 'monto',
+              display_name: 'Monto',
+              type: 4,
+              base_table: 'fact_adjudicacion',
+              second_table: '',
+              entity_id: 2,
+              createdAt: '2017-08-08T06:00:00.000Z',
+              updatedAt: '2017-08-08T06:00:00.000Z'
+            }
+          }
+        }
+      },
+      first_submain: {
+        data: [
+
+        ],
+        definition: {
+
+        }
+      },
+      second_submain: {
+        data: [
+
+        ],
+        definition: {
+
+        }
+      },
+      third_submain: {
+        data: [
+
+        ],
+        definition: {
+
+        }
+      }
+    },
     tags: ['1234']
   };
   let comment = {};
@@ -39,13 +130,13 @@ describe('## POSTS APIs', () => {
         .catch(done);
     });
   });
-  describe('# POST /v1/post/', () => {
+  describe('# POST /v1/posts/', () => {
     it('Create new POST', (done) => {
       request(app)
-        .post('/v1/post')
+        .post('/v1/posts')
         .set('Authorization', jwtToken)
         .send(validPost)
-        .expect(httpStatus.OK)
+        .expect(httpStatus.CREATED)
         .then((res) => {
           expect(res.body)
             .to.have.property('user');
@@ -61,10 +152,10 @@ describe('## POSTS APIs', () => {
         .catch(done);
     });
   });
-  describe('# GET /v1/post/', () => {
+  describe('# GET /v1/posts/', () => {
     it('should get one post', (done) => {
       request(app)
-        .get(`/v1/post/${validPost.id}`)
+        .get(`/v1/posts/${validPost.id}`)
         .set('Authorization', jwtToken)
         .expect(httpStatus.OK)
         .then(() => {
@@ -73,10 +164,10 @@ describe('## POSTS APIs', () => {
         .catch(done);
     });
   });
-  describe('# GET /v1/post/', () => {
+  describe('# GET /v1/posts/', () => {
     it('should get all posts', (done) => {
       request(app)
-        .get('/v1/post')
+        .get('/v1/posts')
         .set('Authorization', jwtToken)
         .expect(httpStatus.OK)
         .then((res) => {
@@ -86,10 +177,10 @@ describe('## POSTS APIs', () => {
         .catch(done);
     });
   });
-  describe('# POST /v1/post/comment', () => {
+  describe('# POST /v1/posts/comment', () => {
     it('add comment to post', (done) => {
       request(app)
-        .post('/v1/post/comment')
+        .post('/v1/posts/comment')
         .set('Authorization', jwtToken)
         .send({ content: 'test content', postId: validPost._id })
         .expect(httpStatus.OK)
@@ -102,10 +193,10 @@ describe('## POSTS APIs', () => {
         .catch(done);
     });
   });
-  describe('# DELETE /v1/post/comment', () => {
+  describe('# DELETE /v1/posts/comment', () => {
     it('delete comment from post', (done) => {
       request(app)
-        .delete('/v1/post/comment')
+        .delete('/v1/posts/comment')
         .set('Authorization', jwtToken)
         .send({ commentId: comment._id, postId: validPost._id })
         .expect(httpStatus.OK)
@@ -117,25 +208,28 @@ describe('## POSTS APIs', () => {
         .catch(done);
     });
   });
-  describe('# POST /v1/post/like', () => {
-    it('add like to post', (done) => {
+  describe('# GET /v1/posts/like/validation/:postId/:userId', () => {
+    it('Check if user can like post', (done) => {
       request(app)
-        .post('/v1/post/like')
+        .get(`/v1/posts/like/validation/${validPost._id}/${validUserCredentials._id}`)
         .set('Authorization', jwtToken)
-        .send({ postId: validPost._id })
         .expect(httpStatus.OK)
         .then((res) => {
           expect(res.body)
-            .to.have.property('likes');
+            .to.have.property('userId');
+          expect(res.body)
+            .to.have.property('canLike');
+          expect(res.body.canLike)
+            .to.be.true;
           done();
         })
         .catch(done);
     });
   });
-  describe('# DELETE /v1/post/like', () => {
-    it('remove like from post', (done) => {
+  describe('# POST /v1/posts/like', () => {
+    it('add like to post', (done) => {
       request(app)
-        .delete('/v1/post/like')
+        .post('/v1/posts/like')
         .set('Authorization', jwtToken)
         .send({ postId: validPost._id })
         .expect(httpStatus.OK)
@@ -148,15 +242,83 @@ describe('## POSTS APIs', () => {
     });
   });
 
-  describe('# DELETE /v1/post', () => {
-    it('delete post', (done) => {
+  describe('# GET /v1/posts/like/validation/:postId/:userId', () => {
+    it('Check if user can like post', (done) => {
       request(app)
-        .delete('/v1/post/')
+        .get(`/v1/posts/like/validation/${validPost._id}/${validUserCredentials._id}`)
+        .set('Authorization', jwtToken)
+        .expect(httpStatus.OK)
+        .then((res) => {
+          expect(res.body)
+            .to.have.property('userId');
+          expect(res.body)
+            .to.have.property('canLike');
+          expect(res.body.canLike)
+            .to.be.false;
+          done();
+        })
+        .catch(done);
+    });
+  });
+  describe('# DELETE /v1/posts/like', () => {
+    it('remove like from post', (done) => {
+      request(app)
+        .delete('/v1/posts/like')
         .set('Authorization', jwtToken)
         .send({ postId: validPost._id })
         .expect(httpStatus.OK)
         .then((res) => {
-          expect(res.body._id).to.equal(validPost._id);
+          expect(res.body)
+            .to.have.property('likes');
+          done();
+        })
+        .catch(done);
+    });
+  });
+
+  describe('# POST /v1/posts/tag', () => {
+    it('add tag to post', (done) => {
+      request(app)
+        .post('/v1/posts/tag')
+        .set('Authorization', jwtToken)
+        .send({ postId: validPost._id, tag: 'tag_test' })
+        .expect(httpStatus.OK)
+        .then((res) => {
+          expect(res.body.tags)
+            .to.be.an('array').to.include('tag_test');
+          done();
+        })
+        .catch(done);
+    });
+  });
+
+  describe('# DELETE /v1/posts/tag', () => {
+    it('remove tag from post', (done) => {
+      request(app)
+        .delete('/v1/posts/tag')
+        .set('Authorization', jwtToken)
+        .send({ postId: validPost._id, tag: 'tag_test' })
+        .expect(httpStatus.OK)
+        .then((res) => {
+          expect(res.body.post.tags)
+            .to.be.an('array').to.not.include('tag_test');
+          expect(res.body.removed)
+            .to.be.a('number');
+          done();
+        })
+        .catch(done);
+    });
+  });
+
+  describe('# DELETE /v1/posts', () => {
+    it('delete post', (done) => {
+      request(app)
+        .delete('/v1/posts/')
+        .set('Authorization', jwtToken)
+        .send({ postId: validPost._id })
+        .expect(httpStatus.OK)
+        .then((res) => {
+          expect(res.body.deleted).to.be.true;
           done();
         })
         .catch(done);
