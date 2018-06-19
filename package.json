@@ -26,7 +26,8 @@
     "postinstall": "gulp",
     "production": "node dist/index.js",
     "snyk-protect": "snyk protect",
-    "prepublish": "npm run snyk-protect"
+    "prepublish": "npm run snyk-protect",
+    "prepare": "npm run snyk-protect"
   },
   "repository": {
     "type": "git",
@@ -97,7 +98,7 @@
     "pmx": "^1.2.0",
     "run-sequence": "^2.2.0",
     "sequelize": "^4.2.0",
-    "snyk": "^1.41.1",
+    "snyk": "^1.83.0",
     "socket.io": "^2.0.3",
     "socket.io-redis": "^5.2.0",
     "squel": "^5.12.0",
