@@ -8,7 +8,7 @@ const plugins = gulpLoadPlugins();
 
 const paths = {
   js: ['./**/*.js', '!dist/**', '!node_modules/**', '!coverage/**', '!react_docs/**'],
-  nonJs: ['./package.json', './.gitignore'],
+  nonJs: ['./package.json', './.gitignore', './.env'],
   tests: './server/tests/*.js'
 };
 
@@ -20,15 +20,16 @@ gulp.task('clean', (done) => {
 
 // Copy non-js files to dist
 gulp.task('copy', () =>
-  gulp.src(paths.nonJs)
+  gulp.src(paths.nonJs, { allowEmpty: true })
     .pipe(plugins.newer('dist'))
     .pipe(gulp.dest('dist'))
 );
 
 gulp.task('copyDocs', () => {
-  gulp.src(['./server/docs/api_docs.yml'])
+  return gulp
+    .src(['./server/docs/api_docs.yml'], { allowEmpty: true })
     .pipe(plugins.newer('dist'))
-    .pipe(gulp.dest('dist/server/docs'))
+    .pipe(gulp.dest('dist/server/docs'));
 });
 
 // Compile ES6 to ES5 and copy to dist
