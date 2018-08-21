@@ -26,7 +26,7 @@ gulp.task('copy', () =>
 );
 
 gulp.task('copyDocs', () => {
-  return gulp.src(['./server/docs/api_docs.yml'])
+  gulp.src(['./server/docs/api_docs.yml'])
     .pipe(plugins.newer('dist'))
     .pipe(gulp.dest('dist/server/docs'))
 });
