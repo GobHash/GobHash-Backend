@@ -1,5 +1,5 @@
 # Snyk (https://snyk.io) policy file, patches or ignores known vulnerabilities.
-version: v1.7.1
+version: v1.13.1
 ignore: {}
 # patches apply the minimum changes required to fix a vulnerability
 patch:
@@ -10,3 +10,12 @@ patch:
         patched: '2017-05-27T02:07:17.247Z'
     - gulp-sourcemaps > debug-fabulous > debug > ms:
         patched: '2017-07-15T07:51:15.528Z'
+  'npm:hoek:20180212':
+    - pm2 > chokidar > fsevents > node-pre-gyp > hawk > hoek:
+        patched: '2018-12-08T10:25:32.302Z'
+    - pm2 > chokidar > fsevents > node-pre-gyp > hawk > boom > hoek:
+        patched: '2018-12-08T10:25:32.302Z'
+    - pm2 > chokidar > fsevents > node-pre-gyp > hawk > sntp > hoek:
+        patched: '2018-12-08T10:25:32.302Z'
+    - pm2 > chokidar > fsevents > node-pre-gyp > hawk > cryptiles > boom > hoek:
+        patched: '2018-12-08T10:25:32.302Z'
