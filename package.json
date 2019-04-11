@@ -96,7 +96,7 @@
     "pm2": "^2.5.0",
     "pmx": "^1.2.0",
     "run-sequence": "^2.2.0",
-    "sequelize": "^4.2.0",
+    "sequelize": "^5.3.0",
     "snyk": "^1.41.1",
     "socket.io": "^2.0.3",
     "socket.io-redis": "^5.2.0",
